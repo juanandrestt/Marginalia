@@ -3,7 +3,6 @@ class CreateLists < ActiveRecord::Migration[7.1]
     create_table :lists do |t|
       t.string :name
       t.references :user, null: false, foreign_key: true
-      t.references :book, null: false, foreign_key: true
 
       t.timestamps
     end

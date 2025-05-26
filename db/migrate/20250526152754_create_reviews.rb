@@ -6,6 +6,7 @@ class CreateReviews < ActiveRecord::Migration[7.1]
       t.string :emotion
       t.string :favorite_characters
       t.references :user, null: false, foreign_key: true
+      t.references :book, null: false, foreign_key: true
 
       t.timestamps
     end
