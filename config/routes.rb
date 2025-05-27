@@ -11,5 +11,4 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
   end
   get 'search', to: 'searchs#index', as: :search
-
 end
