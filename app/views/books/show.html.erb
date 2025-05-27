@@ -1,0 +1,22 @@
+<h1><%= @book.title %></h1>
+<p><strong>Author:</strong> <%= @book.author %></p>
+<p><strong>Description:</strong> <%= @book.description %></p>
+
+<h2>Reviews</h2>
+
+<ul>
+  <li>
+    <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
+    <p><strong>Content:</strong> <%= @current_user_review.content %></p>
+    <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
+    <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+  </li>
+  <% @book.reviews.each do |review| %>
+    <li>
+      <p><strong>Rating:</strong> <%= review.rating %>/5</p>
+      <p><strong>Content:</strong> <%= review.content %></p>
+      <p><strong>Emotion:</strong> <%= review.emotion %></p>
+      <p><strong>Favorite Characters:</strong> <%= review.favorite_characters %></p>
+    </li>
+  <% end %>
+</ul>

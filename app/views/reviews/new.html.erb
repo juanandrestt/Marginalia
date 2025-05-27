@@ -1,0 +1,27 @@
+<h1>Write a Review for <%= @book.title %></h1>
+
+<%= form_with model: [@book, @review], local: true do |form| %>
+  <div>
+    <%= form.label :content, "Your Review" %><br>
+    <%= form.text_area :content, rows: 5 %>
+  </div>
+
+  <div>
+    <%= form.label :rating, "Rating (1-5)" %><br>
+    <%= form.number_field :rating, in: 1..5 %>
+  </div>
+
+  <div>
+    <%= form.label :emotion, "How did you feel?" %><br>
+    <%= form.select :emotion, ["Happy", "Sad"] %>
+  </div>
+
+  <div>
+    <%= form.label :favorite_characters, "What characters did you preferd" %><br>
+    <%= form.select :favorite_characters, ["Happy", "Sad"] %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit Review" %>
+  </div>
+<% end %>
