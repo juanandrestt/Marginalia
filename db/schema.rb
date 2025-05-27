@@ -27,10 +27,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_27_101132) do
     t.string "title"
     t.string "author"
     t.integer "publishing_year"
-    t.string "genre"
-    t.string "characters"
+    t.text "characters"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "open_library_id"
+    t.text "description"
+    t.string "cover_url"
+    t.text "subjects"
   end
 
   create_table "lists", force: :cascade do |t|
