@@ -1,0 +1,25 @@
+<!-- filepath: /Users/anthonymicho/code/juanandresstt/Marginalia/app/views/searchs/index.html.erb -->
+<h1>Search Results</h1>
+
+<%= form_with url: search_path, method: :get, local: true do %>
+  <%= label_tag :query, "Search for a book:" %>
+  <%= text_field_tag :query, params[:query] %>
+  <%= submit_tag "Search" %>
+<% end %>
+
+<div class="row-2">
+<ul>
+  <% @books.each do |book| %>
+    <li>
+      <strong><%= link_to book.title, new_book_review_path(book) %></strong> by <%= book.author %>
+    </li>
+  <% end %>
+</ul>
+<ul>
+  <% @books.each do |book| %>
+    <li>
+      <strong><%= link_to book.title, book_path(book) %></strong> by <%= book.author %>
+    </li>
+  <% end %>
+</ul>
+</div>

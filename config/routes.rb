@@ -3,5 +3,8 @@ Rails.application.routes.draw do
   resources :lists, only: %i[ new create destroy] do
     resources :bookmarks, only: %i[new create]
   end
-  resources :books, only: %i[index show]
+  resources :books, only: %i[index show] do
+    resources :reviews, only: [:new, :create]
+  end
+  get 'search', to: 'searchs#index', as: :search
 end
