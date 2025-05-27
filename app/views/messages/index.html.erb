@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">AI Assistant Chat</h2>
+        </div>
+        <div class="card-body" style="max-height: 500px; overflow-y: auto;">
+          <% @messages.each do |message| %>
+            <div class="message mb-3 <%= message.role == 'user' ? 'text-end' : 'text-start' %>">
+              <div class="d-inline-block p-2 rounded <%= message.role == 'user' ? 'bg-primary text-white' : 'bg-light' %>" style="max-width: 70%;">
+                <small class="d-block text-muted"><%= message.role.capitalize %></small>
+                <%= simple_format message.content %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="card-footer">
+          <%= link_to "Ask a question", new_message_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
