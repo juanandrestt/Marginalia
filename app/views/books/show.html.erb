@@ -5,13 +5,14 @@
 <h2>Reviews</h2>
 
 <ul>
-  <li>
+   <li>
     <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
     <p><strong>Content:</strong> <%= @current_user_review.content %></p>
     <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
     <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
   </li>
-  <% @book.reviews.each do |review| %>
+
+  <% @reviews.each do |review| %>
     <li>
       <p><strong>Rating:</strong> <%= review.rating %>/5</p>
       <p><strong>Content:</strong> <%= review.content %></p>

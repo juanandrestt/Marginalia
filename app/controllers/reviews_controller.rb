@@ -9,6 +9,7 @@ class ReviewsController < ApplicationController
       @book = Book.find(params[:book_id])
       @review = Review.new(review_params)
       @review.book = @book
+      @review.user = current_user
       # @review.user = User.first
       if @review.save
         redirect_to book_path(@book)
