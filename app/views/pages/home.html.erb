@@ -1,1 +1,45 @@
-<%= link_to "Search for Books", search_path, class: "btn btn-primary" %>
+<div class="container">
+  <!-- Barre de recherche -->
+  <div class="row justify-content-center mb-2">
+    <div class="col-md-8 py-4">
+      <%= form_with url: search_path, method: :get, local: true, class: "d-flex align-items-center bg-light rounded-pill px-3 shadow-sm py-1" do |f| %>
+        <i class="fas fa-search me-2" style="font-size: 14px; color: #751F1F;"></i>
+        <%= f.text_field :query, placeholder: "Find your book here...", class: "form-control border-0 bg-light rounded-pill", style: "font-size: 14px; color: #751F1F;", autofocus: false %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Notre recommandation du jour -->
+  <div class="row justify-content-center mb-5">
+    <h2 class="mb-4 text-center playfair-display" style="font-size: 20px;">Notre recommandation</h2>
+    <div class="carousel-inner">
+      <% @book.each_with_index do |book, idx| %>
+        <div class="carousel-item d-flex flex-column align-items-center">
+          <img src="<%= book.cover_url %>" class="shadow rounded mb-2" alt="<%= book.title %>" style="width: 130px; height: 180px; object-fit: cover; ">
+          <div class="mt-2 text-center">
+            <h3 class="playfair-display" style="color:#751F1F; font-size: 16px;"><%= book.title %></h3>
+            <div class="text-muted" style="font-size: 14px;;"><%= book.author %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Les lectures les plus populaires -->
+  <div>
+    <h2 class="mb-4" style="font-size: 20px;  font-family: 'Aujour nuit';">Les lectures les plus populaires</h2>
+    <div class="row flex-nowrap overflow-auto" style="gap: 4px;">
+      <% @books.each do |book| %>
+        <div class="col-auto gap: 2px;">
+          <%= link_to book_path(book), class: "text-decoration-none" do %>
+            <img src="<%= book.cover_url %>" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem;" alt="<%= book.title %>">
+            <h5 style="font-size: 13px; margin-bottom: 2px; color: #222; white-space: wrap; max-width: 120px; font-family: 'Aujour nuit', serif;"><%= book.title %></h5>
+            <p class="text-muted" style="font-size: 11px; margin-bottom: 0;"><%= book.author %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to "Give a review", search_path, class: "rounded" %>
+</div>
