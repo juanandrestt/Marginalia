@@ -11,27 +11,6 @@
 @import "components/index";
 @import "pages/index";
 
-@font-face {
-  font-family: 'Aujour nuit';
-  src: url('/assets/fonts/Aujournuit-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Aujour nuit';
-  src: url('/assets/fonts/Aujournuit-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-body {
-  font-family: 'Aujour nuit', Arial, sans-serif;
-}
-
-.playfair-display {
-  font-family: 'Playfair Display', serif;
-}
 .custom-link {
   color: #751F1F; /* Ta couleur personnalisée */
   text-decoration: none; /* Enlève le soulignement */
