@@ -20,3 +20,14 @@
   color: #751F1F; /* Garde la même couleur au survol */
   text-decoration: underline; /* Optionnel : ajoute un soulignement au survol */
 }
+
+.font-aujournuit {
+  font-family: $my-font;
+}
+
+// Apply Aujournuit font to specific elements
+.your-section h1,
+.your-section h2,
+.your-section h3 {
+  font-family: $my-font;
+}
