@@ -1,17 +1,17 @@
-<div class="container">
+<div class="container"  style="padding-bottom: 20px">
   <!-- Barre de recherche -->
   <div class="row justify-content-center mb-2">
     <div class="col-md-8 py-4">
-      <%= form_with url: search_path, method: :get, local: true, class: "d-flex align-items-center bg-light rounded-pill px-3 shadow-sm py-1" do |f| %>
+      <%= form_with url: all_books_path, method: :get, local: true, class: "d-flex align-items-center bg-light rounded-pill px-3 shadow-sm py-1" do |f| %>
         <i class="fas fa-search me-2" style="font-size: 14px; color: #751F1F;"></i>
-        <%= f.text_field :query, placeholder: "Find your book here...", class: "form-control border-0 bg-light rounded-pill", style: "font-size: 14px; color: #751F1F;", autofocus: false %>
+        <%= f.text_field :query, placeholder: "Find your book here...", class: "form-control border-0 bg-light rounded-pill", style: "font-size: 14px; color: #751F1F;", autofocus: false, onclick: "window.location.href='/books'" %>
       <% end %>
     </div>
   </div>
 
   <!-- Notre recommandation du jour -->
   <div class="row justify-content-center mb-5">
-    <h2 class="mb-4 text-center playfair-display" style="font-size: 20px;">Notre recommandation</h2>
+    <h2 class="mb-4 text-center playfair-display" style="font-size: 20px; color: #751F1F">Notre recommandation</h2>
     <div class="carousel-inner">
       <% @book.each_with_index do |book, idx| %>
         <div class="carousel-item d-flex flex-column align-items-center">
@@ -26,20 +26,42 @@
   </div>
 
   <!-- Les lectures les plus populaires -->
-  <div>
-    <h2 class="mb-4" style="font-size: 20px;  font-family: 'Aujour nuit';">Les lectures les plus populaires</h2>
+  <div class="" style="padding-bottom: 70px">
+    <h2 class="mb-4" style="font-size: 20px; color: #751F1F">Les lectures les plus populaires</h2>
     <div class="row flex-nowrap overflow-auto" style="gap: 4px;">
       <% @books.each do |book| %>
         <div class="col-auto gap: 2px;">
           <%= link_to book_path(book), class: "text-decoration-none" do %>
-            <img src="<%= book.cover_url %>" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem;" alt="<%= book.title %>">
-            <h5 style="font-size: 13px; margin-bottom: 2px; color: #222; white-space: wrap; max-width: 120px; font-family: 'Aujour nuit', serif;"><%= book.title %></h5>
+            <img src="<%= book.cover_url %>" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; " alt="<%= book.title %>">
+            <h5 style="font-size: 13px; margin-bottom: 2px; color: #222; white-space: wrap; max-width: 120px; color: #751F1F"><%= book.title %></h5>
             <p class="text-muted" style="font-size: 11px; margin-bottom: 0;"><%= book.author %></p>
           <% end %>
         </div>
       <% end %>
     </div>
   </div>
+</div>
 
-  <%= link_to "Give a review", search_path, class: "rounded" %>
+
+<div class="tab-bar d-flex justify-content-around align-items-center bg-light rounded-pill px-3 shadow-sm position-fixed w-75 start-50 translate-middle-x" style="bottom: 16px; height: 56px; z-index: 999;">
+  <%= link_to "#", class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+    <i class="fas fa-book" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
+    <small style="font-size: 10px; line-height: 2;">Bookclub</small>
+  <% end %>
+
+
+  <%= link_to new_message_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+    <i class="fas fa-robot" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
+    <small style="font-size: 10px; line-height: 2;">Ask Margi</small>
+  <% end %>
+
+  <%= link_to search_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+    <i class="fas fa-pen" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
+    <small style="font-size: 10px; line-height: 2;">Review</small>
+  <% end %>
+
+  <%= link_to "#", class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+    <i class="fas fa-user" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
+    <small style="font-size: 10px; line-height: 2; ">Profil</small>
+  <% end %>
 </div>

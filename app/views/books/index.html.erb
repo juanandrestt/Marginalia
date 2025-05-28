@@ -1,5 +1,4 @@
-<!-- filepath: /Users/anthonymicho/code/juanandresstt/Marginalia/app/views/searchs/index.html.erb -->
-<h1 class="text-center playfair-display">Search Results</h1>
+
 <div class="container">
   <div class="row justify-content-center mb-1">
     <div class="col-md-8 pt-4 pb-3">
@@ -15,7 +14,7 @@
   <div class="container">
     <div class="row mx-1">
       <% @books.each do |book| %>
-        <%= link_to new_book_review_path(book), class: "text-decoration-none" do %>
+        <%= link_to book_path(book), class: "text-decoration-none" do %>
         <div class="col-16 d-flex mb-3 align-items-center">
           <img src="<%=  book.cover_url %>" style="width: 50px; height: 70px; object-fit: cover; margin-right: 12px;" alt="<%= book.title %>">
           <div>
@@ -28,3 +27,11 @@
     </div>
   </div>
 </div>
+
+<ul>
+  <% @books.each do |book| %>
+    <li>
+      <strong><%= link_to book.title, book_path(book) %></strong> by <%= book.author %>
+    </li>
+  <% end %>
+</ul>
