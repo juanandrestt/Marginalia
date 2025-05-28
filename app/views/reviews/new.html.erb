@@ -1,4 +1,134 @@
-<h1>Write a Review for <%= @book.title %></h1>
+<h3 class="text-center mb-4" style="color: #751F1F;"><%= @book.title %></h3>
+
+<div class="container p-4 rounded" style="max-width: 600px;">
+  <%= form_with model: [@book, @review], local: true do |form| %>
+
+    <!-- Review Content -->
+    <div class="mb-3">
+      <%= form.label :content, "Votre critique", class: "form-label" %>
+      <%= form.text_area :content, rows: 5, class: "form-control", placeholder: "Partagez vos pensées..." %>
+    </div>
+
+    <!-- Rating (Stars) -->
+    <div class="mb-3">
+      <%= form.label :rating, "Votre note", class: "form-label" %>
+      <div class="d-flex justify-content-center gap-2 fs-4">
+        <% (1..5).each do |n| %>
+          <i class="fa-star far text-warning cursor-pointer"
+             id="star-<%= n %>"
+             onclick="selectStar(<%= n %>)"
+             style="cursor: pointer;"></i>
+        <% end %>
+      </div>
+      <%= form.hidden_field :rating, id: "rating-input" %>
+    </div>
+
+    <!-- Emotion -->
+    <div class="mb-3">
+      <%= form.label :emotion, "How did you feel?", class: "form-label" %>
+      <div class="d-flex gap-2">
+        <% ["Nostalgique" ,"Heureux", "Triste"].each do |emotion| %>
+          <button type="button" class="btn bg-white rounded-pill"
+                  onclick="selectEmotion('<%= emotion %>')" id="emotion-btn-<%= emotion.downcase %>">
+            <%= emotion %>
+          </button>
+        <% end %>
+      </div>
+      <%= form.hidden_field :emotion, id: "emotion-input" %>
+    </div>
+
+    <!-- Favorite Characters -->
+    <div class="mb-4">
+      <%= form.label :favorite_characters, "Your favorite characters", class: "form-label" %>
+      <div class="d-flex flex-wrap gap-2">
+        <% ["Juan Pélardon","Anthony d’Auvergne", "Samuel Parmagiano"].each do |char| %>
+          <button type="button" class="btn bg-white rounded-pill"
+                  onclick="selectCharacter('<%= char %>')" id="char-btn-<%= char.parameterize %>">
+            <%= char %>
+          </button>
+        <% end %>
+      </div>
+      <%= form.hidden_field :favorite_characters, id: "character-input" %>
+    </div>
+
+    <!-- Submit -->
+    <div class="d-grid">
+      <%= form.submit "Submit Review", class: "btn btn-outline-dark rounded-pill", style: "color: #751F1F; border-color: #751F1F;" %>
+    </div>
+
+  <% end %>
+</div>
+
+<!-- JS interactions -->
+<script>
+  function selectStar(value) {
+    document.getElementById("rating-input").value = value;
+    for (let i = 1; i <= 5; i++) {
+      const star = document.getElementById(`star-${i}`);
+      star.classList.remove("fas");
+      star.classList.add("far");
+    }
+    for (let i = 1; i <= value; i++) {
+      const star = document.getElementById(`star-${i}`);
+      star.classList.remove("far");
+      star.classList.add("fas");
+    }
+  }
+
+  function selectEmotion(emotion) {
+    document.getElementById("emotion-input").value = emotion;
+  ["Nostalgique", "Heureux", "Triste"].forEach(e => {
+    const id = `emotion-btn-${e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
+    document.getElementById(id).classList.remove("active");
+  });
+    document.getElementById(`emotion-btn-${emotion.toLowerCase()}`).classList.add("active");
+  }
+
+  function selectCharacter(name) {
+    document.getElementById("character-input").value = name;
+    ["juan-pelardon", "anthony-d-auvergne", "samuel-parmagiano"].forEach(id => {
+      document.getElementById(`char-btn-${id}`).classList.remove("active");
+    });
+    document.getElementById(`char-btn-${name.toLowerCase().replaceAll(' ', '-').replaceAll(/[’']/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`).classList.add("active");
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<h1>Write a Review for <%= @book.title %></h1>
 
 <%= form_with model: [@book, @review], local: true do |form| %>
   <div>
@@ -24,4 +154,4 @@
   <div>
     <%= form.submit "Submit Review" %>
   </div>
-<% end %>
+<% end %> -->
