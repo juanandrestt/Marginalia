@@ -14,20 +14,34 @@
 
   <body>
   <nav>
-    <div class="navbar">
-      <% if user_signed_in? %>
-      <%= button_to(
-        "Log Out",
-        destroy_user_session_path,
-        method: :delete
-      )%>
-        <%# <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to 'Sign In', new_user_session_path, class: "btn btn-primary" %>
-        <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-primary" %>
+  <div class="mt-2 d-flex justify-content-center">
+    <%= link_to root_path, class: "text-decoration-none custom-link" do %>
+      <span style="font-size: 48px; color: #751F1F;">Marginalia</span>
+    <% end %>
+  </div>
+
+  <!-- <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+    <div class="container-fluid">
+      <%= link_to root_path, class: "navbar-brand" do %>
+        <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
       <% end %>
+
+      <div class="">
+        <% if user_signed_in? %>
+        <%= button_to(
+          "Log Out",
+          destroy_user_session_path,
+          method: :delete
+        )%>
+          <%# <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+        <% else %>
+          <%= link_to 'Sign In', new_user_session_path, class: "btn btn-primary" %>
+          <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-primary" %>
+        <% end %>
+      </div>
     </div>
-  </nav>
+  </div>
+  </nav> -->
     <%= yield %>
   </body>
 </html>

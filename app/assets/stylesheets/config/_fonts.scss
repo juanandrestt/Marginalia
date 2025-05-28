@@ -5,6 +5,13 @@
 $body-font: "Work Sans", "Helvetica", "sans-serif";
 $headers-font: "Nunito", "Helvetica", "sans-serif";
 
+
+@font-face {
+    font-family: "Aujournuit";
+    src: url("Aujournuit-Regular.woff") format("woff");
+}
+
+$my-font: "Aujournuit";
 // To use a font file (.woff) uncomment following lines
 // @font-face {
 //   font-family: "Font Name";
@@ -13,4 +20,3 @@ $headers-font: "Nunito", "Helvetica", "sans-serif";
 //        font-url('FontFile.woff') format('woff'),
 //        font-url('FontFile.ttf') format('truetype')
 // }
-// $my-font: "Font Name";
