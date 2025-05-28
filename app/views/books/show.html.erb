@@ -1,25 +1,59 @@
-<h1><%= @book.title %></h1>
-<p><strong>Author:</strong> <%= @book.author %></p>
-<p><strong>Description:</strong> <%= @book.description %></p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h1 class="card-title mb-4"><%= @book.title %></h1>
+          <div class="book-details mb-4">
+            <p><strong><i class="fas fa-user"></i> Auteur:</strong> <%= @book.author %></p>
+            <p><strong><i class="fas fa-book-open"></i> Description:</strong> <%= @book.description %></p>
+          </div>
+        </div>
+      </div>
 
-<h2>Reviews</h2>
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h2 class="mb-0">Reviews</h2>
+        </div>
+        <div class="card-body">
+          <% if @current_user_review %>
+            <div class="review-card mb-4 p-3 border rounded">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Votre Review</h5>
+                <div class="review-actions">
+                  <%= link_to edit_book_review_path(@book, @current_user_review), class: 'btn btn-sm btn-outline-primary me-2' do %>
+                    <i class="fas fa-edit"></i> Edit
+                  <% end %>
+                  <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
+                    <%= f.button type: 'submit', class: 'btn btn-sm btn-outline-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure ?' } do %>
+                      <i class="fas fa-trash"></i> Delete
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="review-content">
+                <p><strong><i class="fas fa-star"></i> Note:</strong> <%= @current_user_review.rating %>/5</p>
+                <p><strong><i class="fas fa-comment"></i> Contenu:</strong> <%= @current_user_review.content %></p>
+                <p><strong><i class="fas fa-heart"></i> Émotion:</strong> <%= @current_user_review.emotion %></p>
+                <p><strong><i class="fas fa-users"></i> Personnages préférés:</strong> <%= @current_user_review.favorite_characters %></p>
+              </div>
+            </div>
+          <% end %>
 
-<ul>
-   <li>
-    <% if @current_user_review %>
-      <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
-      <p><strong>Content:</strong> <%= @current_user_review.content %></p>
-      <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
-      <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
-    <% end %>
-  </li>
-
-  <% @reviews.each do |review| %>
-    <li>
-      <p><strong>Rating:</strong> <%= review.rating %>/5</p>
-      <p><strong>Content:</strong> <%= review.content %></p>
-      <p><strong>Emotion:</strong> <%= review.emotion %></p>
-      <p><strong>Favorite Characters:</strong> <%= review.favorite_characters %></p>
-    </li>
-  <% end %>
-</ul>
+          <div class="other-reviews">
+            <% @reviews.each do |review| %>
+              <div class="review-card mb-3 p-3 border rounded">
+                <div class="review-content">
+                  <p><strong><i class="fas fa-star"></i> Note:</strong> <%= review.rating %>/5</p>
+                  <p><strong><i class="fas fa-comment"></i> Contenu:</strong> <%= review.content %></p>
+                  <p><strong><i class="fas fa-heart"></i> Émotion:</strong> <%= review.emotion %></p>
+                  <p><strong><i class="fas fa-users"></i> Personnages préférés:</strong> <%= review.favorite_characters %></p>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :books, only: %i[index show] do
-    resources :reviews, only: [:new, :create]
+    resources :reviews, only: [:new, :create, :edit, :update, :destroy]
   end
   get 'search', to: 'searchs#index', as: :search
 
