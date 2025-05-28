@@ -6,10 +6,12 @@
 
 <ul>
    <li>
-    <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
-    <p><strong>Content:</strong> <%= @current_user_review.content %></p>
-    <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
-    <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+    <% if @current_user_review %>
+      <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
+      <p><strong>Content:</strong> <%= @current_user_review.content %></p>
+      <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
+      <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+    <% end %>
   </li>
 
   <% @reviews.each do |review| %>
