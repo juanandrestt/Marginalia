@@ -10,7 +10,7 @@ subjects.each do |subject|
   url = "https://openlibrary.org/subjects/#{subject}.json?limit=50"
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
-  
+
   data["works"].each do |work|
     title = work["title"]
     authors = work["authors"] || []
@@ -18,16 +18,21 @@ subjects.each do |subject|
     publishing_year = work["first_publish_year"]
     open_library_id = work["key"]&.split("/")&.last
     subjects = work["subject"]&.join(", ") || ""
-    description = work["description"]
-    # description can be string or hash with 'value'
-    if description.is_a?(Hash)
-      description = description["value"]
-    elsif !description.is_a?(String)
+
+    # fetch full work details
+    work_url = "https://openlibrary.org/works/#{open_library_id}.json"
+    begin
+      full_data = JSON.parse(URI.open(work_url).read)
+      desc = full_data["description"]
+      description = desc.is_a?(Hash) ? desc["value"] : desc
+    rescue
       description = nil
     end
+
     cover_id = work["cover_id"]
     cover_url = cover_id ? "https://covers.openlibrary.org/b/id/#{cover_id}-L.jpg" : nil
-    characters = nil # not available here, could add later
+    characters = nil # not available here
+
     Book.create!(
       title: title,
       author: author,
