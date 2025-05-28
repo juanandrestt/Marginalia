@@ -28,7 +28,10 @@ class MessagesController < ApplicationController
   end
 
   def system_prompt
+    @books = Book.all
+    book_links = @books.map { |book| "<a href='books/#{book.id}'>#{book.title}</a>" }.join(",")
     "You are an expert librarian. \
-      You will be given a book, a literary genre or subject, or a literary era. You need to recommend 3 books that are relevant to the user's request."
+      You will be given a book, a literary genre or subject, or a literary era. You need to recommend 3 books that are relevant to the user's request. \
+      Here are the books in the library: #{book_links}"
   end
 end
