@@ -24,10 +24,24 @@
       <div class="card mb-4 shadow-sm">
         <div class="card-body">
           <h5 class="card-title">Your Review</h5>
-          <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
-          <p><strong>Content:</strong> <%= @current_user_review.content %></p>
-          <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
-          <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+          <div class="d-flex">
+            <div class="review-content">
+              <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
+              <p><strong>Content:</strong> <%= @current_user_review.content %></p>
+              <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
+              <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+            </div>
+            <div class="review-actions ms-auto">
+              <%= link_to edit_book_review_path(@book, @current_user_review), class: 'btn btn-sm btn-outline-primary me-2 mb-1' do %>
+                <i class="fas fa-edit"></i> Edit
+              <% end %>
+              <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
+                <%= f.button type: 'submit', class: 'btn btn-sm btn-outline-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure ?' } do %>
+                  <i class="fas fa-trash"></i> Delete
+                <% end %>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>
