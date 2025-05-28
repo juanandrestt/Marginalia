@@ -1,25 +1,47 @@
-<h1><%= @book.title %></h1>
-<p><strong>Author:</strong> <%= @book.author %></p>
-<p><strong>Description:</strong> <%= @book.description %></p>
+<div class="container mt-5">
+  <!-- Section du livre -->
+  <div class="row mb-5">
+    <div class="col-md-4 text-center">
+      <img src="<%= @book.cover_url %>" alt="<%= @book.title %>" class="img-fluid shadow rounded mb-4" style="max-height: 300px; object-fit: cover;">
+    </div>
+    <div class="col-md-8 text-center">
+         <h3 class="My-font" style="color:#751F1F; font-size: 24px;"><%= @book.title %></h3>
+       <div class="text-muted" style="font-size: 14px;;"><%= @book.author %></div>
+       <div class="text-center mb-4">
+    </div>
+      <p><strong>Description:</strong> <%= @book.description %></p>
+      <p><strong>Publishing Year:</strong> <%= @book.publishing_year %></p>
+      <p><strong>Open Library ID:</strong> <%= @book.open_library_id %></p>
+      <p><strong>Subjects:</strong> <%= @book.subjects %></p>
+      <p><strong>Characters:</strong> <%= @book.characters %></p>
+    </div>
+  </div>
 
-<h2>Reviews</h2>
-
-<ul>
-   <li>
+  <!-- Section des avis -->
+  <div class="reviews-section">
+    <h2 class="mb-4 playfair-display" style="font-size: 2rem; color: #751F1F;">Reviews</h2>
     <% if @current_user_review %>
-      <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
-      <p><strong>Content:</strong> <%= @current_user_review.content %></p>
-      <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
-      <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Your Review</h5>
+          <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
+          <p><strong>Content:</strong> <%= @current_user_review.content %></p>
+          <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
+          <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+        </div>
+      </div>
     <% end %>
-  </li>
 
-  <% @reviews.each do |review| %>
-    <li>
-      <p><strong>Rating:</strong> <%= review.rating %>/5</p>
-      <p><strong>Content:</strong> <%= review.content %></p>
-      <p><strong>Emotion:</strong> <%= review.emotion %></p>
-      <p><strong>Favorite Characters:</strong> <%= review.favorite_characters %></p>
-    </li>
-  <% end %>
-</ul>
+    <% @reviews.each do |review| %>
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Review</h5>
+          <p><strong>Rating:</strong> <%= review.rating %>/5</p>
+          <p><strong>Content:</strong> <%= review.content %></p>
+          <p><strong>Emotion:</strong> <%= review.emotion %></p>
+          <p><strong>Favorite Characters:</strong> <%= review.favorite_characters %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

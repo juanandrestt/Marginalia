@@ -10,3 +10,13 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+.custom-link {
+  color: #751F1F; /* Ta couleur personnalisée */
+  text-decoration: none; /* Enlève le soulignement */
+}
+
+.custom-link:hover {
+  color: #751F1F; /* Garde la même couleur au survol */
+  text-decoration: underline; /* Optionnel : ajoute un soulignement au survol */
+}
