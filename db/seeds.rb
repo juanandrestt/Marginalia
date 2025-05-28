@@ -55,19 +55,17 @@ puts "Users created. Now creating reviews..."
 
 emotions = %w[happy sad excited grateful angry bored]
 characters = ["Alice", "Frodo", "Jon Snow", "Matilda", "Naruto", "Hermione"]
-books = Book.order("RANDOM()").limit(10)
+books = Book.all
 
 books.each do |book|
-  rand(1..3).times do
-    Review.create!(
-      content: Faker::Lorem.paragraph(sentence_count: 3),
+  Review.create!(
+      content: Faker::Quotes::Shakespeare.hamlet_quote,
       rating: rand(1.0..5.0).round(1),
       emotion: emotions.sample,
       favorite_characters: characters.sample,
       user: users.sample,
       book: book
     )
-  end
 end
 
 puts "Everything is created!"
