@@ -1,24 +1,25 @@
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="mb-0">AI Assistant Chat</h2>
-        </div>
-        <div class="card-body" style="max-height: 500px; overflow-y: auto;">
-          <% @messages.each do |message| %>
-            <div class="message mb-3 <%= message.role == 'user' ? 'text-end' : 'text-start' %>">
-              <div class="d-inline-block p-2 rounded <%= message.role == 'user' ? 'bg-primary text-white' : 'bg-light' %>" style="max-width: 70%;">
-                <small class="d-block text-muted"><%= message.role.capitalize %></small>
-                <%= simple_format message.content %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-        <div class="card-footer">
-          <%= link_to "Ask a question", new_message_path, class: "btn btn-primary" %>
+<div class="container mt-4 w-50 d-flex flex-column vh-100">
+  <div class="chat-container flex-grow-1 overflow-y-auto mb-3" style="max-height: calc(100vh - 200px);">
+    <% @messages.each do |message| %>
+      <div class="d-flex <%= message.role == 'user' ? 'justify-content-end' : 'justify-content-start' %> mb-3">
+        <div class="<%= message.role == 'user' ? 'bg-info' : '' %> rounded p-3" style="max-width: 70%;">
+          <%= simple_format message.content %>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
-</div> 
+
+  <div class="message-form sticky-bottom">
+    <%= simple_form_for @message do |f| %>
+      <div class="d-flex gap-2">
+        <%= f.input :content, 
+                    placeholder: "Ask a question", 
+                    required: true, 
+                    label: false,
+                    wrapper: false,
+                    input_html: { class: 'form-control' } %>
+        <%= f.button :submit, 'Ask for a recommendation', class: 'btn btn-secondary' %>
+      </div>
+    <% end %>
+  </div>
+</div>

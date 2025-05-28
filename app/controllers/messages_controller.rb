@@ -1,9 +1,6 @@
 class MessagesController < ApplicationController
   def index
     @messages = Message.order(created_at: :asc)
-  end
-
-  def new
     @message = Message.new
   end
 
@@ -17,7 +14,8 @@ class MessagesController < ApplicationController
       Message.create(role: "assistant", content: response.content)
       redirect_to messages_path
     else
-      render :new, status: :unprocessable_entity
+      @messages = Message.order(created_at: :asc)
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -29,9 +27,11 @@ class MessagesController < ApplicationController
 
   def system_prompt
     @books = Book.all
-    book_links = @books.map { |book| "<a href='books/#{book.id}'>#{book.title}</a>" }.join(",")
+    book_links = @books.map { |book| "<a href='books/#{book.id}'>#{book.title}</a>" }.join(", ")
     "You are an expert librarian. \
-      You will be given a book, a literary genre or subject, or a literary era. You need to recommend 3 books that are relevant to the user's request. \
+      You will be given a book, a literary genre or subject, or a literary era. \
+      You must recommend 3 books that are relevant to the user's request. \
+      For each recommendation, you must include the book title as a clickable link using the format: <a href='/books/[id]'>[title]</a>. \
       Here are the books in the library: #{book_links}"
   end
 end
