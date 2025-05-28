@@ -43,12 +43,31 @@
   <!-- Reviews -->
   <div class="reviews-section">
     <h4 class="mb-3" style="color: #751F1F;">Votre critique</h4>
-    <% if @current_user_review %>
+    <% if user_signed_in? && !@current_user_review %>
+      <%= link_to new_book_review_path(@book), class: "btn btn-primary btn-sm" do %>
+        <i class="fas fa-plus"></i> Add a review
+      <% end %>
+    <% end %>
+    <% if user_signed_in? && @current_user_review %>
       <div class="mb-3 p-4 rounded-5" style="background-color: #F5EADB;">
-          <p><%= @current_user_review.content %></p>
-          <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
-          <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
-          <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+        <div class="d-flex justify-content-between mb-3">
+          <div>
+            <p><%= @current_user_review.content %></p>
+            <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
+            <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
+            <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
+          </div>
+          <div class="review-actions">
+            <%= link_to edit_book_review_path(@book, @current_user_review), class: 'btn btn-sm btn-outline-primary me-2 mb-1' do %>
+              <i class="fas fa-edit"></i> Edit
+            <% end %>
+            <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
+              <%= f.button type: 'submit', class: 'btn btn-sm btn-outline-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+                <i class="fas fa-trash"></i> Delete
+              <% end %>
+            <% end %>
+          </div>
+        </div>
       </div>
     <% end %>
     <h4 class="mb-3" style="color: #751F1F;">Les critiques des lecteurs</h4>
