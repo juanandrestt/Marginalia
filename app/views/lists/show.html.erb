@@ -1,8 +1,18 @@
 <div class="container">
     <h1>Books inside <%= @list.name %></h1>
-    <% @list.books.each do |book| %>
-        <div class="card" style="background-image: url(<%= book.cover_url %>);">
-            <%= link_to book.title, book_path(book) %>
+
+    <%= link_to "Add a book", new_list_bookmark_path(@list), class: "btn btn-secondary", data: { bs_toggle: "modal", bs_target: "#new_book_modal" } %>
+
+    <% @list.bookmarks.each do |bookmark| %>
+        <% book = bookmark.book %>
+        <div class="col-auto gap: 2px;">
+          <%= link_to book_path(book), class: "text-decoration-none" do %>
+            <img src="<%= book.cover_url %>" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; " alt="<%= book.title %>">
+            <h3 style="font-size: 13px; margin-bottom: 2px; color: #222; white-space: wrap; max-width: 120px; color: #751F1F"><%= book.title %></h5>
+            <p class="text-muted" style="font-size: 11px; margin-bottom: 0;"><%= book.author %></p>
+          <% end %>
         </div>
-    <% end %>
+      <% end %>
 </div>
+
+<%= render "bookmarks/modal", list: @list, bookmark: Bookmark.new %>

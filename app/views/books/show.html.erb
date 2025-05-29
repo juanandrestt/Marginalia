@@ -44,13 +44,24 @@
         <% end %>
       <% end %>
     </div>
+
     <!-- CTA bookclub -->
     <div>
       <%= link_to new_book_bookclub_path(@book), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
       <i class="fas fa-plus"></i> Create a bookclub
       <% end %>
     </div>
+
+    <%# <div>
+      <%= button_to list_bookmarks_path(list_id: params[:list_id], bookmark: { book_id: @book.id }),  data: { turbo_method: :post }, class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
+        <%# <i class="fas fa-plus"></i> Add to a list %>
+      <%# <% end %>
+    <%# </div> %>
+
   </div>
+
+
+
   <!-- Reviews -->
   <div class="reviews-section">
     <% if user_signed_in? && @current_user_review %>

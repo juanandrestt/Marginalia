@@ -1,0 +1,21 @@
+<div class="modal fade" id="new_book_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add a book to your <%= list.name %> list</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+
+      <%= simple_form_for [list, bookmark] do |f| %>
+        <div class="modal-body">
+          <%= f.association :book, collection: Book.all.order(:title), prompt: "Select a book", input_html: { data: { controller: "tom-select" } } %>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Add book", class: "btn btn-secondary" %>
+          <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Back</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
