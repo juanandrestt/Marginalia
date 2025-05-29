@@ -28,12 +28,21 @@ class BookclubsController < ApplicationController
   end
 
   def edit
-    @book = Book.find(params[:book_id])
+    @bookclub = Bookclub.find(params[:id])
+  end
+
+  def update
+    @bookclub = Bookclub.find(params[:id])
+    if @bookclub.update(bookclub_params)
+      redirect_to book_bookclub_path(@bookclub.book, @bookclub)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
 
   def bookclub_params
-    params.require(:bookclub).permit(:name, :description)
+    params.require(:bookclub).permit(:name)
   end
 end
