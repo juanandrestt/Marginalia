@@ -42,8 +42,8 @@
 
   <!-- Reviews -->
   <div class="reviews-section">
-    <h4 class="mb-3" style="color: #751F1F;">Votre critique</h4>
     <% if @current_user_review %>
+    <h4 class="mb-3" style="color: #751F1F;">Votre critique</h4>
       <div class="mb-3 p-4 rounded-5" style="background-color: #F5EADB;">
           <p><%= @current_user_review.content %></p>
           <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
