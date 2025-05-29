@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
-  
+
   resources :users, only: [:show] do
     member do
       get :followers
@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :messages, only: [:index, :new, :create]
+  
   resources :lists, only: [:index, :new, :create, :show, :destroy] do
     resources :bookmarks, only: [:create, :destroy]
   end
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
     resources :bookclubs, only: [:new, :show, :create, :edit]
   end
-  
+
   resources :follows, only: [:create, :destroy]
   resources :bookclubs, only: [:index]
 
