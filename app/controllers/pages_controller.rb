@@ -15,4 +15,12 @@ class PagesController < ApplicationController
       @books = Book.all
     end
   end
+
+  def dashboard
+    if user_signed_in?
+    @recent_lists = List.where(user_id: current_user.id).order(created_at: :desc).limit(5)
+    else
+      redirect_to new_user_session_path
+    end
+  end
 end
