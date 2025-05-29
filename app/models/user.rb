@@ -7,5 +7,12 @@ class User < ApplicationRecord
   has_many :reviews
   has_many :readings
   has_many :bookclubs, dependent: :destroy
-  
+  has_many :follows, foreign_key: :follower_id, dependent: :destroy
+  has_many :followings, through: :follows, source: :following
+  has_many :reverse_follows, class_name: 'Follow', foreign_key: :following_id, dependent: :destroy
+  has_many :followers, through: :reverse_follows, source: :follower
+
+  def following?(other_user)
+    follows.exists?(following_id: other_user.id)
+  end
 end

@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-4">
+            <%= link_to user_path(@user), class: "text-decoration-none me-3" do %>
+              <i class="fas fa-arrow-left" style="color: #751F1F;"></i>
+            <% end %>
+            <h2 class="mb-0" style="color: #751F1F;">
+              <%= action_name == 'followers' ? "Followers" : "Following" %>
+            </h2>
+          </div>
+
+          <div class="user-list">
+            <% users = action_name == 'followers' ? @followers : @following %>
+            <% if users.any? %>
+              <% users.each do |user| %>
+                <div class="user-item d-flex justify-content-between align-items-center p-3 mb-2 rounded" style="background-color: #F5EADB;">
+                  <%= link_to user_path(user), class: "text-decoration-none" do %>
+                    <div class="d-flex align-items-center">
+                      <i class="fas fa-user-circle me-2" style="color: #751F1F; font-size: 1.5rem;"></i>
+                      <span style="color: #333;"><%= user.email %></span>
+                    </div>
+                  <% end %>
+
+                  <% if current_user != user %>
+                    <div class="follow-button">
+                      <% if current_user.following?(user) %>
+                        <%= button_to follow_path(current_user.follows.find_by(following: user)),
+                            method: :delete,
+                            class: "btn btn-sm btn-outline-primary rounded-pill" do %>
+                          <i class="fas fa-user-minus"></i> Unfollow
+                        <% end %>
+                      <% else %>
+                        <%= button_to follows_path(following_id: user.id),
+                            method: :post,
+                            class: "btn btn-sm btn-primary rounded-pill" do %>
+                          <i class="fas fa-user-plus"></i> Follow
+                        <% end %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            <% else %>
+              <p class="text-muted text-center">No users found</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
