@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   root to: "pages#home"
   devise_for :users
+  resources :users, only: [:show] do
+    member do
+      get :followers
+      get :following
+    end
+  end
 
   resources :messages, only: [:index, :new, :create]
   resources :lists, only: %i[ new create destroy] do
@@ -10,6 +16,9 @@ Rails.application.routes.draw do
   resources :books, only: %i[index show] do
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
   end
+
+  resources :follows, only: [:create, :destroy]
+
   get 'search', to: 'searchs#index', as: :search
   get "/books", to: "books#index", as: :all_books
 end

@@ -78,7 +78,7 @@
     <h3 style="font-size: 10px; line-height: 2;">Review</h3>
   <% end %>
 
-  <%= link_to new_user_session_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+  <%= link_to user_signed_in? ? user_path(current_user) : new_user_session_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
     <i class="fas fa-user" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
     <h3 style="font-size: 10px; line-height: 2; ">Profil</h3>
   <% end %>
