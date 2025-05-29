@@ -1,0 +1,10 @@
+<div class="container mt-4">
+  <!-- Image du livre associé -->
+  <div class="text-center mb-4">
+    <img src="<%= @bookclub.book.cover_url %>" style="width: 150px; height: 200px; object-fit: cover;" alt="<%= @bookclub.book.title %>" class="shadow rounded">
+  </div>
+
+  <!-- Détails du Bookclub -->
+  <h2 class="text-center" style="color: #751F1F;"><%= @bookclub.name %></h2>
+  <p class="text-center text-muted">Premium bookclub</p>
+</div>

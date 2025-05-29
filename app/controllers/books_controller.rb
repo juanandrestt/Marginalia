@@ -4,6 +4,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @current_user_review = @book.reviews.where(user: current_user).first
     @reviews = @book.reviews.where.not(user: current_user)
+
   end
 
   def new

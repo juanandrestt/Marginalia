@@ -1,0 +1,11 @@
+<h1>Bookclubs</h1>
+
+<ul>
+  <% @bookclubs.each do |bookclub| %>
+    <li>
+      <%= link_to book_bookclub_path(bookclub.book, bookclub) do %>
+        <%= bookclub.name %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
