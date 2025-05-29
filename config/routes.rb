@@ -7,10 +7,13 @@ Rails.application.routes.draw do
     resources :bookmarks, only: [:create, :destroy]
   end
 
-  resources :books, only: %i[index show] do
+  resources :books, only: [:index, :show] do
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
+    resources :bookclubs, only: [:new, :show, :create, :edit]
   end
   
+  resources :bookclubs, only: [:index]
+
   get 'search', to: 'searchs#index', as: :search
   get "/books", to: "books#index", as: :all_books
   get '/dashboard', to: 'pages#dashboard'
