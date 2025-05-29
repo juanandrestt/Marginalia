@@ -1,35 +1,130 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="text-center mb-4" style="color: #751F1F;">Edit Profile</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+            <div class="form-inputs">
+              <%= f.input :username,
+                          required: true,
+                          placeholder: "Choose a username",
+                          input_html: { class: "rounded-pill" } %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-    <% end %>
+              <%= f.input :email,
+                          required: true,
+                          input_html: { class: "rounded-pill" } %>
 
-    <%= f.input :password,
-                hint: "leave it blank if you don't want to change it",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
+              <div class="form-group mb-3" data-controller="avatar-selector">
+                <label class="form-label">Choose your avatar</label>
+                <%= f.input :avatar,
+                          as: :hidden,
+                          input_html: {
+                            data: { avatar_selector_target: "input" },
+                            value: resource.avatar
+                          } %>
+
+                <div class="avatar-grid">
+                  <% avatars = [
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Felix",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Luna",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Charlie",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Milo",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Lucy",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Max",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Bella",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Oliver",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Lily",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Leo",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Coco",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Rocky"
+                  ] %>
+
+                  <div class="row g-3">
+                    <% avatars.each do |avatar| %>
+                      <div class="col-3">
+                        <div class="avatar-option <%= 'selected' if resource.avatar == avatar %>"
+                             data-avatar-selector-target="preview"
+                             data-avatar="<%= avatar %>"
+                             data-action="click->avatar-selector#select">
+                          <%= image_tag avatar, class: "img-fluid rounded-circle" %>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+              <% end %>
+
+              <%= f.input :password,
+                          hint: "leave it blank if you don't want to change it",
+                          required: false,
+                          input_html: { class: "rounded-pill" } %>
+              <%= f.input :password_confirmation,
+                          required: false,
+                          input_html: { class: "rounded-pill" } %>
+              <%= f.input :current_password,
+                          hint: "we need your current password to confirm your changes",
+                          required: true,
+                          input_html: { class: "rounded-pill" } %>
+            </div>
+
+            <div class="form-actions text-center">
+              <%= f.button :submit, "Update", class: "btn btn-primary rounded-pill w-100" %>
+            </div>
+          <% end %>
+
+          <hr class="my-4">
+
+          <div class="text-center">
+            <h3 class="h5 mb-3" style="color: #751F1F;">Cancel my account</h3>
+            <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name),
+                data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" },
+                method: :delete,
+                class: "btn btn-outline-danger rounded-pill" %></p>
+          </div>
+
+          <%= link_to "Back", :back, class: "btn btn-link d-block text-center" %>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
+<% content_for :head do %>
+  <style>
+    .avatar-grid {
+      margin: 1rem 0;
+    }
+
+    .avatar-option {
+      cursor: pointer;
+      padding: 0.25rem;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .avatar-option:hover {
+      transform: scale(1.05);
+    }
+
+    .avatar-option.selected {
+      border-color: #751F1F;
+      background-color: #F5EADB;
+      transform: scale(1.1);
+    }
+
+    .avatar-option img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+  </style>
 <% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
