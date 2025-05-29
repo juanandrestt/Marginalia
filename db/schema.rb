@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_29_091218) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_29_091745) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,6 +44,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_29_091218) do
     t.text "description"
     t.string "cover_url"
     t.text "subjects"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.bigint "follower_id", null: false
+    t.bigint "following_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+    t.index ["following_id"], name: "index_follows_on_following_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -98,6 +107,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_29_091218) do
   add_foreign_key "bookclubs", "users"
   add_foreign_key "bookmarks", "books"
   add_foreign_key "bookmarks", "lists"
+  add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "follows", "users", column: "following_id"
   add_foreign_key "lists", "users"
   add_foreign_key "readings", "books"
   add_foreign_key "readings", "users"

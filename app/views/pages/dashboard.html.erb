@@ -1,0 +1,9 @@
+  <h1>Welcome to Your Dashboard</h1>
+  <h2>Your Recent Lists</h2>
+  <div class="container d-flex flex-column align-items-center justify-content-start">
+    <% @recent_lists.each do |list| %>
+      <li><%= link_to list.name, list_path(list), class: "btn btn-secondary" %></li>
+    <% end %>
+  </div>
+  <%= link_to "Create a new list", new_list_path, class: "btn btn-secondary" %>
+  <%= link_to "View All Lists", lists_path, class: "btn btn-secondary" %>

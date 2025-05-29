@@ -1,0 +1,8 @@
+<div class="container">
+    <h1>Books inside <%= @list.name %></h1>
+    <% @list.books.each do |book| %>
+        <div class="card" style="background-image: url(<%= book.cover_url %>);">
+            <%= link_to book.title, book_path(book) %>
+        </div>
+    <% end %>
+</div>

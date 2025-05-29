@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
-  root to: "pages#home"
   devise_for :users
+  root to: "pages#home"
+
+  resources :users, only: [:show] do
+    member do
+      get :followers
+      get :following
+    end
+  end
 
   resources :messages, only: [:index, :new, :create]
-  resources :lists, only: [:new, :create, :destroy] do
-    resources :bookmarks, only: [:new, :create]
+  
+  resources :lists, only: [:index, :new, :create, :show, :destroy] do
+    resources :bookmarks, only: [:create, :destroy]
   end
 
   resources :books, only: [:index, :show] do
@@ -12,8 +20,10 @@ Rails.application.routes.draw do
     resources :bookclubs, only: [:new, :show, :create, :edit]
   end
 
+  resources :follows, only: [:create, :destroy]
   resources :bookclubs, only: [:index]
 
   get 'search', to: 'searchs#index', as: :search
   get "/books", to: "books#index", as: :all_books
+  get '/dashboard', to: 'pages#dashboard'
 end
