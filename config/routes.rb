@@ -10,14 +10,14 @@ Rails.application.routes.draw do
   end
 
   resources :messages, only: [:index, :new, :create]
-  
+
   resources :lists, only: [:index, :new, :create, :show, :destroy] do
     resources :bookmarks, only: [:create, :destroy]
   end
 
   resources :books, only: [:index, :show] do
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
-    resources :bookclubs, only: [:new, :show, :create, :edit]
+    resources :bookclubs, only: [:new, :show, :create, :edit, :update, :destroy, :index]
   end
 
   resources :follows, only: [:create, :destroy]
