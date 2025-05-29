@@ -25,7 +25,6 @@
     </div>
   </div>
 
-  <!-- Les lectures les plus populaires -->
   <div class="" style="">
     <h2 class="mb-4" style="font-size: 20px; color: #751F1F">Les lectures les plus populaires</h2>
     <div class="row flex-nowrap overflow-auto" style="gap: 4px;">
@@ -33,7 +32,7 @@
         <div class="col-auto gap: 2px;">
           <%= link_to book_path(book), class: "text-decoration-none" do %>
             <img src="<%= book.cover_url %>" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; " alt="<%= book.title %>">
-            <h5 style="font-size: 13px; margin-bottom: 2px; color: #222; white-space: wrap; max-width: 120px; color: #751F1F"><%= book.title %></h5>
+            <h3 style="font-size: 13px; margin-bottom: 2px; color: #222; white-space: wrap; max-width: 120px; color: #751F1F"><%= book.title %></h5>
             <p class="text-muted" style="font-size: 11px; margin-bottom: 0;"><%= book.author %></p>
           <% end %>
         </div>
@@ -41,7 +40,8 @@
     </div>
   </div>
 
-    <!-- Les lectures les plus populaires -->
+  <br>
+
   <div class="" style="padding-bottom: 70px">
     <h2 class="mb-4" style="font-size: 20px; color: #751F1F">Les dernières sorties</h2>
     <div class="row flex-nowrap overflow-auto" style="gap: 4px;">
@@ -49,7 +49,7 @@
         <div class="col-auto gap: 2px;">
           <%= link_to book_path(book), class: "text-decoration-none" do %>
             <img src="<%= book.cover_url %>" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; " alt="<%= book.title %>">
-            <h5 style="font-size: 13px; margin-bottom: 2px; color: #222; white-space: wrap; max-width: 120px; color: #751F1F"><%= book.title %></h5>
+            <h3 style="font-size: 13px; margin-bottom: 2px; color: #222; white-space: wrap; max-width: 120px; color: #751F1F"><%= book.title %></h5>
             <p class="text-muted" style="font-size: 11px; margin-bottom: 0;"><%= book.author %></p>
           <% end %>
         </div>
@@ -64,22 +64,22 @@
 <div class="tab-bar d-flex justify-content-around align-items-center bg-light rounded-pill px-3 shadow-sm position-fixed w-75 start-50 translate-middle-x" style="bottom: 16px; height: 56px; z-index: 999;">
   <%= link_to "#", class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
     <i class="fas fa-book" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
-    <small style="font-size: 10px; line-height: 2;">Bookclub</small>
+    <h3 style="font-size: 10px; line-height: 2;">Bookclub</h3>
   <% end %>
 
 
-  <%= link_to new_message_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+  <%= link_to messages_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
     <i class="fas fa-robot" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
-    <small style="font-size: 10px; line-height: 2;">Ask Margi</small>
+    <h3 style="font-size: 10px; line-height: 2;">Ask Margi</h3>
   <% end %>
 
   <%= link_to search_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
     <i class="fas fa-pen" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
-    <small style="font-size: 10px; line-height: 2;">Review</small>
+    <h3 style="font-size: 10px; line-height: 2;">Review</h3>
   <% end %>
 
   <%= link_to new_user_session_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
     <i class="fas fa-user" style="font-size: 16px; line-height: 1.5; color: #751F1F"></i>
-    <small style="font-size: 10px; line-height: 2; ">Profil</small>
+    <h3 style="font-size: 10px; line-height: 2; ">Profil</h3>
   <% end %>
 </div>
