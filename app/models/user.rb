@@ -3,6 +3,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 30 }
+  validates :username, format: { with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers and underscore" }
+
   has_many :lists
   has_many :reviews
   has_many :readings
