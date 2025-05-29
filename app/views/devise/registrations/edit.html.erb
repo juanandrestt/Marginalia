@@ -18,10 +18,45 @@
                           required: true,
                           input_html: { class: "rounded-pill" } %>
 
-              <%= f.input :avatar,
-                          required: false,
-                          placeholder: "Paste your avatar URL",
-                          input_html: { class: "rounded-pill" } %>
+              <div class="form-group mb-3" data-controller="avatar-selector">
+                <label class="form-label">Choose your avatar</label>
+                <%= f.input :avatar,
+                          as: :hidden,
+                          input_html: {
+                            data: { avatar_selector_target: "input" },
+                            value: resource.avatar
+                          } %>
+
+                <div class="avatar-grid">
+                  <% avatars = [
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Felix",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Luna",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Charlie",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Milo",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Lucy",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Max",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Bella",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Oliver",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Lily",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Leo",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Coco",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Rocky"
+                  ] %>
+
+                  <div class="row g-3">
+                    <% avatars.each do |avatar| %>
+                      <div class="col-3">
+                        <div class="avatar-option <%= 'selected' if resource.avatar == avatar %>"
+                             data-avatar-selector-target="preview"
+                             data-avatar="<%= avatar %>"
+                             data-action="click->avatar-selector#select">
+                          <%= image_tag avatar, class: "img-fluid rounded-circle" %>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
 
               <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
                 <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
@@ -61,3 +96,35 @@
     </div>
   </div>
 </div>
+
+<% content_for :head do %>
+  <style>
+    .avatar-grid {
+      margin: 1rem 0;
+    }
+
+    .avatar-option {
+      cursor: pointer;
+      padding: 0.25rem;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .avatar-option:hover {
+      transform: scale(1.05);
+    }
+
+    .avatar-option.selected {
+      border-color: #751F1F;
+      background-color: #F5EADB;
+      transform: scale(1.1);
+    }
+
+    .avatar-option img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+  </style>
+<% end %>

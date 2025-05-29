@@ -20,10 +20,42 @@
                           placeholder: "your@email.com",
                           input_html: { class: "rounded-pill" } %>
 
-              <%= f.input :avatar,
-                          required: false,
-                          placeholder: "Paste your avatar URL",
-                          input_html: { class: "rounded-pill" } %>
+              <div class="form-group mb-3" data-controller="avatar-selector">
+                <label class="form-label">Choose your avatar</label>
+                <%= f.input :avatar,
+                          as: :hidden,
+                          input_html: { data: { avatar_selector_target: "input" } } %>
+
+                <div class="avatar-grid">
+                  <% avatars = [
+                    "https://api.dicebear.com/9.x/thumbs/svg?seed=Robert",
+                    "https://api.dicebear.com/9.x/thumbs/svg?seed=Christian&backgroundColor=b6e3f4,f1f4dc,ffdfbf,1c799f&eyes=variant1W12,variant1W14,variant1W16,variant2W10,variant2W12,variant2W14,variant2W16,variant3W10,variant3W12,variant3W14,variant3W16,variant4W10,variant4W12,variant4W14,variant4W16,variant5W10,variant5W12,variant5W14,variant5W16,variant6W10,variant6W12,variant6W14,variant6W16,variant7W10,variant7W12,variant7W14,variant7W16,variant8W10,variant8W12,variant8W14,variant8W16,variant9W10,variant9W12,variant9W14,variant9W16,variant1W10&face=variant1,variant3,variant4,variant5,variant2",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Charlie",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Milo",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Lucy",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Max",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Bella",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Oliver",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Lily",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Leo",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Coco",
+                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Rocky"
+                  ] %>
+
+                  <div class="row g-3">
+                    <% avatars.each do |avatar| %>
+                      <div class="col-3">
+                        <div class="avatar-option"
+                             data-avatar-selector-target="preview"
+                             data-avatar="<%= avatar %>"
+                             data-action="click->avatar-selector#select">
+                          <%= image_tag avatar, class: "img-fluid rounded-circle" %>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
 
               <%= f.input :password,
                           required: true,
@@ -48,3 +80,35 @@
     </div>
   </div>
 </div>
+
+<% content_for :head do %>
+  <style>
+    .avatar-grid {
+      margin: 1rem 0;
+    }
+
+    .avatar-option {
+      cursor: pointer;
+      padding: 0.25rem;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .avatar-option:hover {
+      transform: scale(1.05);
+    }
+
+    .avatar-option.selected {
+      border-color: #751F1F;
+      background-color: #F5EADB;
+      transform: scale(1.1);
+    }
+
+    .avatar-option img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+  </style>
+<% end %>
