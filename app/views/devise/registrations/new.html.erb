@@ -1,28 +1,50 @@
-<div class="container">
-<h2>Sign up</h2>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="text-center mb-4" style="color: #751F1F;">Sign up</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
+            <div class="form-inputs">
+              <%= f.input :username,
+                          required: true,
+                          autofocus: true,
+                          placeholder: "Choose a username",
+                          input_html: { class: "rounded-pill" } %>
+
+              <%= f.input :email,
+                          required: true,
+                          placeholder: "your@email.com",
+                          input_html: { class: "rounded-pill" } %>
+
+              <%= f.input :avatar,
+                          required: false,
+                          placeholder: "Paste your avatar URL",
+                          input_html: { class: "rounded-pill" } %>
+
+              <%= f.input :password,
+                          required: true,
+                          hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                          input_html: { class: "rounded-pill" } %>
+
+              <%= f.input :password_confirmation,
+                          required: true,
+                          input_html: { class: "rounded-pill" } %>
+            </div>
+
+            <div class="form-actions text-center">
+              <%= f.button :submit, "Sign up", class: "btn btn-primary rounded-pill w-100" %>
+            </div>
+          <% end %>
+
+          <div class="mt-3 text-center">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
 </div>
-
-
-<%= render "devise/shared/links" %>
