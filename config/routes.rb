@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :messages, only: [:index, :new, :create]
   resources :lists, only: [:index, :new, :create, :show, :destroy] do
-    resources :bookmarks, only: [:create, :destroy]
+    resources :bookmarks, only: [:new, :create, :destroy]
   end
 
   resources :books, only: [:index, :show] do
