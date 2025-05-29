@@ -1,17 +1,25 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: %i[show destroy]
+  before_action :set_list, only: [:show, :destroy]
 
-   def new
+  def index
+    @lists = current_user.lists
+  end   
+  
+  def new
     @list = List.new
-   end
+  end
 
   def create
     @list = List.new(list_params)
+    @list.user = current_user
     if @list.save
-      redirect_to list_path(@list)
+      redirect_to dashboard_path
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def show
   end
 
   def destroy
