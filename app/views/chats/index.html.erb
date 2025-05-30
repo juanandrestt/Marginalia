@@ -1,0 +1,15 @@
+<div class="mb-4">
+  <% if current_user.chats.any? %>
+    <ul>
+      <% current_user.chats.each do |chat| %>
+        <li><%= link_to chat.id, chat_path(chat) %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    There are no chats yet.
+  <% end %>
+</div>
+
+<%= simple_form_for Chat.new, url: chats_path do |f| %>
+  <%= f.button :submit, "Start a new chat", class: "btn btn-secondary" %>
+<% end %>

@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :messages, only: [:index, :new, :create]
+  resources :chats, only: [:index, :show, :create] do
+    resources :messages, only: [:create]
+  end
 
   resources :lists, only: [:index, :new, :create, :show, :destroy] do
     resources :bookmarks, only: [:new, :create, :destroy]

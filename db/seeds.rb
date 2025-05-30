@@ -2,12 +2,39 @@ require "json"
 require "open-uri"
 require "faker"
 
-subjects = %w[fantasy science-fiction romance children poetry computers sociology manga]
+puts "Deleting all messages..."
+Message.destroy_all
+
+puts "Deleting all chats..."
+Chat.destroy_all
+
+puts "Deleting all reviews..."
+Review.destroy_all
+
+puts "Deleting all bookmarks..."
+Bookmark.destroy_all
+
+puts "Deleting all lists..."
+List.destroy_all
+
+puts "Deleting all follows..."
+Follow.destroy_all
+
+puts "Deleting all books..."
+Book.destroy_all
+
+puts "Deleting all users..."
+User.destroy_all
+
+puts "Deleting all reviews..."
+Review.destroy_all
 
 puts "Creating books..."
 
+subjects = %w[fantasy science-fiction romance children poetry computers sociology manga]
+
 subjects.each do |subject|
-  url = "https://openlibrary.org/subjects/#{subject}.json?limit=50"
+  url = "https://openlibrary.org/subjects/#{subject}.json?limit=30"
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
 
@@ -48,13 +75,29 @@ end
 
 puts "Books created. Now creating users..."
 
-users = 5.times.map do |i|
+users = [
   User.create!(
-    email: "user#{i + 1}@mail.com",
+    email: "anthony@mail.com",
     password: "password",
-    password_confirmation: "password"
+    password_confirmation: "password",
+    username: "Anthony",
+    avatar: "https://avatars.githubusercontent.com/u/207194539?v=4"
+  ),
+  User.create!(
+    email: "juan@mail.com",
+    password: "password",
+    password_confirmation: "password",
+    username: "Juan",
+    avatar: "https://d26jy9fbi4q9wx.cloudfront.net/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBd2dkQkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--cd42f3a800cd318e2f31388a280d25de9b1f83d7/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNJYVFISWFRSElld1k2Q1dOeWIzQTZEbUYwZEdWdWRHbHZiZz09IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--23cdbdf9871e44adeb4d843a03b0793a5f08394b/CHA_0646-01.jpeg"
+  ),
+  User.create!(
+    email: "samuel@mail.com",
+    password: "password",
+    password_confirmation: "password",
+    username: "Samuel",
+    avatar: "https://avatars.githubusercontent.com/u/207380223?v=4"
   )
-end
+]
 
 puts "Users created. Now creating reviews..."
 
