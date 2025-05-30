@@ -7,7 +7,7 @@ subjects = %w[fantasy science-fiction romance children poetry computers sociolog
 puts "Creating books..."
 
 subjects.each do |subject|
-  url = "https://openlibrary.org/subjects/#{subject}.json?limit=50"
+  url = "https://openlibrary.org/subjects/#{subject}.json?limit=30"
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
 
@@ -48,13 +48,26 @@ end
 
 puts "Books created. Now creating users..."
 
-users = 5.times.map do |i|
+users = [
   User.create!(
-    email: "user#{i + 1}@mail.com",
+    email: "anthony@mail.com",
     password: "password",
-    password_confirmation: "password"
+    password_confirmation: "password",
+    username: "Anthony"
+  ),
+  User.create!(
+    email: "juan@mail.com",
+    password: "password",
+    password_confirmation: "password",
+    username: "Juan"
+  ),
+  User.create!(
+    email: "samuel@mail.com",
+    password: "password",
+    password_confirmation: "password",
+    username: "Samuel"
   )
-end
+]
 
 puts "Users created. Now creating reviews..."
 
