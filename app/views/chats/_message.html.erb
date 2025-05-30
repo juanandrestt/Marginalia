@@ -1,0 +1,6 @@
+<div class="d-flex <%= message.role == 'user' ? 'justify-content-end' : 'justify-content-start' %> mb-4">
+  <div class="px-4 pt-3 pb-0"
+       style="background: <%= message.role == 'user' ? '#F5EADB' : '' %>; border-radius: 16px; max-width: 95%; font-size: 16px; color: #000;">
+    <%= simple_format(message.content) %>
+  </div>
+</div> 
