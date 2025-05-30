@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params.merge(role: 'user', chat: @chat))
     
     if @message.valid?
-      s@chat.with_instructions(system_prompt).ask(@message.content)
+      @chat.with_instructions(system_prompt).ask(@message.content)
       redirect_to chat_path(@chat)
     else
       render "chats/show"
