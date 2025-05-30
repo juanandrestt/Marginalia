@@ -69,6 +69,11 @@
       <div class="mb-3 p-4 rounded-5" style="background-color: #F5EADB;">
         <div class="d-flex justify-content-between mb-3">
           <div>
+            <p class="mb-2">
+              <strong style="color: #751F1F;">
+                <%= current_user.username.present? ? current_user.username : current_user.email %>
+              </strong>
+            </p>
             <p><%= @current_user_review.content %></p>
             <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
             <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
@@ -90,12 +95,34 @@
     <h4 class="mb-3" style="color: #751F1F;">Les critiques des lecteurs</h4>
     <% @reviews.each do |review| %>
       <div class="mb-3 p-4 shadow-sm rounded-5" style="background-color: #F5EADB;">
-        <div class="">
-          <p><%= review.content %></p>
-          <p><strong>Rating:</strong> <%= review.rating %>/5</p>
-          <p><strong>Emotion:</strong> <%= review.emotion %></p>
-          <p><strong>Favorite Characters:</strong> <%= review.favorite_characters %></p>
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <strong style="color: #751F1F;">
+            <%= review.user&.username.present? ? review.user.username : review.user&.email %>
+          </strong>
+          <% if user_signed_in? && review.user && current_user != review.user %>
+            <% if current_user.following?(review.user) %>
+              <%= button_to follow_path(id: current_user.follows.find_by(following: review.user).id),
+                          method: :delete,
+                          class: "btn rounded-pill py-0 px-2 follow-button",
+                          style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
+                          form: { data: { turbo: true } } do %>
+                <i class="fas fa-user-minus me-1"></i>Unfollow
+              <% end %>
+            <% else %>
+              <%= button_to follows_path(following_id: review.user.id),
+                          method: :post,
+                          class: "btn rounded-pill py-0 px-2 follow-button",
+                          style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
+                          form: { data: { turbo: true } } do %>
+                <i class="fas fa-user-plus me-1"></i>Follow
+              <% end %>
+            <% end %>
+          <% end %>
         </div>
+        <p><%= review.content %></p>
+        <p><strong>Rating:</strong> <%= review.rating %>/5</p>
+        <p><strong>Emotion:</strong> <%= review.emotion %></p>
+        <p><strong>Favorite Characters:</strong> <%= review.favorite_characters %></p>
       </div>
     <% end %>
   </div>
@@ -165,3 +192,19 @@
     <% end %>
   </div>
 </div> -->
+
+<% content_for :head do %>
+  <style>
+    .follow-button {
+      background-color: transparent;
+      transition: all 0.3s ease;
+    }
+
+    .follow-button:hover {
+      background-color: #F5EADB !important;
+      color: #751F1F !important;
+      border-color: #751F1F !important;
+      transform: scale(1.05);
+    }
+  </style>
+<% end %>
