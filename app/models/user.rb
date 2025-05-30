@@ -7,6 +7,8 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 30 }
   validates :username, format: { with: /\A[a-zA-Z0-9_]+\z/, message: "only allows letters, numbers and underscore" }
 
+  before_validation :set_default_avatar
+
   has_many :lists
   has_many :reviews
   has_many :readings
@@ -19,5 +21,14 @@ class User < ApplicationRecord
 
   def following?(other_user)
     follows.exists?(following_id: other_user.id)
+  end
+
+  private
+
+  def set_default_avatar
+    return if avatar.present?
+
+    initials = username.to_s[0..1].upcase
+    self.avatar = "https://ui-avatars.com/api/?name=#{initials}&background=751F1F&color=FAF5EF&size=64&font-size=0.4"
   end
 end

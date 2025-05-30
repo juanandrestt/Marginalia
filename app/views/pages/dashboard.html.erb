@@ -1,21 +1,70 @@
-  <h1>Welcome to Your Dashboard</h1>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center my-4">
+    <h1 class="text-center">Dashboard</h1>
+    <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "text-decoration-none d-flex align-items-center" do %>
+        <span style="font-size: 16px; color: #000;" class="fw-medium">Sign out</span>
+      <% end %>
+  </div>
 
-  <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-secondary" %>
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="" style="font-size: 20px; color: #751F1F;"><strong>Recent Lists</strong></h2>
+    <%= link_to lists_path, class: "text-decoration-none d-flex align-items-center" do %>
+      <span style="font-size: 16px; color: #000;" class="fw-medium">All Lists</span>
+      <i class="fa-solid fa-chevron-right ms-2" style="color: #000;"></i>
+    <% end %>
+  </div>
 
-  <h2>Your Recent Lists</h2>
-  <div class="container">
-    <div class="row">
-      <% @recent_lists.each do |list| %>
-      <div class="col-12 col-sm-6 col-md-4 mb-3">
-        <%= link_to list_path(list), class:"text-decoration-none" do %>
-          <div style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= list.books.sample.cover_url %>)">
-            <%= list.name %>
+  <div class="row flex-nowrap overflow-auto align-items-center mb-4" style="gap: 4px;"">
+    <% @recent_lists.each do |list| %>
+      <div class="col-auto gap: 2px;">
+        <%= link_to list_path(list), class: "text-decoration-none" do %>
+          <div class="align-items-center">
+            <img src="<%= list.books.sample&.cover_url.presence || 'default_cover_url.jpg' %>"
+                 style="width: 120px; height: 160px; object-fit: cover; margin-right: 12px;"
+                 alt="<%= list.name %>"
+                 class="rounded mb-2">
+            <p style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium">
+              <%= list.name %>
+            </p>
           </div>
         <% end %>
       </div>
     <% end %>
+    <div class="mb-4">
+        <%= link_to new_list_path, class: "btn btn-outline-dark rounded-pill ", style: "color: #751F1F; border-color: #751F1F;" do %>
+        <i class="fas fa-plus"></i>
+        <% end %>
+      </div>
     </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="" style="font-size: 20px; color: #751F1F"><strong>Bookmarks</strong></h2>
+    <%= link_to lists_path, class: "text-decoration-none d-flex align-items-center" do %>
+      <span style="font-size: 16px; color: #000;" class="fw-medium">All Bookmarks</span>
+      <i class="fa-solid fa-chevron-right ms-2" style="color: #000;"></i>
+    <% end %>
   </div>
 
-  <%= link_to "Create a new list", new_list_path, class: "btn btn-secondary" %>
-  <%= link_to "View All Lists", lists_path, class: "btn btn-secondary" %>
+  <div class="row flex-nowrap overflow-auto align-items-center" style="gap: 4px;"">
+    <% @recent_lists.each do |list| %>
+      <div class="col-auto gap: 2px;">
+        <%= link_to list_path(list), class: "text-decoration-none" do %>
+          <div class="align-items-center">
+            <img src="<%= list.books.sample&.cover_url.presence || 'default_cover_url.jpg' %>"
+                 style="width: 120px; height: 160px; object-fit: cover; margin-right: 12px;"
+                 alt="<%= list.name %>"
+                 class="rounded mb-2">
+            <p style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium">
+              <%= list.name %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="mb-4">
+        <%= link_to new_list_path, class: "btn btn-outline-dark rounded-pill ", style: "color: #751F1F; border-color: #751F1F;" do %>
+        <i class="fas fa-plus"></i>
+        <% end %>
+      </div>
+    </div>
+</div>

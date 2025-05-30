@@ -1,24 +1,30 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "preview"]
+  static targets = ["preview", "input"]
 
   connect() {
-    if (this.inputTarget.value) {
-      this.updateSelectedAvatar(this.inputTarget.value)
+    // Si un avatar est déjà sélectionné, marquer l'option correspondante
+    const currentAvatar = this.inputTarget.value
+    if (currentAvatar) {
+      this.previewTargets.forEach(preview => {
+        if (preview.dataset.avatar === currentAvatar) {
+          preview.classList.add('selected')
+        }
+      })
     }
   }
 
   select(event) {
-    const avatar = event.currentTarget.dataset.avatar
-    this.inputTarget.value = avatar
-    this.updateSelectedAvatar(avatar)
-  }
-
-  updateSelectedAvatar(avatar) {
-    this.previewTargets.forEach((preview) => {
-      const isSelected = preview.dataset.avatar === avatar
-      preview.classList.toggle('selected', isSelected)
+    // Retirer la classe selected de tous les avatars
+    this.previewTargets.forEach(preview => {
+      preview.classList.remove('selected')
     })
+
+    // Ajouter la classe selected à l'avatar cliqué
+    event.currentTarget.classList.add('selected')
+
+    // Mettre à jour la valeur du champ caché
+    this.inputTarget.value = event.currentTarget.dataset.avatar
   }
 }
