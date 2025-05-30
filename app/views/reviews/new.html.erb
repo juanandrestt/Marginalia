@@ -5,13 +5,13 @@
 
     <!-- Review Content -->
     <div class="mb-3">
-      <%= form.label :content, "Votre critique", class: "form-label" %>
-      <%= form.text_area :content, rows: 5, class: "form-control", placeholder: "Partagez vos pensées..." %>
+      <%= form.label :content, "Your review", class: "form-label" %>
+      <%= form.text_area :content, rows: 5, class: "form-control d-flex align-items-center bg-light rounded-4 px-3 shadow-sm py-1 w-100", placeholder: "Share your thoughts..." %>
     </div>
 
     <!-- Rating (Stars) -->
     <div class="mb-3">
-      <%= form.label :rating, "Votre note", class: "form-label" %>
+      <%= form.label :rating, "Your rating", class: "form-label" %>
       <div class="d-flex justify-content-center gap-2 fs-4">
         <% (1..5).each do |n| %>
           <i class="fa-star far text-warning cursor-pointer"
