@@ -8,12 +8,6 @@ Message.destroy_all
 puts "Deleting all chats..."
 Chat.destroy_all
 
-puts "Deleting all bookmarks..."
-Bookmark.destroy_all
-
-puts "Deleting all lists..."
-List.destroy_all
-
 puts "Deleting all follows..."
 Follow.destroy_all
 
@@ -22,9 +16,6 @@ Book.destroy_all
 
 puts "Deleting all users..."
 User.destroy_all
-
-puts "Deleting all reviews..."
-Review.destroy_all
 
 puts "Creating books..."
 

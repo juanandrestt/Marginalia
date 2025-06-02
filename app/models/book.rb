@@ -1,6 +1,6 @@
 class Book < ApplicationRecord
-  has_many :reviews
-  has_many :readings
-  has_many :bookmarks
+  has_many :reviews, dependent: :destroy
+  has_many :readings, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
   has_many :bookclubs, dependent: :destroy
 end
