@@ -9,10 +9,15 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params.merge(role: 'user', chat: @chat))
     
     if @message.valid?
-      s@chat.with_instructions(system_prompt).ask(@message.content)
-      redirect_to chat_path(@chat)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to chat_path(@chat) }
+      end
     else
-      render "chats/show"
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_message", partial: "messages/form", locals: { chat: @chat, message: @message }) }
+        format.html { render "chats/show", status: :unprocessable_entity }
+      end
     end
   end
 

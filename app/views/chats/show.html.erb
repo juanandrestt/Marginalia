@@ -1,29 +1,8 @@
-<% if Rails.env.development? %>
-  <span class="float-end">
-    Input tokens: <%= @input_tokens %> / Output tokens: <%= @output_tokens %> / Context window: <%= @context_window %>
-  </span>
-<% end %>
-
 <div class="container d-flex flex-column vh-100 px-0">
   <div id="chat" class="flex-grow-1 overflow-auto px-4" style="max-height: calc(100vh - 160px);">
     <%= render partial: "chats/message", collection: @chat.messages, as: :message %>
   </div>
   <div class="p-3">
-    <%= simple_form_for [@chat, @message] do |f| %>
-      <div class="d-flex gap-2">
-        <%= f.input :content,
-                    placeholder: "Talk with Margi",
-                    required: true,
-                    label: false,
-                    wrapper: false,
-                    input_html: {
-                      class: 'd-flex align-items-center bg-light rounded-pill shadow-sm py-2 px-2',
-                      style: 'background: #fff; border: none; font-size: 1rem; height: 3rem;'
-                    } %>
-        <%= f.button :submit, '', class: 'btn btn-light rounded-circle d-flex justify-content-center align-items-center', style: 'width: 3rem; height: 3rem; background: #F5EADB;' do %>
-          <i class="fa-solid fa-arrow-up text-black" style="font-size: 1.2rem;"></i>
-        <% end %>
-      </div>
-    <% end %>
+    <%= render "messages/form", chat: @chat, message: @message %>
   </div>
 </div>
