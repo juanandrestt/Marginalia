@@ -1,19 +1,32 @@
 class UsersController < ApplicationController
+  before_action :set_user
+
   def show
-    @user = User.find(params[:id])
     @followers_count = @user.followers.count
     @following_count = @user.followings.count
   end
 
   def followers
-    @user = User.find(params[:id])
     @followers = @user.followers
     render 'follow_list'
   end
 
   def following
-    @user = User.find(params[:id])
     @following = @user.followings
     render 'follow_list'
+  end
+
+  def books
+    @books = @user.readings
+  end
+
+  def lists
+    @lists = @user.lists
+  end
+
+  private
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end
