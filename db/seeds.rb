@@ -8,9 +8,6 @@ Message.destroy_all
 puts "Deleting all chats..."
 Chat.destroy_all
 
-puts "Deleting all reviews..."
-Review.destroy_all
-
 puts "Deleting all bookmarks..."
 Bookmark.destroy_all
 
@@ -46,7 +43,6 @@ subjects.each do |subject|
     open_library_id = work["key"]&.split("/")&.last
     subjects = work["subject"]&.join(", ") || ""
 
-    # fetch full work details
     work_url = "https://openlibrary.org/works/#{open_library_id}.json"
     begin
       full_data = JSON.parse(URI.open(work_url).read)
@@ -77,37 +73,62 @@ puts "Books created. Now creating users..."
 
 users = [
   User.create!(
+    email: "isabela@mail.com",
+    password: "password",
+    password_confirmation: "password",
+    username: "Isabela",
+    avatar: ""
+  ),
+  User.create!(
     email: "anthony@mail.com",
     password: "password",
     password_confirmation: "password",
     username: "Anthony",
-    avatar: "https://avatars.githubusercontent.com/u/207194539?v=4"
+    avatar: ""
   ),
   User.create!(
     email: "juan@mail.com",
     password: "password",
     password_confirmation: "password",
     username: "Juan",
-    avatar: "https://d26jy9fbi4q9wx.cloudfront.net/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBd2dkQkE9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--cd42f3a800cd318e2f31388a280d25de9b1f83d7/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNJYVFISWFRSElld1k2Q1dOeWIzQTZEbUYwZEdWdWRHbHZiZz09IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--23cdbdf9871e44adeb4d843a03b0793a5f08394b/CHA_0646-01.jpeg"
+    avatar: ""
   ),
   User.create!(
     email: "samuel@mail.com",
     password: "password",
     password_confirmation: "password",
     username: "Samuel",
-    avatar: "https://avatars.githubusercontent.com/u/207380223?v=4"
+    avatar: ""
   )
 ]
 
-puts "Users created. Now creating reviews..."
+puts "Users created. Now creating lists..."
 
-emotions = %w[happy sad excited grateful angry bored]
+users.each do |user|
+  list = List.create!(
+    name: "My favorite books",
+    user: user
+  )
+  list.books << Book.all.sample(5)
+end
+
+puts "Lists created. Now creating bookmarks..."
+
+Bookmark.create!(
+  list: List.all.sample,
+  book: Book.all.sample
+)
+
+
+puts "Bookmarks created. Now creating reviews..."
+
+emotions = %w[Happy Sad Excited Grateful Angry Bored]
 characters = ["Alice", "Frodo", "Jon Snow", "Matilda", "Naruto", "Hermione"]
 books = Book.all
 
 books.each do |book|
   Review.create!(
-      content: Faker::Quotes::Shakespeare.hamlet_quote,
+      content: Faker::GreekPhilosophers.quote,
       rating: rand(1.0..5.0).round(1),
       emotion: emotions.sample,
       favorite_characters: characters.sample,
