@@ -101,7 +101,7 @@ users = [
 
 puts "Users created. Now creating reviews..."
 
-emotions = %w[happy sad excited grateful angry bored]
+emotions = %w[Happy Sad Excited Grateful Angry Bored]
 characters = ["Alice", "Frodo", "Jon Snow", "Matilda", "Naruto", "Hermione"]
 books = Book.all
 
