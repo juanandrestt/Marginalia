@@ -150,25 +150,28 @@
                   <span><%= review.likes_count %></span>
                 <% end %>
               <% end %>
+              <%= link_to review_comments_path(review), class: "d-flex align-items-center gap-1", style: "background-color: transparent; color: #751F1F; border: none; text-decoration: none;" do %>
+                <i class="fa-regular fa-comment"></i>
+                <span><%= review.comments.count %></span>
+              <% end %>
             </div>
-            <p><i class="fa-regular fa-comment"></i></i> 120</p>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
-<% content_for :head do %>
-  <style>
-    .follow-button {
-      background-color: transparent;
-      transition: all 0.3s ease;
-    }
+  <% content_for :head do %>
+    <style>
+      .follow-button {
+        background-color: transparent;
+        transition: all 0.3s ease;
+      }
 
-    .follow-button:hover {
-      background-color: #F5EADB !important;
-      color: #751F1F !important;
-      border-color: #751F1F !important;
-      transform: scale(1.05);
-    }
-  </style>
-<% end %>
+      .follow-button:hover {
+        background-color: #F5EADB !important;
+        color: #751F1F !important;
+        border-color: #751F1F !important;
+        transform: scale(1.05);
+      }
+    </style>
+  <% end %>
