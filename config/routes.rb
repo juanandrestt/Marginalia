@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     member do
       get :followers
       get :following
+      get :books
+      get :lists
     end
   end
 
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :books, only: [:index, :show, :new, :create] do
+    post 'mark_as_read', on: :member
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
     resources :bookclubs, only: [:new, :create]
   end
