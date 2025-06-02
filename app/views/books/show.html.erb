@@ -70,7 +70,7 @@
     <!-- Mark as read -->
     <div>
       <% if user_signed_in? && !current_user.readings.exists?(book: @book) %>
-        <%= link_to user_book_path(current_user, @book),  data: { turbo_method: :post }, class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
+        <%= link_to mark_as_read_book_path(@book),  data: { turbo_method: :post }, class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
           <i class="fas fa-plus"></i> Mark as read
         <% end %>
       <% end %>
