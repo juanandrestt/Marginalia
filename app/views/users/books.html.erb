@@ -1,0 +1,24 @@
+<div class="container">
+  <h1 class="mb-4">All your books</h1>
+  <div class="container">
+    <div class="row mx-1">
+      <% current_user.readings.each do |reading| %>
+        <%= link_to book_path(reading.book), class: "text-decoration-none" do %>
+          <div class="col-16 d-flex mb-3 align-items-center">
+            <img src="<%= reading.book.cover_url.presence || 'default_cover_url.jpg' %>"
+                 style="width: 50px; height: 70px; object-fit: cover; margin-right: 12px;"
+                 alt="<%= reading.book.title %>">
+            <div>
+              <h5 style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium playfair-display">
+                <%= reading.book.title %>
+              </h5>
+              <p class="text-muted" style="font-size: 14px; margin-bottom: 0;">
+                <%= reading.book.author %>
+              </p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
