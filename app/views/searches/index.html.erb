@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row justify-content-center mb-1">
     <div class="col-md-8 pt-4 pb-3">
-      <%= form_with url: search_path, method: :get, local: true, class: "d-flex align-items-center bg-light rounded-pill px-3 shadow-sm py-1" do |f| %>
+      <%= form_with url: searches_path, method: :get, local: true, class: "d-flex align-items-center bg-light rounded-pill px-3 shadow-sm py-1" do |f| %>
         <i class="fas fa-search me-2" style="font-size: 14px; color: #751F1F; "></i>
         <%= f.text_field :query, placeholder: "Find your book here...", class: "form-control border-0 bg-light rounded-pill", style: "font-size: 14px; color: #751F1F;", autofocus: false %>
       <% end %>
