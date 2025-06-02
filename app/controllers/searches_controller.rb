@@ -1,4 +1,4 @@
-class SearchsController < ApplicationController
+class SearchesController < ApplicationController
   def index
     if params[:query].present?
       @books = Book.where("title ILIKE ? OR author ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
