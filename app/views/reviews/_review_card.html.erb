@@ -1,0 +1,73 @@
+<div class="mb-3 p-4 shadow-sm rounded-5" style="background-color: #F5EADB;">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center gap-3 mb-3">
+      <%= link_to user_path(review.user), class: "d-flex align-items-center text-decoration-none" do %>
+        <img src="<%= review.user.avatar %>"
+             alt="<%= review.user.username || review.user.email %>"
+             class="rounded-circle"
+             style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
+        <div>
+          <p class="mb-0 fw-bold" style="color: #751F1F;">
+            <%= review.user&.username.present? ? review.user.username : review.user&.email %>
+          </p>
+          <p class="text-muted mb-0" style="font-size: 12px;">
+            <%= review.created_at.strftime("%d/%m/%Y") %>
+          </p>
+        </div>
+      <% end %>
+      <% if user_signed_in? && review.user && current_user != review.user %>
+        <% if current_user.following?(review.user) %>
+          <%= button_to follow_path(id: current_user.follows.find_by(following: review.user).id),
+                        method: :delete,
+                        class: "btn rounded-pill py-0 px-2 follow-button",
+                        style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
+                        form: { data: { turbo: true } } do %>
+            Unfollow
+          <% end %>
+        <% else %>
+          <%= button_to follows_path(following_id: review.user.id),
+                        method: :post,
+                        class: "btn rounded-pill py-0 px-2 follow-button",
+                        style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
+                        form: { data: { turbo: true } } do %>
+            Follow
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <p class="mb-0 fw-bold"><%= review.rating %></p>
+      <i class="fa-solid fa-star text-warning mb-1"></i>
+    </div>
+  </div>
+  <p><%= review.content %></p>
+  <div class="border-bottom border-dark">
+    <p class="mb-0"><strong style="color: #751F1F;">Emotion:</strong> <%= review.emotion %></p>
+    <p><strong style="color: #751F1F;">Favorite Characters:</strong> <%= review.favorite_characters %></p>
+  </div>
+  <div class="d-flex align-items-center gap-3 mt-3">
+    <% if user_signed_in? && current_user.likes.exists?(review: review) %>
+      <%= button_to like_path(review_id: review.id),
+                    method: :delete,
+                    class: "d-flex align-items-center gap-1",
+                    style: "background-color: transparent; color: #751F1F; border: none;",
+                    form: { data: { turbo: true } } do %>
+        <i class="fa-refular fa-heart"></i>
+        <span><%= review.likes_count %></span>
+      <% end %>
+    <% else %>
+      <%= button_to likes_path(review_id: review.id),
+                    method: :post,
+                    class: "d-flex align-items-center gap-1",
+                    style: "background-color: transparent; color: #751F1F; border: none;",
+                    form: { data: { turbo: true } } do %>
+        <i class="fa-solid fa-heart"></i>
+        <span><%= review.likes_count %></span>
+      <% end %>
+    <% end %>
+    <%= link_to review_comments_path(review), class: "d-flex align-items-center gap-1", style: "background-color: transparent; color: #751F1F; border: none; text-decoration: none;" do %>
+      <i class="fa-regular fa-comment"></i>
+      <span><%= review.comments.count %></span>
+    <% end %>
+  </div>
+</div>

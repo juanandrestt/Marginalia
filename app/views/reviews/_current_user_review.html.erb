@@ -1,0 +1,51 @@
+<% if user_signed_in? && current_user_review %>
+  <h4 class="mb-3" style="color: #751F1F;">Votre critique</h4>
+  <div class="mb-3 p-4 shadow-sm rounded-5" style="background-color: #F5EADB;">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <%= link_to user_path(current_user), class: "d-flex align-items-center text-decoration-none" do %>
+          <img src="<%= current_user.avatar %>"
+               alt="<%= current_user.username || current_user.email %>"
+               class="rounded-circle"
+               style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
+          <div>
+            <p class="mb-0 fw-bold" style="color: #751F1F;">
+              <%= current_user.username.present? ? current_user.username : current_user.email %>
+            </p>
+            <p class="text-muted mb-0" style="font-size: 12px;">
+              <%= current_user_review.created_at.strftime("%d/%m/%Y") %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <p class="mb-0 fw-bold"><%= current_user_review.rating %></p>
+        <i class="fa-solid fa-star text-warning mb-1"></i>
+        <!-- Edit and Delete buttons -->
+        <%= link_to edit_book_review_path(book, current_user_review), class: "btn btn-sm", style: "background-color: transparent; color: #751F1F; border: none; padding: 2px 4px;" do %>
+          <i class="fas fa-edit"></i>
+        <% end %>
+         <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
+                <%= f.button type: 'submit', class: 'btn btn-sm btn-outline-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+                  <i class="fas fa-trash"></i> Delete
+                <% end %>
+              <% end %>
+      </div>
+    </div>
+    <p><%= current_user_review.content %></p>
+    <div class="border-bottom border-dark">
+      <p class="mb-0"><strong style="color: #751F1F;">Emotion:</strong> <%= current_user_review.emotion %></p>
+      <p><strong style="color: #751F1F;">Favorite Characters:</strong> <%= current_user_review.favorite_characters %></p>
+    </div>
+    <div class="d-flex align-items-center gap-3 mt-3">
+      <div class="d-flex align-items-center gap-1" style="color: #751F1F;">
+        <i class="fa-solid fa-heart"></i>
+        <span><%= current_user_review.likes_count || 0 %></span>
+      </div>
+      <%= link_to review_comments_path(current_user_review), class: "d-flex align-items-center gap-1", style: "background-color: transparent; color: #751F1F; border: none; text-decoration: none;" do %>
+        <i class="fa-regular fa-comment"></i>
+        <span><%= current_user_review.comments.count %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>
