@@ -1,8 +1,12 @@
+<%= turbo_stream_from @chat %>
+
 <div class="container d-flex flex-column vh-100 px-0">
-  <div id="chat" class="flex-grow-1 overflow-auto px-4" style="max-height: calc(100vh - 160px);">
-    <%= render "messages/message", messages: @chat.messages %>
+  <div id="messages" data-controller="chat-scroll" class="flex-grow-1 overflow-auto px-4" style="max-height: calc(100vh - 160px);">
+    <% @chat.messages.each do |message| %>
+      <%= render "messages/message", message: message %>
+    <% end %>
   </div>
-  <div class="p-3" id="new_message">
+  <div id="new_message" class="p-3">
     <%= render "messages/form", chat: @chat, message: @message %>
   </div>
 </div>

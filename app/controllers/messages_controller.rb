@@ -9,7 +9,14 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params.merge(role: 'user', chat: @chat))
     
     if @message.valid?
-      @chat.with_instructions(system_prompt).ask(@message.content)
+      @chat.with_instructions(system_prompt).ask(@message.content) do |chunk|
+        next if chunk.content.blank? # skip empty chunks
+      
+        message = @chat.messages.last
+        message.content += chunk.content
+        Turbo::StreamsChannel.broadcast_replace_to(@chat, target: helpers.dom_id(message), partial: "messages/message", locals: { message: message })
+      end
+
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to chat_path(@chat) }
