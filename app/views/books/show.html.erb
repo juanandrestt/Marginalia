@@ -204,3 +204,30 @@
       }
     </style>
   <% end %>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const followButtons = document.querySelectorAll('.follow-button');
+      followButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+          event.preventDefault();
+          const userId = button.id.replace('follow-button-', '');
+          try {
+            const response = fetch('/follows', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+              },
+              body: JSON.stringify({ following_id: userId })
+            });
+            if (response.ok) {
+              // Mettre à jour l'interface utilisateur
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        });
+      });
+    });
+  </script>
