@@ -19,6 +19,7 @@ gem "sassc-rails"
 gem "ruby_llm"
 gem "devise"
 gem "faker"
+gem "solid_cable"
 
 group :development, :test do
   gem "dotenv-rails"
