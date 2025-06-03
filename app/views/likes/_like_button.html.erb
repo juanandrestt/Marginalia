@@ -1,0 +1,21 @@
+<div id="review-<%= review.id %>-likes">
+  <% if current_user.likes.exists?(review: review) %>
+    <%= button_to like_path(review_id: review.id),
+                  method: :delete,
+                  class: "btn btn-sm btn-outline-danger d-flex align-items-center gap-1",
+                  style: "color: #751F1F; border-color: #751F1F;",
+                  form: { data: { turbo: true } } do %>
+      <i class="fa-solid fa-heart-broken"></i>
+      <span><%= review.likes_count || 0 %></span>
+    <% end %>
+  <% else %>
+    <%= button_to likes_path(review_id: review.id),
+                  method: :post,
+                  class: "btn btn-sm btn-outline-primary d-flex align-items-center gap-1",
+                  style: "color: #751F1F; border-color: #751F1F;",
+                  form: { data: { turbo: true } } do %>
+      <i class="fa-solid fa-heart"></i>
+      <span><%= review.likes_count || 0 %></span>
+    <% end %>
+  <% end %>
+</div>

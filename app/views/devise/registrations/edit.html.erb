@@ -19,38 +19,46 @@
                           input_html: { class: "rounded-pill" } %>
 
               <div class="form-group mb-3" data-controller="avatar-selector">
-                <label class="form-label">Choose your avatar</label>
+                <label class="form-label">Choose your avatar (optional)</label>
+                <small class="form-text text-muted d-block mb-2">If you don't choose an avatar, we'll create one with your initials.</small>
                 <%= f.input :avatar,
                           as: :hidden,
                           input_html: {
-                            data: { avatar_selector_target: "input" },
+                            data: {
+                              avatar_selector_target: "input"
+                            },
                             value: resource.avatar
                           } %>
 
                 <div class="avatar-grid">
                   <% avatars = [
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Felix",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Luna",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Charlie",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Milo",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Lucy",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Max",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Bella",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Oliver",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Lily",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Leo",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Coco",
-                    "https://api.dicebear.com/7.x/adventurer/svg?seed=Rocky"
+                    "https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Light&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=LongHairBob&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=BlazerSweater&eyeType=Happy&eyebrowType=RaisedExcited&mouthType=Smile&skinColor=Light&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortCurly&accessoriesType=Round&hairColor=Black&facialHairType=BeardMedium&clotheType=ShirtCrewNeck&eyeType=Default&eyebrowType=Default&mouthType=Twinkle&skinColor=DarkBrown&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=LongHairCurly&accessoriesType=Blank&hairColor=Blonde&facialHairType=Blank&clotheType=ShirtVNeck&eyeType=Happy&eyebrowType=Default&mouthType=Smile&skinColor=Pale&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairDreads01&accessoriesType=Prescription01&hairColor=Black&facialHairType=Blank&clotheType=ShirtScoopNeck&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Brown&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraightStrand&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=Overall&eyeType=Happy&eyebrowType=Default&mouthType=Smile&skinColor=Light&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortWaved&accessoriesType=Round&hairColor=Brown&facialHairType=BeardLight&clotheType=CollarSweater&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=LongHairBun&accessoriesType=Prescription01&hairColor=Black&facialHairType=Blank&clotheType=ShirtVNeck&eyeType=Happy&eyebrowType=RaisedExcited&mouthType=Smile&skinColor=Brown&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairTheCaesar&accessoriesType=Blank&hairColor=BrownDark&facialHairType=BeardMedium&clotheType=GraphicShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=DarkBrown&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=LongHairNotTooLong&accessoriesType=Kurt&hairColor=Red&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Pale&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairSides&accessoriesType=Wayfarers&hairColor=Black&facialHairType=MoustacheFancy&clotheType=ShirtCrewNeck&eyeType=Happy&eyebrowType=Default&mouthType=Twinkle&skinColor=Brown&background=751F1F",
+                    "https://avataaars.io/?avatarStyle=Circle&topType=LongHairFrida&accessoriesType=Prescription02&hairColor=BrownDark&facialHairType=Blank&clotheType=ShirtScoopNeck&eyeType=Default&eyebrowType=RaisedExcited&mouthType=Smile&skinColor=Light&background=751F1F"
                   ] %>
 
                   <div class="row g-3">
                     <% avatars.each do |avatar| %>
                       <div class="col-3">
-                        <div class="avatar-option <%= 'selected' if resource.avatar == avatar %>"
+                        <div class="avatar-option"
                              data-avatar-selector-target="preview"
                              data-avatar="<%= avatar %>"
                              data-action="click->avatar-selector#select">
-                          <%= image_tag avatar, class: "img-fluid rounded-circle" %>
+                          <div class="avatar-wrapper">
+                            <%= image_tag avatar, class: "img-fluid" %>
+                            <div class="avatar-check">
+                              <i class="fas fa-check"></i>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     <% end %>
@@ -105,26 +113,50 @@
 
     .avatar-option {
       cursor: pointer;
-      padding: 0.25rem;
-      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
       border-radius: 50%;
-      transition: all 0.2s ease;
+      padding: 3px;
     }
 
     .avatar-option:hover {
       transform: scale(1.05);
+      border-color: rgba(117, 31, 31, 0.5);
+      box-shadow: 0 0 10px rgba(117, 31, 31, 0.2);
     }
 
     .avatar-option.selected {
       border-color: #751F1F;
       background-color: #F5EADB;
       transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(117, 31, 31, 0.3);
     }
 
     .avatar-option img {
       width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
+      height: auto;
+      border-radius: 50%;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+    }
+
+    .avatar-check {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #751F1F;
+      color: #F5EADB;
+      border-radius: 50%;
+      padding: 4px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .avatar-option.selected .avatar-check {
+      opacity: 1;
     }
   </style>
 <% end %>

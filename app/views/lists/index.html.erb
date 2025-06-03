@@ -1,9 +1,0 @@
-
-<div class="container">
-    <h1>All your lists</h1>
-    <% current_user.lists.each do |list| %>
-        <div class="card" style="background-image: url(<%= list.books.sample.cover_url %>);">
-            <%= link_to list.name, list_path(list) %>
-        </div>
-    <% end %>
-</div>

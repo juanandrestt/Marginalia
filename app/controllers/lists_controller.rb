@@ -1,9 +1,5 @@
 class ListsController < ApplicationController
   before_action :set_list, only: [:show, :destroy]
-
-  def index
-    @lists = current_user.lists
-  end   
   
   def new
     @list = List.new

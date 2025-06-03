@@ -1,0 +1,5 @@
+<turbo-stream action="replace" target="review-<%= @review.id %>-likes">
+  <template>
+    <%= render partial: "reviews/like_button", locals: { review: @review } %>
+  </template>
+</turbo-stream>
