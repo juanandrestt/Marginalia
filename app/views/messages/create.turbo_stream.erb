@@ -1,5 +1,5 @@
-<%= turbo_stream.append "messages" do %>
-  <%= render "chats/message", message: @message %>
+<%= turbo_stream.append "chat" do %>
+  <%= render "messages/message", messages: @chat.messages.last(2) %>
 <% end %>
 
 <%= turbo_stream.replace "new_message" do %>

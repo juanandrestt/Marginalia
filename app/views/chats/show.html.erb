@@ -1,8 +1,8 @@
 <div class="container d-flex flex-column vh-100 px-0">
   <div id="chat" class="flex-grow-1 overflow-auto px-4" style="max-height: calc(100vh - 160px);">
-    <%= render partial: "chats/message", collection: @chat.messages, as: :message %>
+    <%= render "messages/message", messages: @chat.messages %>
   </div>
-  <div class="p-3">
+  <div class="p-3" id="new_message">
     <%= render "messages/form", chat: @chat, message: @message %>
   </div>
 </div>

@@ -9,6 +9,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params.merge(role: 'user', chat: @chat))
     
     if @message.valid?
+      @chat.with_instructions(system_prompt).ask(@message.content)
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to chat_path(@chat) }
