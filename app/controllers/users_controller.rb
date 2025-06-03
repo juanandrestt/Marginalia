@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: [:show, :followers, :following, :books, :lists]
 
   def show
     @followers_count = @user.followers.count

@@ -1,4 +1,7 @@
-<div class="container mt-4">
+<div class="container mt-4 mb-4">
+  <div class="mb-3">
+    <%= link_to "←", :back, class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" %>
+  </div>
   <!-- Book Cover -->
   <div class="text-center mb-4">
     <img src="<%= @book.cover_url %>" alt="<%= @book.title %>" class="img-fluid shadow rounded" style="max-height: 280px; object-fit: cover;">
@@ -57,7 +60,7 @@
   </div>
   </div>
   <!-- Reviews -->
-  <div class="reviews-section">
+  <div class="container">
     <%= render 'reviews/current_user_review', current_user_review: @current_user_review, book: @book %>
     <h4 class="mb-3" style="color: #751F1F;">Les critiques des lecteurs</h4>
     <% @reviews.each do |review| %>
@@ -65,18 +68,3 @@
     <% end %>
   </div>
 </div>
-<% content_for :head do %>
-  <style>
-    .follow-button {
-      background-color: transparent;
-      transition: all 0.3s ease;
-    }
-
-    .follow-button:hover {
-      background-color: #F5EADB !important;
-      color: #751F1F !important;
-      border-color: #751F1F !important;
-      transform: scale(1.05);
-    }
-  </style>
-<% end %>

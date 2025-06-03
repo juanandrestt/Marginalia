@@ -1,4 +1,4 @@
-<div class="mb-3 p-4 shadow-sm rounded-5" style="background-color: #F5EADB;">
+<div class="mb-3 p-4 rounded-5" style="background-color: #F5EADB;">
   <div class="d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-3 mb-3">
       <%= link_to user_path(review.user), class: "d-flex align-items-center text-decoration-none" do %>
@@ -35,16 +35,23 @@
         <% end %>
       <% end %>
     </div>
-    <div class="d-flex align-items-center gap-2 mb-3">
-      <p class="mb-0 fw-bold"><%= review.rating %></p>
+  </div>
+  <p class=""><%= review.content %></p>
+  <div class="d-flex gap-4 mb-2 border-bottom border-dark pb-3">
+    <div class="d-flex align-items-center gap-2">
       <i class="fa-solid fa-star text-warning mb-1"></i>
+      <p class="mb-0 fw-bold"><%= review.rating %></p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <i class="fa-regular fa-face-sad-tear"></i>
+      <p class="mb-0 fw-bold"><%= review.emotion %></p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <i class="fa-solid fa-star text-warning mb-1"></i>
+      <p class="mb-0 fw-bold"><%= review.favorite_characters %></p>
     </div>
   </div>
-  <p><%= review.content %></p>
-  <div class="border-bottom border-dark">
-    <p class="mb-0"><strong style="color: #751F1F;">Emotion:</strong> <%= review.emotion %></p>
-    <p><strong style="color: #751F1F;">Favorite Characters:</strong> <%= review.favorite_characters %></p>
-  </div>
+  <div class="mb-4"></div>
   <div class="d-flex align-items-center gap-3 mt-3">
     <% if user_signed_in? && current_user.likes.exists?(review: review) %>
       <%= button_to like_path(review_id: review.id),
@@ -52,7 +59,7 @@
                     class: "d-flex align-items-center gap-1",
                     style: "background-color: transparent; color: #751F1F; border: none;",
                     form: { data: { turbo: true } } do %>
-        <i class="fa-refular fa-heart"></i>
+        <i class="fa-solid fa-heart"></i>
         <span><%= review.likes_count %></span>
       <% end %>
     <% else %>
@@ -61,7 +68,7 @@
                     class: "d-flex align-items-center gap-1",
                     style: "background-color: transparent; color: #751F1F; border: none;",
                     form: { data: { turbo: true } } do %>
-        <i class="fa-solid fa-heart"></i>
+        <i class="fa-regular fa-heart"></i>
         <span><%= review.likes_count %></span>
       <% end %>
     <% end %>

@@ -20,8 +20,8 @@ class LikesController < ApplicationController
     @like.destroy if @like
 
     respond_to do |format|
-      format.html { redirect_to book_path(@like.review.book), notice: "Unliked!" }
       format.turbo_stream
+      format.html { redirect_to book_path(@like.review.book), notice: "Unliked!" }
     end
   end
 end

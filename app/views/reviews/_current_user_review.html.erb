@@ -1,6 +1,6 @@
 <% if user_signed_in? && current_user_review %>
   <h4 class="mb-3" style="color: #751F1F;">Votre critique</h4>
-  <div class="mb-3 p-4 shadow-sm rounded-5" style="background-color: #F5EADB;">
+  <div class="mb-3 p-4 rounded-5" style="background-color: #F5EADB;">
     <div class="d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-3 mb-3">
         <%= link_to user_path(current_user), class: "d-flex align-items-center text-decoration-none" do %>
@@ -25,11 +25,11 @@
         <%= link_to edit_book_review_path(book, current_user_review), class: "btn btn-sm", style: "background-color: transparent; color: #751F1F; border: none; padding: 2px 4px;" do %>
           <i class="fas fa-edit"></i>
         <% end %>
-         <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
-                <%= f.button type: 'submit', class: 'btn btn-sm btn-outline-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
-                  <i class="fas fa-trash"></i> Delete
-                <% end %>
-              <% end %>
+        <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
+          <%= f.button type: 'submit', class: "btn btn-sm", style: "background-color: transparent; color: #751F1F; border: none; padding: 2px 4px;", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <p><%= current_user_review.content %></p>
@@ -38,10 +38,25 @@
       <p><strong style="color: #751F1F;">Favorite Characters:</strong> <%= current_user_review.favorite_characters %></p>
     </div>
     <div class="d-flex align-items-center gap-3 mt-3">
-      <div class="d-flex align-items-center gap-1" style="color: #751F1F;">
-        <i class="fa-solid fa-heart"></i>
-        <span><%= current_user_review.likes_count || 0 %></span>
-      </div>
+      <% if user_signed_in? && current_user.likes.exists?(review: current_user_review) %>
+        <%= button_to like_path(review_id: current_user_review.id),
+                    method: :delete,
+                    class: "d-flex align-items-center gap-1",
+                    style: "background-color: transparent; color: #751F1F; border: none;",
+                    form: { data: { turbo: true } } do %>
+          <i class="fa-solid fa-heart"></i>
+          <span><%= current_user_review.likes_count %></span>
+        <% end %>
+      <% else %>
+        <%= button_to likes_path(review_id: current_user_review.id),
+                    method: :post,
+                    class: "d-flex align-items-center gap-1",
+                    style: "background-color: transparent; color: #751F1F; border: none;",
+                    form: { data: { turbo: true } } do %>
+          <i class="fa-regular fa-heart"></i>
+          <span><%= current_user_review.likes_count %></span>
+        <% end %>
+      <% end %>
       <%= link_to review_comments_path(current_user_review), class: "d-flex align-items-center gap-1", style: "background-color: transparent; color: #751F1F; border: none; text-decoration: none;" do %>
         <i class="fa-regular fa-comment"></i>
         <span><%= current_user_review.comments.count %></span>
