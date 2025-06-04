@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
   get '/dashboard', to: 'pages#dashboard'
+  post '/create_chat', to: 'chats#create_chat', as: :quick_chat
 
   resources :users, only: [:show, :edit, :update] do
     member do
