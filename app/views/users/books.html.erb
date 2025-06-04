@@ -2,7 +2,7 @@
   <h1 class="mb-4">All your books</h1>
   <div class="container">
     <div class="row mx-1">
-      <% current_user.readings.each do |reading| %>
+      <% @books.each do |reading| %>
         <%= link_to book_path(reading.book), class: "text-decoration-none" do %>
           <div class="col-16 d-flex mb-3 align-items-center">
             <img src="<%= reading.book.cover_url.presence || 'default_cover_url.jpg' %>"

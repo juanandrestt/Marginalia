@@ -1,67 +1,354 @@
-<div class="container">
-  <div class="d-flex justify-content-between align-items-center my-4">
-    <h1 class="text-center">Dashboard</h1>
-    <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "text-decoration-none d-flex align-items-center" do %>
-        <span style="font-size: 16px; color: #000;" class="fw-medium">Sign out</span>
-      <% end %>
+<div class="container py-4">
+  <!-- Header avec profil -->
+  <div class="p-4 rounded-4 shadow-sm mb-5 bg-opacity-75 hover-shadow gradient-hover">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <img src="<%= current_user.avatar %>"
+             class="rounded-circle shadow-sm"
+             style="width: 100px; height: 100px; object-fit: cover;"
+             alt="Profile picture">
+      </div>
+      <div class="col">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h1 class="display-6 fw-bold mb-0" style="color: #751F1F;"><%= current_user.username.presence || current_user.email %></h1>
+            <p class="text-muted mb-2">Welcome to your account!</p>
+          </div>
+          <div class="d-flex gap-3">
+            <%= link_to edit_user_registration_path, class: "btn btn-outline-dark rounded-pill px-4 hover-scale", style: "color: #751F1F; border-color: #751F1F;" do %>
+              <i class="fas fa-user-edit me-2"></i>Edit Profile
+            <% end %>
+            <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-danger rounded-pill px-4 hover-scale" do %>
+              <i class="fas fa-sign-out-alt me-2"></i>Sign out
+            <% end %>
+          </div>
+        </div>
+        <!-- Stats -->
+        <div class="d-flex gap-4 mt-3">
+          <%= link_to books_user_path(current_user), class: "text-decoration-none" do %>
+            <div class="stat-badge text-center">
+              <p class="fw-bold mb-0 stat-counter" style="color: #751F1F;"><%= current_user.readings.count %></p>
+              <small class="text-muted">Books Read</small>
+            </div>
+          <% end %>
+          <%= link_to lists_user_path(current_user), class: "text-decoration-none" do %>
+            <div class="stat-badge text-center">
+              <p class="fw-bold mb-0 stat-counter" style="color: #751F1F;"><%= current_user.lists.count %></p>
+              <small class="text-muted">Lists Created</small>
+            </div>
+          <% end %>
+          <%= link_to followers_user_path(current_user), class: "text-decoration-none" do %>
+            <div class="stat-badge text-center">
+              <p class="fw-bold mb-0 stat-counter" style="color: #751F1F;"><%= current_user.followers.count %></p>
+              <small class="text-muted">Followers</small>
+            </div>
+          <% end %>
+          <%= link_to following_user_path(current_user), class: "text-decoration-none" do %>
+            <div class="stat-badge text-center">
+              <p class="fw-bold mb-0 stat-counter" style="color: #751F1F;"><%= current_user.followings.count %></p>
+              <small class="text-muted">Following</small>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Recent readings -->
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h2 class="" style="font-size: 20px; color: #751F1F"><strong>Recent readings</strong></h2>
-    <%= link_to books_user_path(current_user), class: "text-decoration-none d-flex align-items-center" do %>
-      <span style="font-size: 16px; color: #000;" class="fw-medium">All books</span>
-      <i class="fa-solid fa-chevron-right ms-2" style="color: #000;"></i>
-    <% end %>
-  </div>
+  <div class="p-4 rounded-4 shadow-sm mb-4 bg-opacity-75 hover-shadow gradient-hover">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0 section-header" style="font-size: 20px; color: #751F1F"><strong>Recent readings</strong></h2>
+      <%= link_to books_user_path(current_user), class: "text-decoration-none d-flex align-items-center hover-link" do %>
+        <span style="font-size: 16px; color: #000;" class="fw-medium">All books</span>
+        <i class="fa-solid fa-chevron-right ms-2" style="color: #000;"></i>
+      <% end %>
+    </div>
 
-  <div class="row flex-nowrap overflow-auto align-items-center" style="gap: 4px;"">
-    <% @recent_readings.each do |reading| %>
-      <div class="col-auto gap: 2px;">
-        <%= link_to book_path(reading.book), class: "text-decoration-none" do %>
-          <div class="align-items-center">
-            <img src="<%= reading.book.cover_url.presence || 'default_cover_url.jpg' %>"
-                 style="width: 120px; height: 160px; object-fit: cover; margin-right: 12px;"
-                 alt="<%= reading.book.title %>"
-                 class="rounded mb-2">
-            <p style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium">
-              <%= reading.book.title %>
-            </p>
+    <div class="row flex-nowrap overflow-auto align-items-center pb-2" style="gap: 4px;">
+      <% if @recent_readings.any? %>
+        <% @recent_readings.each do |reading| %>
+          <div class="col-auto">
+            <%= link_to book_path(reading.book), class: "text-decoration-none book-card" do %>
+              <div class="align-items-center">
+                <img src="<%= reading.book.cover_url.presence || 'default_cover_url.jpg' %>"
+                     style="width: 120px; height: 180px; object-fit: contain; margin: 0 8px;"
+                     alt="<%= reading.book.title %>"
+                     class="rounded mb-2 shadow-sm hover-img">
+                <p style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium text-truncate" data-bs-toggle="tooltip" title="<%= reading.book.title %>">
+                  <%= reading.book.title %>
+                </p>
+              </div>
+            <% end %>
           </div>
         <% end %>
-      </div>
-    <% end %>
+      <% else %>
+        <p class="text-muted text-center mt-2">No recent readings</p>
+      <% end %>
+    </div>
   </div>
 
   <!-- Recent lists -->
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h2 class="" style="font-size: 20px; color: #751F1F;"><strong>Recent lists</strong></h2>
-    <%= link_to lists_user_path(current_user), class: "text-decoration-none d-flex align-items-center" do %>
-      <span style="font-size: 16px; color: #000;" class="fw-medium">All lists</span>
-      <i class="fa-solid fa-chevron-right ms-2" style="color: #000;"></i>
-    <% end %>
-  </div>
+  <div class="p-4 rounded-4 shadow-sm mb-5 bg-opacity-75 hover-shadow gradient-hover">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0 section-header" style="font-size: 20px; color: #751F1F"><strong>Recent lists</strong></h2>
+      <%= link_to lists_user_path(current_user), class: "text-decoration-none d-flex align-items-center hover-link" do %>
+        <span style="font-size: 16px; color: #000;" class="fw-medium">All lists</span>
+        <i class="fa-solid fa-chevron-right ms-2" style="color: #000;"></i>
+      <% end %>
+    </div>
 
-  <div class="row flex-nowrap overflow-auto align-items-center mb-4" style="gap: 4px;"">
-    <% @recent_lists.each do |list| %>
-      <div class="col-auto gap: 2px;">
-        <%= link_to list_path(list), class: "text-decoration-none" do %>
-          <div class="align-items-center">
-            <img src="<%= list.books.sample&.cover_url.presence || 'default_cover_url.jpg' %>"
-                 style="width: 120px; height: 160px; object-fit: cover; margin-right: 12px;"
-                 alt="<%= list.name %>"
-                 class="rounded mb-2">
-            <p style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium">
-              <%= list.name %>
-            </p>
+    <div class="row flex-nowrap overflow-auto align-items-center pb-2" style="gap: 4px;">
+      <% if @recent_lists.any? %>
+        <% @recent_lists.each do |list| %>
+          <div class="col-auto">
+            <%= link_to list_path(list), class: "text-decoration-none book-card" do %>
+              <div class="align-items-center">
+                <img src="<%= list.books.sample&.cover_url.presence || 'default_cover_url.jpg' %>"
+                     style="width: 120px; height: 180px; object-fit: contain; margin: 0 8px;"
+                     alt="<%= list.name %>"
+                     class="rounded mb-2 shadow-sm hover-img">
+                <p style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium text-truncate" data-bs-toggle="tooltip" title="<%= list.name %>">
+                  <%= list.name %>
+                </p>
+              </div>
+            <% end %>
           </div>
         <% end %>
-      </div>
-    <% end %>
-    <div class="mb-4">
-        <%= link_to new_list_path, class: "btn btn-outline-dark rounded-pill ", style: "color: #751F1F; border-color: #751F1F;" do %>
-        <i class="fas fa-plus"></i>
+      <% else %>
+        <p class="text-muted text-center mt-2">No lists created yet</p>
+      <% end %>
+      <div>
+        <%= link_to new_list_path, class: "btn btn-outline-dark rounded-pill hover-scale", style: "color: #751F1F; border-color: #751F1F;" do %>
+          <i class="fas fa-plus"></i>
         <% end %>
       </div>
     </div>
+
 </div>
+
+  </div>
+
+  <!-- Followers & Following Section -->
+  <div class="row g-4">
+    <!-- Followers -->
+    <div class="col-md-6">
+      <div class="p-4 rounded-4 shadow-sm h-100 bg-opacity-75 hover-shadow gradient-hover" style="min-height: 200px;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="mb-0 section-header" style="font-size: 20px; color: #751F1F"><strong>Followers (<%= current_user.followers.count %>)</strong></h2>
+          <%= link_to followers_user_path(current_user), class: "text-decoration-none d-flex align-items-center hover-link" do %>
+            <span style="font-size: 16px; color: #000;" class="fw-medium">All followers</span>
+            <i class="fa-solid fa-chevron-right ms-2" style="color: #000;"></i>
+          <% end %>
+        </div>
+
+        <div class="row flex-nowrap overflow-auto align-items-center pb-2" style="gap: 4px;">
+          <% if current_user.followers.any? %>
+            <% current_user.followers.limit(5).each do |follower| %>
+              <div class="col-auto">
+                <%= link_to user_path(follower), class: "text-decoration-none" do %>
+                  <div class="align-items-center text-center user-card">
+                    <img src="<%= follower.avatar %>"
+                         style="width: 60px; height: 60px; object-fit: cover;"
+                         alt="<%= follower.username || follower.email %>"
+                         class="rounded-circle mb-2 shadow-sm hover-img">
+                    <p style="font-size: 14px; margin-bottom: 4px; color: #751F1F;" class="fw-medium text-truncate" data-bs-toggle="tooltip" title="<%= follower.username.presence || follower.email %>">
+                      <%= follower.username.presence || follower.email %>
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted text-center mt-2">You don't have any followers yet</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Following -->
+    <div class="col-md-6">
+      <div class="p-4 rounded-4 shadow-sm h-100 bg-opacity-75 hover-shadow gradient-hover" style="min-height: 200px;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="mb-0 section-header" style="font-size: 20px; color: #751F1F"><strong>Following (<%= current_user.followings.count %>)</strong></h2>
+          <%= link_to following_user_path(current_user), class: "text-decoration-none d-flex align-items-center hover-link" do %>
+            <span style="font-size: 16px; color: #000;" class="fw-medium">All following</span>
+            <i class="fa-solid fa-chevron-right ms-2" style="color: #000;"></i>
+          <% end %>
+        </div>
+
+        <div class="row flex-nowrap overflow-auto align-items-center pb-2" style="gap: 4px;">
+          <% if current_user.followings.any? %>
+            <% current_user.followings.limit(5).each do |following| %>
+              <div class="col-auto">
+                <%= link_to user_path(following), class: "text-decoration-none" do %>
+                  <div class="align-items-center text-center user-card">
+                    <img src="<%= following.avatar %>"
+                         style="width: 60px; height: 60px; object-fit: cover;"
+                         alt="<%= following.username || following.email %>"
+                         class="rounded-circle mb-2 shadow-sm hover-img">
+                    <p style="font-size: 14px; margin-bottom: 4px; color: #751F1F;" class="fw-medium text-truncate" data-bs-toggle="tooltip" title="<%= following.username.presence || following.email %>">
+                      <%= following.username.presence || following.email %>
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted text-center mt-2">You are not following anyone at the moment</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :head do %>
+  <style>
+    .hover-shadow {
+      transition: all 0.3s ease;
+    }
+
+    .hover-shadow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+
+    .hover-img {
+      transition: all 0.3s ease;
+    }
+
+    .hover-img:hover {
+      transform: scale(1.05);
+    }
+
+    .hover-link {
+      transition: all 0.3s ease;
+    }
+
+    .hover-link:hover {
+      transform: translateX(5px);
+    }
+
+    .hover-scale {
+      transition: all 0.3s ease;
+    }
+
+    .hover-scale:hover {
+      transform: scale(1.1);
+    }
+
+    .book-card, .user-card {
+      transition: all 0.3s ease;
+    }
+
+    .book-card:hover, .user-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Stats counter animation */
+    .stat-counter {
+      animation: countUp 1s ease-out;
+    }
+
+    @keyframes countUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Section headers */
+    .section-header {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, #751F1F, transparent);
+    }
+
+    /* Custom scrollbar */
+    .overflow-auto {
+      scrollbar-width: thin;
+      scrollbar-color: #751F1F #F5EADB;
+    }
+
+    .overflow-auto::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .overflow-auto::-webkit-scrollbar-track {
+      background: #F5EADB;
+      border-radius: 20px;
+    }
+
+    .overflow-auto::-webkit-scrollbar-thumb {
+      background-color: #751F1F;
+      border-radius: 20px;
+    }
+
+    /* Card gradients */
+    .gradient-hover {
+      background: linear-gradient(145deg, #F5EADB 0%, #fff 100%);
+      transition: all 0.3s ease;
+    }
+
+    .gradient-hover:hover {
+      background: linear-gradient(145deg, #fff 0%, #F5EADB 100%);
+    }
+
+    /* Stats badges */
+    .stat-badge {
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      background-color: rgba(117, 31, 31, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .stat-badge:hover {
+      background-color: rgba(117, 31, 31, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(117, 31, 31, 0.1);
+    }
+
+    .stat-badge p, .stat-badge small {
+      transition: all 0.3s ease;
+    }
+
+    .stat-badge:hover p {
+      transform: scale(1.1);
+    }
+
+    .stat-badge:hover small {
+      color: #751F1F !important;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tooltips
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      });
+
+      // Animation des stats
+      const stats = document.querySelectorAll('.stat-counter');
+      stats.forEach(stat => {
+        stat.classList.add('animate');
+      });
+    });
+  </script>
+<% end %>
+
