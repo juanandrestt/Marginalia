@@ -31,8 +31,9 @@ Rails.application.routes.draw do
 
   resources :searches, only: [:index], path: 'search'
 
-  resources :likes, only: [:create, :destroy]
+  resources :likes, only: [:destroy]
   resources :reviews, only: [] do
+    resources :likes, only: [:create]
     resources :comments, only: [:index, :create]
   end
 end
