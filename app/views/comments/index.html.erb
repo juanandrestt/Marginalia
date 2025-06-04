@@ -13,7 +13,7 @@
              style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
         <div>
           <p class="mb-0 fw-bold" style="color: #751F1F;">
-            <%= @review.user&.username.present? ? @review.user.username : review.user&.email %>
+            <%= @review.user&.username.present? ? @review.user.username : @review.user.email %>
           </p>
           <p class="text-muted mb-0" style="font-size: 12px;">
             <%= @review.created_at.strftime("%d/%m/%Y") %>
