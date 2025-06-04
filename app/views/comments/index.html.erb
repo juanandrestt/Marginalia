@@ -79,7 +79,7 @@
   <div class="tab-bar d-flex align-items-center bg-light p-2 rounded-pill shadow-sm position-fixed" style="bottom: 16px; height: 56px; z-index: 999; width: 95%">
         <%= form_with model: [@review, @comment], local: true do |f| %>
           <div class="d-flex align-items-center justify-content-betweenw-100">
-            <%= f.text_field :content, placeholder: "Add a comment...", class: "form-control border-0 bg-light rounded-pill", style: "font-size: 14px; color: #751F1F;", style: "flex: 1;" %>
+            <%= f.text_field :content, placeholder: "Add a comment...", class: "form-control border-0 bg-light rounded-pill", style: "font-size: 14px; color: #751F1F; flex: 1;" %>
             <%= f.submit "Comment", class: "btn btn-primary rounded-pill",    style: "background-color: transparent; color: #751F1F; border: none;" %>
           </div>
         <% end %>
