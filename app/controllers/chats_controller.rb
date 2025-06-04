@@ -9,11 +9,6 @@ class ChatsController < ApplicationController
 
   def show
     @chat = Chat.includes(:messages).find(params[:id])
-    if Rails.env.development?
-      @input_tokens = @chat.messages.pluck(:input_tokens).compact.sum
-      @output_tokens = @chat.messages.pluck(:output_tokens).compact.sum
-      @context_window = RubyLLM.models.find(@chat.model_id).context_window
-    end
     @message = Message.new
   end
 
@@ -24,6 +19,17 @@ class ChatsController < ApplicationController
       redirect_to chat_path(@chat)
     else
       render :index
+    end
+  end
+
+  def create_chat
+    if user_signed_in?
+      @chat = Chat.new
+      @chat.user = current_user
+      @chat.save
+      redirect_to chat_path(@chat)
+    else
+      redirect_to new_user_session_path
     end
   end
 end
