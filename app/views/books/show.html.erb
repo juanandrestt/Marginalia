@@ -49,6 +49,7 @@
 
 </div>
 <div class="d-flex justify-content-center gap-2 mt-4 mb-5">
+  <!-- Add a review-->
   <div>
     <% if user_signed_in? && !@current_user_review %>
       <%= link_to new_book_review_path(@book), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
@@ -56,12 +57,21 @@
       <% end %>
     <% end %>
   </div>
-  <!-- CTA bookclub -->
+  <!-- Create a bookclub -->
   <div>
     <%= link_to new_book_bookclub_path(@book), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
       <i class="fas fa-plus"></i> Create a bookclub
     <% end %>
   </div>
+<!-- Mark a read -->
+  <div>
+    <% if user_signed_in? && !current_user.readings.exists?(book: @book) %>
+      <%= link_to mark_as_read_book_path(@book), data: {turbo_method: :post}, class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
+        <i class="fas fa-plus"></i> Mark as read
+      <% end %>
+    <% end %>
+  </div>
+
   </div>
   <!-- Reviews -->
   <div class="container">
