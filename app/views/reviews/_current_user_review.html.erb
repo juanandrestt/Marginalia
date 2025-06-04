@@ -38,24 +38,8 @@
       <p><strong style="color: #751F1F;">Favorite Characters:</strong> <%= current_user_review.favorite_characters %></p>
     </div>
     <div class="d-flex align-items-center gap-3 mt-3">
-      <% if user_signed_in? && current_user.likes.exists?(review: current_user_review) %>
-        <%= button_to like_path(review_id: current_user_review.id),
-                    method: :delete,
-                    class: "d-flex align-items-center gap-1",
-                    style: "background-color: transparent; color: #751F1F; border: none;",
-                    form: { data: { turbo: true } } do %>
-          <i class="fa-solid fa-heart"></i>
-          <span><%= current_user_review.likes_count %></span>
-        <% end %>
-      <% else %>
-        <%= button_to likes_path(review_id: current_user_review.id),
-                    method: :post,
-                    class: "d-flex align-items-center gap-1",
-                    style: "background-color: transparent; color: #751F1F; border: none;",
-                    form: { data: { turbo: true } } do %>
-          <i class="fa-regular fa-heart"></i>
-          <span><%= current_user_review.likes_count %></span>
-        <% end %>
+      <% if user_signed_in? %>
+        <%= render partial: "likes/like_button", locals:  { review: current_user_review } %>
       <% end %>
       <%= link_to review_comments_path(current_user_review), class: "d-flex align-items-center gap-1", style: "background-color: transparent; color: #751F1F; border: none; text-decoration: none;" do %>
         <i class="fa-regular fa-comment"></i>
