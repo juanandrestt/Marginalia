@@ -30,8 +30,6 @@ Rails.application.routes.draw do
 
   resources :bookclubs, only: [:index, :show, :edit, :update, :destroy]
 
-  resources :searches, only: [:index], path: 'search'
-
   resources :likes, only: [:destroy]
   resources :reviews, only: [] do
     resources :likes, only: [:create]
