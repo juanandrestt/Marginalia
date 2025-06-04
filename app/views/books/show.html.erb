@@ -1,5 +1,7 @@
-<div class="container mt-4">
-
+<div class="container mt-4 mb-4">
+  <div class="mb-3">
+    <%= link_to "←", :back, class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" %>
+  </div>
   <!-- Book Cover -->
   <div class="text-center mb-4">
     <img src="<%= @book.cover_url %>" alt="<%= @book.title %>" class="img-fluid shadow rounded" style="max-height: 280px; object-fit: cover;">
@@ -16,10 +18,10 @@
     <p class="text-muted" style="margin-top: -0.5rem;"><%= @book.author %></p>
   </div>
 
-  <!-- Description -->
+  <!-- Description bloc styled -->
+
   <div class="mb-4 px-2 text-center">
     <p class="text-muted mb-2" style="font-size: 14px;"><%= @book.description %></p>
-
     <span class="badge bg-light border text-muted rounded-pill px-3">
       <%= @book.publishing_year %>
     </span>
@@ -38,196 +40,35 @@
       </div>
     <% end %>
   </div>
-
   <!-- CTA Buttons -->
-
   <% if @book.characters.present? %>
     <div class="mt-2 text-muted" style="font-size: 13px;">
       <strong>Characters:</strong> <%= @book.characters %>
     </div>
   <% end %>
 
-  <div class="d-flex justify-content-center gap-2 mt-4 mb-5">
-
-  <!-- Add a review -->
-    <div>
-      <% if user_signed_in? && !@current_user_review %>
-        <%= link_to new_book_review_path(@book), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
-          <i class="fas fa-plus"></i> Add a review
-        <% end %>
+</div>
+<div class="d-flex justify-content-center gap-2 mt-4 mb-5">
+  <div>
+    <% if user_signed_in? && !@current_user_review %>
+      <%= link_to new_book_review_path(@book), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
+        <i class="fas fa-plus"></i> Add a review
       <% end %>
-    </div>
-
-    <!-- Create a bookclub -->
-    <div>
-      <% if user_signed_in? && !current_user.bookclubs.exists?(book: @book) %>
-        <%= link_to new_book_bookclub_path(@book), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
-          <i class="fas fa-plus"></i> Create a bookclub
-        <% end %>
-      <% end %>
-    </div>
-
-    <!-- Mark as read -->
-    <div>
-      <% if user_signed_in? && !current_user.readings.exists?(book: @book) %>
-        <%= link_to mark_as_read_book_path(@book),  data: { turbo_method: :post }, class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
-          <i class="fas fa-plus"></i> Mark as read
-        <% end %>
-      <% end %>
-    </div>
+    <% end %>
   </div>
-
-    <!-- Reviews -->
-    <div class="reviews-section">
-      <% if user_signed_in? && @current_user_review %>
-        <h4 class="mb-3" style="color: #751F1F;">Votre critique</h4>
-        <div class="mb-3 p-4 rounded-5" style="background-color: #F5EADB;">
-          <div class="d-flex justify-content-between mb-3">
-            <div>
-              <p class="mb-2">
-                <strong style="color: #751F1F;">
-                  <%= current_user.username.present? ? current_user.username : current_user.email %>
-                </strong>
-              </p>
-              <p><%= @current_user_review.content %></p>
-              <p><strong>Rating:</strong> <%= @current_user_review.rating %>/5</p>
-              <p><strong>Emotion:</strong> <%= @current_user_review.emotion %></p>
-              <p><strong>Favorite Characters:</strong> <%= @current_user_review.favorite_characters %></p>
-            </div>
-            <div class="review-actions">
-              <%= link_to edit_book_review_path(@book, @current_user_review), class: 'btn btn-sm btn-outline-primary me-2 mb-1' do %>
-                <i class="fas fa-edit"></i> Edit
-              <% end %>
-              <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
-                <%= f.button type: 'submit', class: 'btn btn-sm btn-outline-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
-                  <i class="fas fa-trash"></i> Delete
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <h4 class="mb-3" style="color: #751F1F;">Les critiques des lecteurs</h4>
-      <% @reviews.each do |review| %>
-        <div class="mb-3 p-4 shadow-sm rounded-5" style="background-color: #F5EADB;">
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <%= link_to user_path(review.user), class: "d-flex align-items-center text-decoration-none" do %>
-                <img src="<%= review.user.avatar %>"
-                      alt="<%= review.user.username || review.user.email %>"
-                      class="rounded-circle"
-                      style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
-                <div>
-                  <p class="mb-0 fw-bold" style="color: #751F1F;">
-                    <%= review.user&.username.present? ? review.user.username : review.user&.email %>
-                  </p>
-                  <p class="text-muted mb-0" style="font-size: 12px;">
-                    <%= review.created_at.strftime("%d/%m/%Y") %>
-                  </p>
-                </div>
-              <% end %>
-              <% if user_signed_in? && review.user && current_user != review.user %>
-                <% if current_user.following?(review.user) %>
-                  <%= button_to follow_path(id: current_user.follows.find_by(following: review.user).id),
-                        method: :delete,
-                        class: "btn rounded-pill py-0 px-2 follow-button",
-                        style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
-                        form: { data: { turbo: true } } do %>
-                    Unfollow
-                  <% end %>
-                <% else %>
-                  <%= button_to follows_path(following_id: review.user.id),
-                        method: :post,
-                        class: "btn rounded-pill py-0 px-2 follow-button",
-                        style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
-                        form: { data: { turbo: true } } do %>
-                    Follow
-                  <% end %>
-                <% end %>
-              <% end %>
-            </div>
-            <div class="d-flex align-items-center gap-2 mb-3">
-              <p class="mb-0 fw-bold"><%= review.rating %></p>
-              <i class="fa-solid fa-star text-warning mb-1"></i>
-            </div>
-          </div>
-          <p><%= review.content %></p>
-          <div class="border-bottom border-dark">
-            <p class="mb-0"><strong style="color: #751F1F;">Emotion:</strong> <%= review.emotion %></p>
-            <p><strong style="color: #751F1F;">Favorite Characters:</strong> <%= review.favorite_characters %></p>
-          </div>
-          <div class="d-flex">
-            <div class="d-flex align-items-center gap-3">
-              <% if current_user.likes.exists?(review: review) %>
-                <%= button_to like_path(review_id: review.id),
-                  method: :delete,
-                  class: "d-flex align-items-center gap-1",
-                  style: "background-color: transparent; color: #751F1F; border: none;",
-                  form: { data: { turbo: true } } do %>
-                  <i class="fa-solid fa-heart"></i>
-                  <span><%= review.likes_count %></span>
-                <% end %>
-              <% else %>
-                <%= button_to likes_path(review_id: review.id),
-                  method: :post,
-                  class: "d-flex align-items-center gap-1",
-                  style: "background-color: transparent; color: #751F1F; border: none;",
-                  form: { data: { turbo: true } } do %>
-                  <i class="fa-solid fa-heart"></i>
-                  <span><%= review.likes_count %></span>
-                <% end %>
-              <% end %>
-              <%= link_to review_comments_path(review), class: "d-flex align-items-center gap-1", style: "background-color: transparent; color: #751F1F; border: none; text-decoration: none;" do %>
-                <i class="fa-regular fa-comment"></i>
-                <span><%= review.comments.count %></span>
-              <% end %>
-            </div>
-          </div>
-        </div>
-
-      <% end %>
-    </div>
+  <!-- CTA bookclub -->
+  <div>
+    <%= link_to new_book_bookclub_path(@book), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;" do %>
+      <i class="fas fa-plus"></i> Create a bookclub
+    <% end %>
   </div>
-
-  <% content_for :head do %>
-    <style>
-      .follow-button {
-        background-color: transparent;
-        transition: all 0.3s ease;
-      }
-
-      .follow-button:hover {
-        background-color: #F5EADB !important;
-        color: #751F1F !important;
-        border-color: #751F1F !important;
-        transform: scale(1.05);
-      }
-    </style>
-  <% end %>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const followButtons = document.querySelectorAll('.follow-button');
-      followButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-          event.preventDefault();
-          const userId = button.id.replace('follow-button-', '');
-          try {
-            const response = fetch('/follows', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-              },
-              body: JSON.stringify({ following_id: userId })
-            });
-            if (response.ok) {
-              // Mettre à jour l'interface utilisateur
-            }
-          } catch (error) {
-            console.error('Error:', error);
-          }
-        });
-      });
-    });
-  </script>
+  </div>
+  <!-- Reviews -->
+  <div class="container">
+    <%= render 'reviews/current_user_review', current_user_review: @current_user_review, book: @book %>
+    <h4 class="mb-3" style="color: #751F1F;">Les critiques des lecteurs</h4>
+    <% @reviews.each do |review| %>
+      <%= render 'reviews/review_card', review: review %>
+    <% end %>
+  </div>
+</div>

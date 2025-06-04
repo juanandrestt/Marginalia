@@ -7,8 +7,8 @@ class LikesController < ApplicationController
 
     if @like.save
       respond_to do |format|
-        format.html { redirect_to book_path(@review.book), notice: "Liked!" }
         format.turbo_stream
+        format.html { redirect_to book_path(@review.book), notice: "Liked!" }
       end
     else
       redirect_to book_path(@review.book), alert: "Unable to like."
@@ -16,12 +16,13 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    @like = Like.find_by(user: current_user, review_id: params[:review_id])
+    @like = Like.find(params[:id])
+    @review = @like.review if @like
     @like.destroy if @like
 
     respond_to do |format|
-      format.html { redirect_to book_path(@like.review.book), notice: "Unliked!" }
       format.turbo_stream
+      format.html { redirect_to book_path(@like.review.book), notice: "Unliked!" }
     end
   end
 end

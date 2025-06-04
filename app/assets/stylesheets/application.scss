@@ -12,19 +12,19 @@
 @import "pages/index";
 
 .custom-link {
-  color: #751F1F; /* Ta couleur personnalisée */
-  text-decoration: none; /* Enlève le soulignement */
+  color: #751F1F;
+  text-decoration: none;
 }
 
 .custom-link:hover {
-  color: #751F1F; /* Garde la même couleur au survol */
-  text-decoration: underline; /* Optionnel : ajoute un soulignement au survol */
+  color: #751F1F; 
+  text-decoration: underline;
 }
 
-.font-aujournuit {
-  font-family: $my-font;
-}
+// .font-aujournuit {
+//   font-family: $my-font;
+// }
 
-h1, h2, h3 {
-  font-family: $my-font;
-}
+// h1, h2, h3 {
+//   font-family: $my-font;
+// }

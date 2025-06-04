@@ -1,0 +1,126 @@
+.hover-shadow {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  }
+}
+
+.hover-img {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.hover-link {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateX(5px);
+  }
+}
+
+.hover-scale {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.book-card, .user-card {
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.stat-counter {
+  animation: countUp 1s ease-out;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-header {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #751F1F, transparent);
+  }
+}
+
+.overflow-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #751F1F #F5EADB;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #F5EADB;
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #751F1F;
+    border-radius: 20px;
+  }
+}
+
+.gradient-hover {
+  background: linear-gradient(145deg, #F5EADB 0%, #fff 100%);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(145deg, #fff 0%, #F5EADB 100%);
+  }
+}
+
+.stat-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background-color: rgba(117, 31, 31, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(117, 31, 31, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(117, 31, 31, 0.1);
+  }
+
+  p, small {
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    p {
+      transform: scale(1.1);
+    }
+
+    small {
+      color: #751F1F !important;
+    }
+  }
+}

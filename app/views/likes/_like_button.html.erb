@@ -1,6 +1,7 @@
+<% like = current_user.likes.find_by(review: review) %>
 <div id="review-<%= review.id %>-likes">
-  <% if current_user.likes.exists?(review: review) %>
-    <%= button_to like_path(review_id: review.id),
+  <% if like %>
+    <%= button_to like_path(like),
                   method: :delete,
                   class: "btn btn-sm btn-outline-danger d-flex align-items-center gap-1",
                   style: "color: #751F1F; border-color: #751F1F;",
@@ -9,7 +10,7 @@
       <span><%= review.likes_count || 0 %></span>
     <% end %>
   <% else %>
-    <%= button_to likes_path(review_id: review.id),
+    <%= button_to review_likes_path(review_id: review.id),
                   method: :post,
                   class: "btn btn-sm btn-outline-primary d-flex align-items-center gap-1",
                   style: "color: #751F1F; border-color: #751F1F;",
