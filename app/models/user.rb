@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   before_validation :set_default_avatar
 
-  has_many :lists
+  has_many :lists, dependent: :destroy
   has_many :reviews
   has_many :readings
   has_many :bookclubs, dependent: :destroy

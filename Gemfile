@@ -21,6 +21,8 @@ gem "devise"
 gem "faker"
 gem "solid_cable"
 gem "neighbor"
+gem 'kramdown'
+gem "kramdown-parser-gfm"
 
 group :development, :test do
   gem "dotenv-rails"

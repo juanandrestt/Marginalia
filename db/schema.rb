@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_05_123511) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_05_124643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_05_123511) do
     t.text "description"
     t.string "cover_url"
     t.text "subjects"
+    t.vector "embedding", limit: 1536
   end
 
   create_table "chats", force: :cascade do |t|

@@ -5,6 +5,9 @@ require "faker"
 puts "Deleting all messages..."
 Message.destroy_all
 
+puts "Deleting all lists..."
+List.destroy_all
+
 puts "Deleting all chats..."
 Chat.destroy_all
 
@@ -19,10 +22,10 @@ User.destroy_all
 
 puts "Creating books..."
 
-subjects = ["fiction", "manga"]
+subjects = ["fiction", "poetry", "manga"]
 
 subjects.each do |subject|
-  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2016+TO+*]+AND+(publisher:Knopf+OR+OR+publisher:Gallimard+OR+publisher:Random+House)"
+  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=20"
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
 
@@ -56,7 +59,7 @@ subjects.each do |subject|
       subjects: subjects,
       characters: characters
     )
-    sleep(1)
+    sleep(5)
   end
 end
 
