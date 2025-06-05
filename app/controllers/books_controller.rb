@@ -11,10 +11,14 @@ class BooksController < ApplicationController
   end
 
   def index
+    @books = Book.all
     if params[:query].present?
-      @books = Book.where("title ILIKE ?", "%#{params[:query]}%")
-    else
-       @books = Book.all
+      sql_subquery = <<~SQL
+        books.title @@ :query
+        OR books.author @@ :query
+        OR books.description @@ :query
+      SQL
+      @books = @books.where(sql_subquery, query: params[:query])
     end
   end
 
