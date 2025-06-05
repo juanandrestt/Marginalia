@@ -13,7 +13,7 @@ class ChatsController < ApplicationController
   end
 
   def create
-    @chat = Chat.new(model_id: "gpt-4o-mini")
+    @chat = Chat.new(model_id: "o4-mini-2025-04-16")
     @chat.user = current_user
     if @chat.save
       redirect_to chat_path(@chat)
