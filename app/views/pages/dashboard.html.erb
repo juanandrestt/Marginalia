@@ -1,4 +1,4 @@
-<div class="container py-4">
+<div class="container py-4" data-controller="dashboard">
   <!-- Header avec profil -->
   <div class="p-4 rounded-4 shadow-sm mb-5 bg-opacity-75 hover-shadow gradient-hover">
     <div class="row align-items-center">
@@ -201,22 +201,4 @@
     </div>
   </div>
 </div>
-
-<% content_for :head do %>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Tooltips
-      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-      });
-
-      // Animation des stats
-      const stats = document.querySelectorAll('.stat-counter');
-      stats.forEach(stat => {
-        stat.classList.add('animate');
-      });
-    });
-  </script>
-<% end %>
 

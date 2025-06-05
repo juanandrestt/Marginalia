@@ -4,21 +4,26 @@ class FollowsController < ApplicationController
   before_action :set_follow, only: [:destroy]
 
   def create
-    @follow = current_user.follows.build(following_id: @user.id)
+    user_to_follow = User.find(params[:following_id])
+    @follow = Follow.new(follower: current_user, following: user_to_follow)
 
     if @follow.save
-      redirect_back(fallback_location: root_path, notice: "You are now following #{@user.email}")
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to book_path(@follow.following) }
+      end
     else
-      redirect_back(fallback_location: root_path, alert: "Unable to follow this user")
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def destroy
-    if @follow.destroy
-      redirect_back(fallback_location: root_path, notice: "You have unfollowed #{@follow.following.email}")
-    else
-      redirect_back(fallback_location: root_path, alert: "Unable to unfollow this user")
-    end
+    @follow = Follow.find(params[:id])
+    @follow.destroy
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to book_path(@follow.following) }
+      end
   end
 
   private
