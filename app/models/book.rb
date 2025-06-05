@@ -8,6 +8,8 @@ class Book < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :bookclubs, dependent: :destroy
 
+  has_one_attached :cover
+
   private
 
   def set_embedding

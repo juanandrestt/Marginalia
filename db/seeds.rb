@@ -22,44 +22,67 @@ User.destroy_all
 
 puts "Creating books..."
 
+def upload_cover(image_path)
+  Cloudinary::Uploader.upload(image_path)['secure_url']
+end
+
 subjects = ["fiction", "poetry", "manga"]
 
 subjects.each do |subject|
   url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=20"
-  serialized = URI.open(url).read
-  data = JSON.parse(serialized)
+  begin
+    serialized = URI.open(url).read
+    data = JSON.parse(serialized)
 
-  data["docs"].each do |doc|
-    title = doc["title"]
-    author = doc["author_name"]&.first || "Unknown Author"
-    publishing_year = doc["first_publish_year"]
-    open_library_id = doc["key"]&.split("/")&.last
-    subjects = doc["subject"]&.join(", ") || ""
+    data["docs"].each do |doc|
+      title = doc["title"]
+      author = doc["author_name"]&.first || "Unknown Author"
+      publishing_year = doc["first_publish_year"]
+      open_library_id = doc["key"]&.split("/")&.last
+      subjects = doc["subject"]&.join(", ") || ""
 
-    work_url = "https://openlibrary.org/works/#{open_library_id}.json"
-    begin
-      full_data = JSON.parse(URI.open(work_url).read)
-      desc = full_data["description"]
-      description = desc.is_a?(Hash) ? desc["value"] : desc
-    rescue
-      description = nil
+      work_url = "https://openlibrary.org/works/#{open_library_id}.json"
+      begin
+        full_data = JSON.parse(URI.open(work_url).read)
+        desc = full_data["description"]
+        description = desc.is_a?(Hash) ? desc["value"] : desc
+      rescue
+        description = nil
+      end
+
+      cover_id = doc["cover_i"]
+      cover_url = cover_id ? "https://covers.openlibrary.org/b/id/#{cover_id}-L.jpg" : nil
+
+      # Ensure cover_url is not nil before proceeding
+      next unless cover_url
+
+      characters = nil # not available here
+
+      book = Book.new(
+        title: title,
+        author: author,
+        publishing_year: publishing_year,
+        open_library_id: open_library_id,
+        description: description,
+        cover_url: cover_url,
+        subjects: subjects,
+        characters: characters
+      )
+
+      # Ensure cover_url is valid before attaching
+      if book.cover_url
+        book.cover.attach(
+          io: URI.open(book.cover_url),
+          filename: "cover_#{book.title}",
+          content_type: "image/jpg"
+        )
+      end
+
+      book.save!
     end
-
-    cover_id = doc["cover_i"]
-    cover_url = cover_id ? "https://covers.openlibrary.org/b/id/#{cover_id}-L.jpg" : nil
-    characters = nil # not available here
-
-    Book.create!(
-      title: title,
-      author: author,
-      publishing_year: publishing_year,
-      open_library_id: open_library_id,
-      description: description,
-      cover_url: cover_url,
-      subjects: subjects,
-      characters: characters
-    )
-    sleep(5)
+  rescue => e
+    puts "An error occurred: #{e.message}"
+    next
   end
 end
 
