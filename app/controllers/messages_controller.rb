@@ -6,10 +6,15 @@ class MessagesController < ApplicationController
 
   def create
     @chat = Chat.find(params[:chat_id])
+    embedding = RubyLLM.embed(message_params[:content])
+    books = Book.nearest_neighbors(:embedding, embedding.vectors, distance: "euclidean").first(3)
+    instructions = system_prompt
+    instructions += books.map { |book| book_prompt(book) }.join("\n") 
+    
     @message = Message.new(message_params.merge(role: 'user', chat: @chat))
     
     if @message.valid?
-      @chat.with_instructions(system_prompt).ask(@message.content) do |chunk|
+      @chat.with_instructions(instructions).ask(@message.content) do |chunk|
         next if chunk.content.blank? # skip empty chunks
       
         message = @chat.messages.last
@@ -36,8 +41,14 @@ class MessagesController < ApplicationController
   end
 
   def system_prompt
-    "You are an expert librarian. \
-      You will be given a book, a literary genre or subject, or a literary era. \
-      You must recommend 3 books that are relevant to the user's request."
+    "You are an assistant for a social platform dedicated to people passionate about reading.
+    Your task is to recommend the 3 most relevant books based on the request.
+    Always share the name and url of the books given in the catalog. \
+    Your answer should be in markdown. \
+    Here are the nearest catalog books based on the user's question: "
+  end
+
+  def book_prompt(book)
+    "BOOK id: #{book.id}, title: #{book.title}, Author: #{book.author}, Description: #{book.description}, Subjects: #{book.subjects}, Publishing year: #{book.publishing_year}, url: #{request.base_url}#{book_path(book)}"
   end
 end

@@ -1,13 +1,13 @@
   <% if message.role == "user" %>
     <div class="d-flex justify-content-end mb-2">
       <div class="bg-white px-4 pb-0 pt-3" style="border-radius: 16px; max-width: 95%; font-size: 16px" background-color: #F5EADB>
-        <%= simple_format(message.content) %>
+        <%= render_markdown(message.content) %>
       </div>
     </div>
   <% elsif message.role == "assistant" %>
     <div class="d-flex justify-content-start mb-4" id="<%= dom_id(message)%>">
       <div class="px-3 pb-0 pt-3">
-        <%= simple_format(message.content) %>
+        <%= render_markdown(message.content) %>
       </div>
     </div>
   <% end %> 
