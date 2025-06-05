@@ -1,5 +1,5 @@
 <h4 class="mb-3" style="color: #751F1F;">Reviews of the community</h4>
-<div class="mb-3 p-4 shadow-sm" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 8px;">
+<div class="mb-3 p-4" style="background-color: rgba(250, 245, 239, 0.9); border-radius: 8px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05)">
   <div class="d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-3 mb-3">
       <%= link_to user_path(review.user), class: "d-flex align-items-center text-decoration-none" do %>
@@ -8,9 +8,9 @@
              class="rounded-circle"
              style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
         <div>
-          <p class="mb-0 fw-bold" style="color: #751F1F;">
+          <h5 class="mb-0 fw-bold" style="color: #751F1F;">
             <%= review.user&.username.present? ? review.user.username : review.user&.email %>
-          </p>
+          </h5>
           <p class="text-muted mb-0" style="font-size: 12px; font-family: Poppins;">
             <%= review.created_at.strftime("%d/%m/%Y") %>
           </p>
