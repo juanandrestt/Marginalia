@@ -20,6 +20,7 @@ gem "ruby_llm"
 gem "devise"
 gem "faker"
 gem "solid_cable"
+gem "neighbor"
 
 group :development, :test do
   gem "dotenv-rails"
