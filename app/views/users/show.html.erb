@@ -7,7 +7,7 @@
   </div>
 </div>
 <!-- Profil -->
-<div class="bg-white py-3 px-4 opacity-80 shadow-sm">
+<div class="bg-white py-3 px-4 opacity-80 shadow-sm mb-3">
   <div class="d-flex">
     <div>
       <% if @user.avatar.present? %>
@@ -19,7 +19,6 @@
       <% end %>
     </div>
     <div>
-      <p class="mb-0" style="font-size: 12px;">Welcome</p>
       <h2 class="mb-0" style="color: #751F1F;"><%= @user.username %></h2>
       <div class="mt-1 d-flex gap-3">
         <%= link_to followers_user_path(@user), class: "text-decoration-none me-3" do %>
@@ -61,11 +60,40 @@
     <!-- Profil -->
   </div>
 </div>
-
-<div class="bg-white py-3 px-4 opacity-80 shadow-sm">
-  <h2>Time past reading</h2>
-  <div>
-    <p class="mb-0 fw-bold"><%= 510 * @followers_count %></p>
-    <p class="mb-0" style="font-size: 12px;">Followers</>
+<div class="bg-white py-3 opacity-80 shadow-sm text-center rounded-3 mx-5">
+  <h2 class="mb-3" style="color: #751F1F;">Time past reading</h2>
+  <div class="d-flex justify-content-center gap-4">
+    <div class="text-center">
+      <p class="mb-0 fw-bold">16</p>
+      <p class="mb-0" style="font-size: 12px;">Month</p>
+    </div>
+    <div class="text-center">
+      <p class="mb-0 fw-bold">03</p>
+      <p class="mb-0" style="font-size: 12px;">Days</p>
+    </div>
+    <div class="text-center">
+      <p class="mb-0 fw-bold">02</p>
+      <p class="mb-0" style="font-size: 12px;">Hours</p>
+    </div>
+  </div>
+</div>
+<div class="px-3 mt-4">
+  <div class="" style="">
+    <div class="d-flex align-items-center gap-4">
+      <h2 class="mb-4" style="font-size: 20px; color: #751F1F">Recent readings</h2>
+    </div>
+    <div class="row flex-nowrap overflow-auto" style="gap: 4px;">
+      <% @books.each do |book| %>
+        <div class="col-auto gap: 2px;">
+          <%= link_to book_path(book), class: "text-decoration-none" do %>
+            <img src="<%= book.cover_url %>" class="rounded-3" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);" alt="<%= book.title %>">
+            <h5 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
+              <%= truncate(book.title, length: 22) %>
+            </h5>
+            <p class="" style="font-size: 12px; margin-bottom: 0;"><%= book.author %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
