@@ -1,4 +1,5 @@
-<div class="mb-3 p-4 rounded-5" style="background-color: #F5EADB;">
+<h4 class="mb-3" style="color: #751F1F;">Reviews of the community</h4>
+<div class="mb-3 p-4 shadow-sm" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 8px;">
   <div class="d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-3 mb-3">
       <%= link_to user_path(review.user), class: "d-flex align-items-center text-decoration-none" do %>
@@ -10,11 +11,12 @@
           <p class="mb-0 fw-bold" style="color: #751F1F;">
             <%= review.user&.username.present? ? review.user.username : review.user&.email %>
           </p>
-          <p class="text-muted mb-0" style="font-size: 12px;">
+          <p class="text-muted mb-0" style="font-size: 12px; font-family: Poppins;">
             <%= review.created_at.strftime("%d/%m/%Y") %>
           </p>
         </div>
       <% end %>
+      <!-- FOLLOW -->
       <% if user_signed_in? && review.user && current_user != review.user %>
         <% if current_user.following?(review.user) %>
           <%= button_to follow_path(id: current_user.follows.find_by(following: review.user).id),
@@ -34,31 +36,25 @@
           <% end %>
         <% end %>
       <% end %>
+      <!-- FOLLOW -->
     </div>
   </div>
-  <p class=""><%= review.content %></p>
-  <div class="d-flex gap-4 mb-2 border-bottom border-dark pb-3">
-    <div class="d-flex align-items-center gap-2">
-      <i class="fa-solid fa-star text-warning mb-1"></i>
-      <p class="mb-0 fw-bold"><%= review.rating %></p>
+  <p class="pb-2"" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;"><%= review.content %></p>
+  <div class="d-flex align-items-center justify-content-between mt-3">
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-3">
+        <% if user_signed_in? %>
+          <%= render partial: "likes/like_button", locals:  { review: review } %>
+        <% end %>
+        <%= link_to review_comments_path(review), class: "d-flex align-items-center gap-1", style: "background-color: transparent;  border: none; text-decoration: none;" do %>
+          <i class="fa-regular fa-comment" style="color: #751F1F;"></i>
+          <p class="mb-0" style="font-family: Poppins;"><%= review.comments.count %></p>
+        <% end %>
+      </div>
     </div>
     <div class="d-flex align-items-center gap-2">
-      <i class="fa-regular fa-face-sad-tear"></i>
-      <p class="mb-0 fw-bold"><%= review.emotion %></p>
+      <i class="fa-solid fa-star" style="color: #751F1F;"></i>
+      <p class="mb-0" style="font-family: Poppins;"><%= review.rating %></p>
     </div>
-    <div class="d-flex align-items-center gap-2">
-      <i class="fa-solid fa-star text-warning mb-1"></i>
-      <p class="mb-0 fw-bold"><%= review.favorite_characters %></p>
-    </div>
-  </div>
-  <div class="mb-4"></div>
-  <div class="d-flex align-items-center gap-3 mt-3">
-    <% if user_signed_in? %>
-      <%= render partial: "likes/like_button", locals:  { review: review } %>
-    <% end %>
-    <%= link_to review_comments_path(review), class: "d-flex align-items-center gap-1", style: "background-color: transparent; color: #751F1F; border: none; text-decoration: none;" do %>
-      <i class="fa-regular fa-comment"></i>
-      <span><%= review.comments.count %></span>
-    <% end %>
   </div>
 </div>

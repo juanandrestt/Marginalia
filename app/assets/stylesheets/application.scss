@@ -17,14 +17,10 @@
 }
 
 .custom-link:hover {
-  color: #751F1F; 
+  color: #751F1F;
   text-decoration: underline;
 }
 
-// .font-aujournuit {
-//   font-family: $my-font;
-// }
-
-// h1, h2, h3 {
-//   font-family: $my-font;
-// }
+h1, h2, h3 {
+  font-family: $my-font;
+}
