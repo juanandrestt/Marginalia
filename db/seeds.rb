@@ -22,10 +22,6 @@ User.destroy_all
 
 puts "Creating books..."
 
-def upload_cover(image_path)
-  Cloudinary::Uploader.upload(image_path)['secure_url']
-end
-
 subjects = ["fiction", "poetry", "manga"]
 
 subjects.each do |subject|
