@@ -167,6 +167,10 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.12.2)
+    kramdown (2.5.1)
+      rexml (>= 3.3.9)
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~> 2.0)
     logger (1.7.0)
     loofah (2.24.1)
       crass (~> 1.0.2)
@@ -183,6 +187,8 @@ GEM
     msgpack (1.8.0)
     multipart-post (2.4.1)
     mutex_m (0.3.0)
+    neighbor (0.5.2)
+      activerecord (>= 7)
     net-http (0.6.0)
       uri
     net-imap (0.5.8)
@@ -356,6 +362,9 @@ DEPENDENCIES
   faker
   font-awesome-sass (~> 6.1)
   importmap-rails
+  kramdown
+  kramdown-parser-gfm
+  neighbor
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.5, >= 7.1.5.1)

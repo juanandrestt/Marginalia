@@ -33,6 +33,7 @@
           <% (1..5).each do |n| %>
             <i class="fa-star far cursor-pointer"
              id="star-<%= n %>"
+
              onclick="selectStar(<%= n %>)"
              style="cursor: pointer; color: #751F1F"></i>
           <% end %>
