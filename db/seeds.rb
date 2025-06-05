@@ -11,9 +11,6 @@ List.destroy_all
 puts "Deleting all chats..."
 Chat.destroy_all
 
-puts "Deleting all follows..."
-Follow.destroy_all
-
 puts "Deleting all books..."
 Book.destroy_all
 
