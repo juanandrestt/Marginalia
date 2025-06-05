@@ -8,9 +8,6 @@ Message.destroy_all
 puts "Deleting all chats..."
 Chat.destroy_all
 
-puts "Deleting all follows..."
-Follow.destroy_all
-
 puts "Deleting all books..."
 Book.destroy_all
 
@@ -22,7 +19,7 @@ puts "Creating books..."
 subjects = ["fiction", "manga"]
 
 subjects.each do |subject|
-  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2016+TO+*]+AND+(publisher:Knopf+OR+OR+publisher:Gallimard+OR+publisher:Random+House)"
+  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Penguin+Classics+OR+publisher:Random+House+OR+publisher:Viz+Media)"
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
 
