@@ -25,25 +25,7 @@
             </p>
           </div>
         <% end %>
-        <% if user_signed_in? && @review.user && current_user != @review.user %>
-          <% if current_user.following?(@review.user) %>
-            <%= button_to follow_path(id: current_user.follows.find_by(following: review.user).id),
-                        method: :delete,
-                        class: "btn rounded-pill py-0 px-2 follow-button",
-                        style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
-                        form: { data: { turbo: true } } do %>
-              Unfollow
-            <% end %>
-          <% else %>
-            <%= button_to follows_path(following_id: @review.user.id),
-                        method: :post,
-                        class: "btn rounded-pill py-0 px-2 follow-button",
-                        style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
-                        form: { data: { turbo: true } } do %>
-              Follow
-            <% end %>
-          <% end %>
-        <% end %>
+
       </div>
     </div>
     <p class="pb-3 mb-3"" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;"><%= @review.content %></p>
