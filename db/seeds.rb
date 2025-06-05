@@ -19,20 +19,19 @@ User.destroy_all
 
 puts "Creating books..."
 
-subjects = %w[fantasy science-fiction romance children poetry computers sociology manga]
+subjects = ["fiction", "manga"]
 
 subjects.each do |subject|
-  url = "https://openlibrary.org/subjects/#{subject}.json?limit=30"
+  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2016+TO+*]+AND+(publisher:Knopf+OR+OR+publisher:Gallimard+OR+publisher:Random+House)"
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
 
-  data["works"].each do |work|
-    title = work["title"]
-    authors = work["authors"] || []
-    author = authors.first ? authors.first["name"] : "Unknown Author"
-    publishing_year = work["first_publish_year"]
-    open_library_id = work["key"]&.split("/")&.last
-    subjects = work["subject"]&.join(", ") || ""
+  data["docs"].each do |doc|
+    title = doc["title"]
+    author = doc["author_name"]&.first || "Unknown Author"
+    publishing_year = doc["first_publish_year"]
+    open_library_id = doc["key"]&.split("/")&.last
+    subjects = doc["subject"]&.join(", ") || ""
 
     work_url = "https://openlibrary.org/works/#{open_library_id}.json"
     begin
@@ -43,7 +42,7 @@ subjects.each do |subject|
       description = nil
     end
 
-    cover_id = work["cover_id"]
+    cover_id = doc["cover_i"]
     cover_url = cover_id ? "https://covers.openlibrary.org/b/id/#{cover_id}-L.jpg" : nil
     characters = nil # not available here
 
@@ -57,6 +56,7 @@ subjects.each do |subject|
       subjects: subjects,
       characters: characters
     )
+    sleep(1)
   end
 end
 
