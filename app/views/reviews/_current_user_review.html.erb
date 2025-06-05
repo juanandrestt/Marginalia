@@ -1,7 +1,9 @@
+
 <% if user_signed_in? && current_user_review %>
-  <h4 class="mb-3" style="color: #751F1F;">Votre critique</h4>
-  <div class="mb-3 p-4 rounded-5" style="background-color: #F5EADB;">
+<h4 class="mb-3" style="color: #751F1F;">Your review</h4>
+  <div class="mb-3 p-4" style="background-color: rgba(250, 245, 239, 0.9); border-radius: 8px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05)">
     <div class="d-flex align-items-center justify-content-between">
+      <!-- Avatar Title Date -->
       <div class="d-flex align-items-center gap-3 mb-3">
         <%= link_to user_path(current_user), class: "d-flex align-items-center text-decoration-none" do %>
           <img src="<%= current_user.avatar %>"
@@ -12,39 +14,43 @@
             <p class="mb-0 fw-bold" style="color: #751F1F;">
               <%= current_user.username.present? ? current_user.username : current_user.email %>
             </p>
-            <p class="text-muted mb-0" style="font-size: 12px;">
+            <p class="text-muted mb-0" style="font-size: 12px;"">
               <%= current_user_review.created_at.strftime("%d/%m/%Y") %>
             </p>
           </div>
-        <% end %>
-      </div>
-      <div class="d-flex align-items-center gap-2 mb-3">
-        <p class="mb-0 fw-bold"><%= current_user_review.rating %></p>
-        <i class="fa-solid fa-star text-warning mb-1"></i>
+        </div>
         <!-- Edit and Delete buttons -->
-        <%= link_to edit_book_review_path(book, current_user_review), class: "btn btn-sm", style: "background-color: transparent; color: #751F1F; border: none; padding: 2px 4px;" do %>
-          <i class="fas fa-edit"></i>
-        <% end %>
-        <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
-          <%= f.button type: 'submit', class: "btn btn-sm", style: "background-color: transparent; color: #751F1F; border: none; padding: 2px 4px;", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
-            <i class="fas fa-trash"></i>
+        <div class="d-flex align-items-center">
+          <%= link_to edit_book_review_path(book, current_user_review), class: "btn btn-sm", style: "background-color: transparent; border: none; padding: 2px 4px;" do %>
+            <i class="fas fa-edit"></i>
+          <% end %>
+          <%= form_for @current_user_review, url: book_review_path(@book, @current_user_review), method: :delete, class: 'd-inline' do |f| %>
+            <%= f.button type: 'submit', class: "btn btn-sm", style: "background-color: transparent; border: none; padding: 2px 4px;", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
           <% end %>
         <% end %>
       </div>
     </div>
-    <p><%= current_user_review.content %></p>
-    <div class="border-bottom border-dark">
-      <p class="mb-0"><strong style="color: #751F1F;">Emotion:</strong> <%= current_user_review.emotion %></p>
-      <p><strong style="color: #751F1F;">Favorite Characters:</strong> <%= current_user_review.favorite_characters %></p>
-    </div>
-    <div class="d-flex align-items-center gap-3 mt-3">
-      <% if user_signed_in? %>
-        <%= render partial: "likes/like_button", locals:  { review: current_user_review } %>
-      <% end %>
-      <%= link_to review_comments_path(current_user_review), class: "d-flex align-items-center gap-1", style: "background-color: transparent; color: #751F1F; border: none; text-decoration: none;" do %>
-        <i class="fa-regular fa-comment"></i>
-        <span><%= current_user_review.comments.count %></span>
-      <% end %>
+    <p class="pb-2"" style="border-bottom: 1px solid #D5D5D5; font-family: 'Poppins', sans-serif;"">
+      <%= current_user_review.content %>
+    </p>
+    <div class="d-flex align-items-center justify-content-between mt-3">
+      <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <% if user_signed_in? %>
+            <%= render partial: "likes/like_button", locals:  { review: current_user_review } %>
+          <% end %>
+          <%= link_to review_comments_path(current_user_review), class: "d-flex align-items-center gap-1", style: "background-color: transparent;  border: none; text-decoration: none;" do %>
+            <i class="fa-regular fa-comment" style="color: #751F1F;"></i>
+            <p class="mb-0" style="font-family: 'Poppins', sans-serif;""><%= current_user_review.comments.count %></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <i class="fa-solid fa-star"  style="color: #751F1F;"></i>
+        <p class="mb-0" style="font-family: 'Poppins', sans-serif;""><%= current_user_review.rating %></p>
+      </div>
     </div>
   </div>
 <% end %>

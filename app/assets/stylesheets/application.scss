@@ -12,19 +12,25 @@
 @import "pages/index";
 
 .custom-link {
-  color: #751F1F;
+  color: #751f1f;
   text-decoration: none;
 }
 
 .custom-link:hover {
-  color: #751F1F; 
+  color: #751f1f;
   text-decoration: underline;
 }
 
-// .font-aujournuit {
-//   font-family: $my-font;
-// }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $my-font;
+  color: #751f1f;
+}
 
-// h1, h2, h3 {
-//   font-family: $my-font;
-// }
+p {
+  color: #070740;
+}
