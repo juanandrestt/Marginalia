@@ -43,9 +43,10 @@ class MessagesController < ApplicationController
   def system_prompt
     "You are an assistant for a social platform dedicated to people passionate about reading.
     Your task is to recommend the 3 most relevant books based on the request.
-    Always share the name and url of the books given in the catalog. \
-    Your answer should be in markdown. \
-    Here are the nearest catalog books based on the user's question: "
+    Always include the title and the exact URL provided for each book.
+    The answer must be in Markdown format, using the provided URLs as links.
+    Use only the provided book list below and do not make up any books or URLs.
+    Here are the nearest catalog books: "
   end
 
   def book_prompt(book)
