@@ -50,6 +50,6 @@ class MessagesController < ApplicationController
   end
 
   def book_prompt(book)
-    "BOOK id: #{book.id}, title: #{book.title}, Author: #{book.author}, Description: #{book.description}, Subjects: #{book.subjects}, Publishing year: #{book.publishing_year}, url: #{request.base_url}#{book_path(book)}"
+    "BOOK id: #{book.id}, Title: #{book.title}, Author: #{book.author}, Description: #{book.description}, Subjects: #{book.subjects}, Publishing year: #{book.publishing_year}, URL: #{request.base_url}#{book_path(book)}"
   end
 end
