@@ -74,11 +74,11 @@
       <div class="d-flex align-items-center gap-4">
         <h2 class="mb-3" style="font-size: 20px; color: #751F1F">Recommandations</h2>
       </div>
-      <div class="row flex-nowrap overflow-auto" style="gap: 4px;">
+      <div class="hide-scrollbar row flex-nowrap overflow-auto" style="gap: 4px;">
         <% @books.each do |book| %>
           <div class="col-auto gap: 2px;">
             <%= link_to book_path(book), class: "text-decoration-none" do %>
-              <img src="<%= book.cover_url %>" class="rounded-3" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);" alt="<%= book.title %>">
+              <%= cl_image_tag book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
               <h6 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
                 <%= truncate(book.title, length: 22) %>
               </h6>
@@ -90,7 +90,7 @@
     </div>
     <div class="" style="padding-bottom: 70px">
       <h2 class="mb-3 fw-bold" style="font-size: 20px; color: #751F1F font-">Last book</h2>
-      <div class="row flex-nowrap overflow-auto" style="gap: 4px;">
+      <div class="hide-scrollbar row flex-nowrap overflow-auto" style="gap: 4px;">
         <% @last.each do |book| %>
           <div class="col-auto gap: 2px;">
             <%= link_to book_path(book), class: "text-decoration-none" do %>

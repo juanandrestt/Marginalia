@@ -21,7 +21,7 @@ class BookclubsController < ApplicationController
     @bookclub.book = @book
     @bookclub.user = current_user
     if @bookclub.save
-      redirect_to bookclub_path(@book, @bookclub)
+      redirect_to bookclub_path(@bookclub)
     else
       render :new, status: :unprocessable_entity
     end

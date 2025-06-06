@@ -21,7 +21,7 @@
     </div>
     <!-- CTA list -->
     <div>
-      <%= link_to new_book_bookclub_path(@book), class: "btn rounded-pill", style: "color: #751F1F;" do %>
+      <%= link_to new_list_path(book_id: @book.id), class: "btn rounded-pill", style: "color: #751F1F;" do %>
         <i class="fa-solid fa-list text-12"></i>
       <% end %>
     </div>
@@ -39,6 +39,7 @@
     <h2 class="fw-bold px-4" style="color: #751F1F;">
       <%= @book.title %>
     </h2>
+
     <p class="text-muted" style="margin-top: -0.5rem;"><%= @book.author %></p>
   </div>
   <!-- Add a review -->
@@ -119,8 +120,8 @@
         <% end %>
       </div>
       <div>
-        <% if user_signed_in? && !@current_user_review %>
-          <%= link_to new_book_review_path(@book), class: "btn px-4 rounded-3", style: "color: #fff; background-color: #751F1F" do %>
+        <% if user_signed_in? && current_user.readings.where(book: @book).empty? %>
+          <%= link_to mark_as_read_book_path(@book), data: { turbo_method: :post }, class: "btn px-4 rounded-3", style: "color: #fff; background-color: #751F1F" do %>
             <h5 style="color: #fff">Mark as read</h5>
           <% end %>
         <% end %>
