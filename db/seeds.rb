@@ -23,18 +23,20 @@ subjects = ["fiction", "poetry", "manga"]
 
 subjects.each do |subject|
   url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=30"
+  p url
   begin
     serialized = URI.open(url).read
     data = JSON.parse(serialized)
+    p data
 
     data["docs"].each do |doc|
-      title = doc["title"]
-      author = doc["author_name"]&.first || "Unknown Author"
-      publishing_year = doc["first_publish_year"]
-      open_library_id = doc["key"]&.split("/")&.last
-      subjects = doc["subject"]&.join(", ") || ""
+     p title = doc["title"]
+     p author = doc["author_name"]&.first || "Unknown Author"
+     p publishing_year = doc["first_publish_year"]
+     p open_library_id = doc["key"]&.split("/")&.last
+     p subjects = doc["subject"]&.join(", ") || ""
 
-      work_url = "https://openlibrary.org/works/#{open_library_id}.json"
+     p work_url = "https://openlibrary.org/works/#{open_library_id}.json"
       begin
         full_data = JSON.parse(URI.open(work_url).read)
         desc = full_data["description"]
@@ -50,7 +52,7 @@ subjects.each do |subject|
       next unless cover_url
 
       characters = nil # not available here
-
+      counter = 1
       book = Book.new(
         title: title,
         author: author,
@@ -72,6 +74,8 @@ subjects.each do |subject|
       end
 
       book.save! if book.cover.attached?
+      counter += 1
+      p "Book #{counter} created"
     end
   rescue => e
     puts "An error occurred: #{e.message}"
