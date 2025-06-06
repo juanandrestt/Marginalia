@@ -76,9 +76,9 @@
     <%= form_with model: [@review, @comment], local: true, class: "w-100 d-flex justify-content-center" do |f| %>
       <div class="d-flex align-items-center bg-white shadow-sm px-3 py-2" style="border-radius: 50px; width: 100%; max-width: 720px; border: 1px solid #FFEAD8;">
         <%= f.text_field :content, placeholder: "Comment", class: "form-control border-0 bg-transparent", style: "font-size: 16px; color: #070740;" %>
-        <div class="position-relative">
+        <div class="position-relative d-flex align-items-center justify-content-center">
           <%= f.submit "", class: "btn d-flex align-items-center justify-content-center", style: "width: 36px; height: 36px; border-radius: 50%; background-color: #751F1F;"%>
-          <i class="fa-solid fa-arrow-up position-absolute text-white top-0"></i>
+          <i class="fa-solid fa-arrow-up position-absolute text-white"></i>
         </div>
       </div>
     <% end %>
