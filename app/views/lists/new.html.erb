@@ -3,7 +3,7 @@
 <div class="container">
   <%= simple_form_for(@list) do |f| %>
     <%= f.error_notification %>
-
+    <%= f.hidden_field :book_id, value: @book.id if params[:book_id] %>
     <div class="form-inputs mb-3">
       <%= f.input :name, label: " Name", class: "form-control" %>
     </div>

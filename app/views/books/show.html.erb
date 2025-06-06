@@ -21,7 +21,7 @@
     </div>
     <!-- CTA list -->
     <div>
-      <%= link_to new_list_path, class: "btn rounded-pill", style: "color: #751F1F;" do %>
+      <%= link_to new_list_path(book_id: @book.id), class: "btn rounded-pill", style: "color: #751F1F;" do %>
         <i class="fa-solid fa-list text-12"></i>
       <% end %>
     </div>
