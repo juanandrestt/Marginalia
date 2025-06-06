@@ -11,10 +11,10 @@
                class="rounded-circle"
                style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
           <div>
-            <p class="mb-0 fw-bold" style="color: #751F1F;">
+            <h5 class="mb-0 fw-bold" style="color: #751F1F;">
               <%= current_user.username.present? ? current_user.username : current_user.email %>
-            </p>
-            <p class="text-muted mb-0" style="font-size: 12px;"">
+            </h5>
+            <p class="text-muted mb-0" style="font-size: 12px;font-family: Poppins;">
               <%= current_user_review.created_at.strftime("%d/%m/%Y") %>
             </p>
           </div>

@@ -1,5 +1,12 @@
+<div class="container mt-3">
+  <div class="d-flex align-items-center mb-4 position-relative">
+    <%= link_to :back, class: "btn rounded-pill bg-white position-absolute", style: "color: #751F1F; left: 0;" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+    <h3 class="text-center mb-0 w-100" style="color: #0C0C0C;">All your books</h3>
+  </div>
+</div>
 <div class="container">
-  <h1 class="mb-4">All your books</h1>
   <div class="container">
     <div class="row mx-1">
       <% @books.each do |reading| %>

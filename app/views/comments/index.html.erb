@@ -8,7 +8,7 @@
 </div>
 <div class="container mt-4"style="padding-bottom: 80px;">
   <!-- Review Content -->
-  <div class="mb-3 p-4 shadow-sm" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 8px;">
+  <div class=" p-4 shadow-sm" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 8px;">
     <div class="d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-3 mb-3">
         <%= link_to user_path(@review.user), class: "d-flex align-items-center text-decoration-none" do %>
@@ -17,37 +17,19 @@
              class="rounded-circle"
              style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
           <div>
-            <p class="mb-0 fw-bold" style="color: #751F1F;">
+            <h5 class="mb-0 fw-bold" style="color: #751F1F;">
               <%= @review.user&.username.present? ? @review.user.username : @review.user&.email %>
-            </p>
+            </h5>
             <p class="text-muted mb-0" style="font-size: 12px; font-family: Poppins;">
               <%= @review.created_at.strftime("%d/%m/%Y") %>
             </p>
           </div>
         <% end %>
-        <% if user_signed_in? && @review.user && current_user != @review.user %>
-          <% if current_user.following?(@review.user) %>
-            <%= button_to follow_path(id: current_user.follows.find_by(following: review.user).id),
-                        method: :delete,
-                        class: "btn rounded-pill py-0 px-2 follow-button",
-                        style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
-                        form: { data: { turbo: true } } do %>
-              Unfollow
-            <% end %>
-          <% else %>
-            <%= button_to follows_path(following_id: @review.user.id),
-                        method: :post,
-                        class: "btn rounded-pill py-0 px-2 follow-button",
-                        style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
-                        form: { data: { turbo: true } } do %>
-              Follow
-            <% end %>
-          <% end %>
-        <% end %>
+
       </div>
     </div>
-    <p class="pb-2"" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;"><%= @review.content %></p>
-    <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+    <p class="pb-3 mb-3"" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;"><%= @review.content %></p>
+    <div class="d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-3">
         <div class="d-flex align-items-center gap-3">
           <% if user_signed_in? %>
@@ -67,7 +49,7 @@
     <!-- Comments Section -->
     <% @comments.each do |comment| %>
       <div class="d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="d-flex align-items-center mt-3 gap-3 mb-3">
           <%= link_to user_path(comment.user), class: "d-flex align-items-center text-decoration-none" do %>
             <img src="<%= comment.user.avatar %>"
              alt="<%= comment.user.username || comment.user.email %>"
@@ -75,9 +57,9 @@
              style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
             <div>
               <div class="d-flex gap-2 align-items-center">
-                <p class="mb-0 fw-bold" style="color: #751F1F;">
+                <h5 class="mb-0 fw-bold" style="color: #751F1F;">
                   <%= comment.user.username || comment.user.email %>
-                </p>
+                </h5>
                 <p class="text-muted mb-0" style="font-size: 12px; font-family: Poppins;">
                   <%= comment.created_at.strftime("%d/%m/%Y") %>
                 </p>
@@ -88,13 +70,17 @@
       <% end %>
       <p class="pb-2" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;"><%= comment.content %></p>
     <% end %>
-    <!-- Add Comment Form -->
-    <div class="tab-bar d-flex align-items-center bg-light p-2 rounded-pill shadow-sm position-fixed" style="bottom: 16px; height: 56px; z-index: 999; width: 95%">
-      <%= form_with model: [@review, @comment], local: true do |f| %>
-        <div class="d-flex align-items-center justify-content-betweenw-100">
-          <%= f.text_field :content, placeholder: "Add a comment...", class: "form-control border-0 bg-light rounded-pill", style: "font-size: 14px; color: #751F1F; flex: 1;" %>
-          <%= f.submit "Comment", class: "btn btn-primary rounded-pill",    style: "background-color: transparent; color: #751F1F; border: none;" %>
-        </div>
-      <% end %>
-    </div>
   </div>
+  <!-- Add Comment Form -->
+  <div class="position-fixed w-100 start-50 translate-middle-x px-3" style="bottom: 0px; z-index: 999; background-color: #FAF5EF; padding: 16px 0;">
+    <%= form_with model: [@review, @comment], local: true, class: "w-100 d-flex justify-content-center" do |f| %>
+      <div class="d-flex align-items-center bg-white shadow-sm px-3 py-2" style="border-radius: 50px; width: 100%; max-width: 720px; border: 1px solid #FFEAD8;">
+        <%= f.text_field :content, placeholder: "Comment", class: "form-control border-0 bg-transparent", style: "font-size: 16px; color: #070740;" %>
+        <div class="position-relative">
+          <%= f.submit "", class: "btn d-flex align-items-center justify-content-center", style: "width: 36px; height: 36px; border-radius: 50%; background-color: #751F1F;"%>
+          <i class="fa-solid fa-arrow-up position-absolute text-white top-0"></i>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

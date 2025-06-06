@@ -1,17 +1,11 @@
-<%= simple_form_for [chat, message] do |f| %> 
-    <div class="d-flex gap-2">
-    <%= f.input :content,
-                 placeholder: "Talk with Margi",
-                 required: true,
-                 label: false,
-                 wrapper: false,
-                 input_html: { 
-                    class: 'd-flex align-items-center bg-light rounded-pill shadow-sm py-2 px-2',
-                    style: 'background: #fff; border: none; font-size: 1rem; height: 3rem;',
-                } %>
-    <%= f.button :submit, '', class: 'btn btn-light rounded-circle d-flex justify-content-center align-items-center', style: 'width: 3rem; height: 3rem; background: #F5EADB;' do %>
-        <i class="fa-solid fa-arrow-up text-black" style="font-size: 1.2rem;"></i>
-    <% end %>
+<div class="position-fixed w-100 start-50 translate-middle-x px-3" style="bottom: 0px; z-index: 999; background-color: #FAF5EF; padding: 16px 0;">
+  <%= simple_form_for [chat, message] do |f| %>
+    <div class="d-flex align-items-center bg-white shadow-sm px-3 py-2" style="border-radius: 50px; width: 100%; max-width: 720px; border: 1px solid #FFEAD8;">
+      <%= f.text_field :content, placeholder: "Talk with margi", class: "form-control border-0 bg-transparent", style: "font-size: 16px; color: #070740;" %>
+      <div class="position-relative">
+        <%= f.button :submit, '', class: "btn d-flex align-items-center justify-content-center", style: "width: 36px; height: 36px; border-radius: 50%; background-color: #751F1F;" %>
+     <i class="fa-solid fa-arrow-up position-absolute text-white top-0"></i>
+      </div>
     </div>
-<%end%>
-
+  <%end%>
+</div>

@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :followers, :following, :books, :lists]
+  before_action :set_user, only: [:show, :followers, :following, :books, :lists, :bookclubs]
 
   def show
     @followers_count = @user.followers.count
     @following_count = @user.followings.count
+    @books = @user.readings.includes(:book).map(&:book).first(5)
   end
 
   def followers
@@ -22,6 +23,10 @@ class UsersController < ApplicationController
 
   def lists
     @lists = @user.lists
+  end
+
+  def bookclubs
+    @bookclubs = @user.bookclubs
   end
 
   private

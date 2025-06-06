@@ -8,84 +8,106 @@
   </div>
 </div>
 <!-- Book -->
-<div class="mb-4 bg-white p-3  opacity-80 shadow-sm">
+<div class="bg-white p-3 opacity-80 shadow-sm">
   <div class="d-flex container align-items-center">
     <img src="<%= @book.cover_url %>" alt="<%= @book.title %>" class="img-fluid shadow rounded me-3 ms-1.25" style="max-height: 89px; object-fit: cover;">
     <div class="d-flex flex-column justify-content-center h-100">
-      <h2 class="fw-bold font-size mb-1" style="color: #751F1F;">
+      <h4 class="fw-bold font-size mb-1" style="color: #751F1F;">
         <%= @book.title %>
-      </h2>
-      <p class="text-muted mb-0"><%= @book.author %></p>
+      </h4>
+      <p class="mb-0"><%= @book.author %></p>
     </div>
   </div>
 </div>
-<div class="container p-4 rounded" style="max-width: 600px;">
-  <%= form_with model: [@book, @review], local: true, data: { controller: "review-form" } do |form| %>
 
-    <!-- Review Content -->
-    <div class="mb-3">
-      <%= form.label :rating, "Your rating", class: "text-center mb-2 d-block" ,style: "color: #751F1F;" %>
+
+<div class="container p-4 rounded" style="margin-bottom: 104px;" data-controller="review-form">
+  <%= form_with model: [@book, @review], local: true do |form| %>
+    <!-- Rating -->
+    <div class="mb-5">
+      <%= form.label :rating, class: "text-center mb-3 d-block" ,style: "color: #751F1F;" do %>
+        <h5>Your rating</h5>
+      <% end %>
       <div class="mb-4 bg-white p-4 opacity-80 shadow-sm rounded-4">
         <div class="d-flex justify-content-center gap-4 fs-4">
           <% (1..5).each do |n| %>
             <i class="fa-star far cursor-pointer"
              id="star-<%= n %>"
-
-             onclick="selectStar(<%= n %>)"
+             data-action="click->review-form#selectStar"
+             data-value="<%= n %>"
              style="cursor: pointer; color: #751F1F"></i>
           <% end %>
         </div>
-        <%= form.hidden_field :rating, id: "rating-input" %>
-      </div>
-      <!-- Emotion -->
-      <div class="mb-3">
-        <%= form.label :emotion, "How did you feel?", class: "text-center mb-2 d-block" ,style: "color: #751F1F;" %>
-        <div class="row g-2 mb-2">
-          <% ["😀 Happy", "😢 Sad", "😡 Angry"].each do |emotion| %>
-            <div class="col-4">
-              <button type="button" class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center"
-                onclick="selectEmotion('<%= emotion %>')" id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
-                <span class="fs-4 mb-1"><%= emotion.split(' ').first %></span>
-                <span class="small"><%= emotion.split(' ').last %></span>
-              </button>
-            </div>
-          <% end %>
-        </div>
-        <div class="row g-2">
-          <% ["🧠 Thinking", "🤯 Impress", "🥹 Emotional"].each do |emotion| %>
-            <div class="col-4">
-              <button type="button" class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center"
-                onclick="selectEmotion('<%= emotion %>')" id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
-                <span class="fs-4"><%= emotion.split(' ').first %></span>
-                <span class="small"><%= emotion.split(' ').last %></span>
-              </button>
-            </div>
-          <% end %>
-        </div>
-        <%= form.hidden_field :emotion, id: "emotion-input" %>
-      </div>
-      <!-- Review Content -->
-      <div class="mb-3">
-        <%= form.label :content, "Your review", class: "text-center mb-2 d-block" ,style: "color: #751F1F;"%>
-        <%= form.text_area :content, rows: 5, class: "form-control d-flex align-items-center bg-white rounded-4 opacity-80 px-3 shadow-sm py-3 w-100 border-0", placeholder: "Share your thoughts..." %>
-      </div>
-      <!-- Favorite Characters -->
-      <div class="", style="margin-bottom: 104px;">
-        <%= form.label :favorite_characters, "Your favorite characters", class: "text-center mb-2 d-block" ,style: "color: #751F1F;" %>
-        <div class="d-flex flex-wrap gap-2">
-          <% ["Juan Pélardon","Anthony d’Auvergne", "Samuel Parmagiano", "Juan Pélardon"].each do |char| %>
-            <button type="button" class="btn bg-white p-3 opacity-80 shadow-sm rounded-4"
-                  onclick="selectCharacter('<%= char %>')" id="char-btn-<%= char.parameterize %>">
-              <%= char %>
-            </button>
-          <% end %>
-        </div>
-        <%= form.hidden_field :favorite_characters, id: "character-input" %>
+        <%= form.hidden_field :rating, id: "rating-input", data: { review_form_target: "ratingInput" } %>
       </div>
     </div>
-  </div>
+    <!-- Emotion -->
+    <div class="mb-5">
+      <%= form.label :emotion, class: "text-center mb-3 d-block" ,style: "color: #751F1F;" do %>
+        <h5>How did you feel?</h5>
+      <% end %>
+      <div class="row g-2 mb-2">
+        <% ["😀 Happy", "😢 Sad", "😡 Angry"].each do |emotion| %>
+          <div class="col-4">
+            <button type="button" class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center"
+                data-action="click->review-form#selectEmotion"
+                data-emotion="<%= emotion %>"
+                data-id="<%= emotion.downcase.split(' ').first %>"
+                id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
+              <span class="fs-4 mb-1"><%= emotion.split(' ').first %></span>
+              <span class="small"><%= emotion.split(' ').last %></span>
+            </button>
+          </div>
+        <% end %>
+      </div>
+      <div class="row g-2">
+        <% ["🧠 Thinking", "🤯 Impress", "🥹 Emotional"].each do |emotion| %>
+          <div class="col-4">
+            <button type="button" class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center"
+                data-action="click->review-form#selectEmotion"
+                data-emotion="<%= emotion %>"
+                data-id="<%= emotion.downcase.split(' ').first %>"
+                id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
+              <span class="fs-4"><%= emotion.split(' ').first %></span>
+              <span class="small"><%= emotion.split(' ').last %></span>
+            </button>
+          </div>
+        <% end %>
+      </div>
+      <%= form.hidden_field :emotion, id: "emotion-input", data: { review_form_target: "emotionInput" } %>
+    </div>
+    <!-- Review Content -->
+    <div class="mb-5">
+      <%= form.label :content, class: "text-center mb-2 d-block" ,style: "color: #751F1F;" do %>
+        <h5>Your review</h5>
+      <% end %>
+      <%= form.text_area :content, rows: 5, class: "form-control d-flex align-items-center bg-white rounded-4 opacity-80 px-3 shadow-sm py-3 w-100 border-0", placeholder: "Share your thoughts..." %>
+    </div>
+    <!-- Favorite Characters -->
+    <div>
+      <%= form.label :favorite_characters, class: "text-center mb-3 d-block" ,style: "color: #751F1F;" do %>
+        <h5>Your favorite characters</h5>
+      <% end %>
+      <div class="d-flex flex-wrap gap-2">
+        <% ["Juan Pélardon","Anthony d'Auvergne", "Samuel Parmagiano", "Juan Pélardon"].each do |char| %>
+          <button type="button" class="btn bg-white p-3 opacity-80 shadow-sm rounded-4"
+                  data-action="click->review-form#selectCharacter"
+                  data-character="<%= char %>"
+                  data-id="<%= char.parameterize %>"
+                  id="char-btn-<%= char.parameterize %>">
+            <%= char %>
+          </button>
+        <% end %>
+      </div>
+      <%= form.hidden_field :favorite_characters, id: "character-input", data: { review_form_target: "characterInput" } %>
+    </div>
+  </disv>
   <!-- Submit -->
-  <div class="tab-bar col justify-content-around align-items-center bg-white p-3 shadow-sm position-fixed w-100 start-50 translate-middle-x" style="bottom: 0px; height: 104px; z-index: 999; box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);">
-    <%= form.submit "Submit Review", class: "btn rounded-4 shadow-sm py-2 w-100 mb-2", style: "color: #fff; background-color: #751F1F" %>
+  <div class="tab-bar col justify-content-around align-items-center bg-white p-3 shadow-sm position-fixed w-100 start-50 translate-middle-x" style="bottom: 0px; height: 104px; z-index: 999; crae-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);">
+    <%= form.submit class: "btn rounded-4 py-2 w-100 mb-2", style: "color: #fff; background-color: #751F1F" do %>
+      <h5>Submit Review</h5>
+    <% end %>
   <% end %>
+  <p class="text-center mb-4" style="font-size: 14px;">You can modify your review later</p>
+</div>
 </div>

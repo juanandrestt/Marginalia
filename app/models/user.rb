@@ -10,8 +10,8 @@ class User < ApplicationRecord
   before_validation :set_default_avatar
 
   has_many :lists, dependent: :destroy
-  has_many :reviews
-  has_many :readings
+  has_many :reviews, dependent: :destroy
+  has_many :readings, dependent: :destroy
   has_many :bookclubs, dependent: :destroy
   has_many :chats, dependent: :destroy
   has_many :follows, foreign_key: :follower_id, dependent: :destroy
