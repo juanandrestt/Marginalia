@@ -22,7 +22,7 @@ puts "Creating books..."
 subjects = ["fiction", "poetry", "manga"]
 
 subjects.each do |subject|
-  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=50"
+  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=30"
   begin
     serialized = URI.open(url).read
     data = JSON.parse(serialized)
@@ -160,4 +160,16 @@ books.each do |book|
     )
 end
 
+puts "Reviews created. Now creating bookclubs..."
+
+users.each do |user|
+  book = Book.all.sample
+  Bookclub.create!(
+    name: "#{user.username}'s Book Club",
+    user: user,
+    book: book
+  )
+end
+
+puts "Bookclubs created!"
 puts "Everything is created!"
