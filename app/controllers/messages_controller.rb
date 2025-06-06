@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
   def create
     @chat = Chat.find(params[:chat_id])
     embedding = RubyLLM.embed(message_params[:content])
-    books = Book.nearest_neighbors(:embedding, embedding.vectors, distance: "euclidean").first(3)
+    books = Book.nearest_neighbors(:embedding, embedding.vectors, distance: "euclidean")
     instructions = system_prompt
     instructions += books.map { |book| book_prompt(book) }.join("\n") 
     
