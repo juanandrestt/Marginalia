@@ -12,16 +12,16 @@
     </div>
   </div>
   <h3 class="text-center mb-0" style="color: #0C0C0C;">Book</h3>
-  <div class="d-flex justify-content-center gap-2">
+  <div class="d-flex justify-content-center">
     <!-- CTA bookclub -->
     <div>
-      <%= link_to new_book_bookclub_path(@book), class: "btn btn-outline-dark rounded-pill", style: "color: #751F1F; border-color: #751F1F;" do %>
+      <%= link_to new_book_bookclub_path(@book), class: "btn rounded-pill", style: "color: #751F1F;" do %>
         <i class="fa-regular fa-bookmark"></i>
       <% end %>
     </div>
     <!-- CTA list -->
     <div>
-      <%= link_to new_book_bookclub_path(@book), class: "btn btn-outline-dark rounded-pill", style: "color: #751F1F; border-color: #751F1F;" do %>
+      <%= link_to new_book_bookclub_path(@book), class: "btn rounded-pill", style: "color: #751F1F;" do %>
         <i class="fa-solid fa-list text-12"></i>
       <% end %>
     </div>
@@ -36,7 +36,7 @@
   </div>
   <!-- Title & Author -->
   <div class="text-center mb-4">
-    <h2 class="fw-bold" style="color: #751F1F;">
+    <h2 class="fw-bold px-4" style="color: #751F1F;">
       <%= @book.title %>
     </h2>
     <p class="text-muted" style="margin-top: -0.5rem;"><%= @book.author %></p>

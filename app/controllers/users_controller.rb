@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def show
     @followers_count = @user.followers.count
     @following_count = @user.followings.count
+    @books = @user.readings.includes(:book).map(&:book).first(5)
   end
 
   def followers
