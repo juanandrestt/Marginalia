@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get :following
       get :books
       get :lists
+      get :bookclubs
     end
   end
 

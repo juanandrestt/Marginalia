@@ -11,7 +11,7 @@
       </div>
       <!-- Icon link - 10% -->
       <div class="d-flex align-items-center justify-content-center" style="width: 42px;">
-        <%= link_to chats_path, class: "text-decoration-none" do %>
+        <%= link_to quick_chat_path, data: {turbo_method: :post}, class: "text-decoration-none" do %>
           <i class="fa-solid fa-wand-magic-sparkles" style="font-size: 18px; color: #751F1F;"></i>
         <% end %>
       </div>
@@ -106,10 +106,10 @@
     </div>
   </div>
   <div class="tab-bar d-flex bg-white justify-content-between position-fixed w-100 start-50 translate-middle-x px-5" style="bottom: 0px; height: 56px; z-index: 999; box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.05)">
-    <%= link_to bookclubs_path, class: "text-center text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+    <%= link_to bookclubs_user_path(current_user), class: "text-center text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
       <i class="fas fa-book" style="font-size: 20px; color: #751F1F"></i>
     <% end %>
-    <%= link_to chats_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+    <%= link_to lists_user_path(current_user), class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
       <i class="fa-solid fa-list" style="font-size: 20px; color: #751F1F"></i>
     <% end %>
     <%= link_to books_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
