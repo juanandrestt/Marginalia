@@ -22,19 +22,19 @@ puts "Creating books..."
 subjects = ["fiction", "poetry", "manga"]
 
 subjects.each do |subject|
-  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=20"
+  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=30"
   begin
     serialized = URI.open(url).read
     data = JSON.parse(serialized)
 
     data["docs"].each do |doc|
-      title = doc["title"]
-      author = doc["author_name"]&.first || "Unknown Author"
-      publishing_year = doc["first_publish_year"]
-      open_library_id = doc["key"]&.split("/")&.last
-      subjects = doc["subject"]&.join(", ") || ""
+     title = doc["title"]
+     author = doc["author_name"]&.first || "Unknown Author"
+     publishing_year = doc["first_publish_year"]
+     open_library_id = doc["key"]&.split("/")&.last
+     subjects = doc["subject"]&.join(", ") || ""
 
-      work_url = "https://openlibrary.org/works/#{open_library_id}.json"
+     p work_url = "https://openlibrary.org/works/#{open_library_id}.json"
       begin
         full_data = JSON.parse(URI.open(work_url).read)
         desc = full_data["description"]
@@ -50,7 +50,7 @@ subjects.each do |subject|
       next unless cover_url
 
       characters = nil # not available here
-
+      counter = 1
       book = Book.new(
         title: title,
         author: author,
@@ -72,6 +72,8 @@ subjects.each do |subject|
       end
 
       book.save! if book.cover.attached?
+      counter += 1
+      p "Book #{counter} created"
     end
   rescue => e
     puts "An error occurred: #{e.message}"
@@ -133,18 +135,43 @@ Bookmark.create!(
 puts "Bookmarks created. Now creating reviews..."
 
 emotions = %w[Happy Sad Excited Grateful Angry Bored]
-characters = ["Alice", "Frodo", "Jon Snow", "Matilda", "Naruto", "Hermione"]
 books = Book.all
+quotes = [
+  "J'ai mis quatre mois à le lire, et on ne sort pas indemne de la fréquentation aussi longue d'une littérature aussi rude.",
+  "Un livre labyrinthique et total, superbement écrit.",
+  "Peut-on se libérer de ses origines sans les trahir ? Ce récit subtil et incarné montre qu'on ne se défait jamais tout à fait de ce qui nous a formés, mais qu'on peut apprendre à le regarder autrement. Une réussite.",
+  "I don't know if this is the best book I've ever read, or the worst.",
+  "This also happened when I dyed my hair",
+  "When your circle small but y'all crazy",
+  "No spoilers but I didn't breathe for the last few pages of this book.",
+  "Écrit par une IA",
+  "Je suis en train de chialer comme une merde j'arrive pas à m'arrêter",
+  "Bravo les lesbiennes",
+  "Ok...",
+  "In a narrative that unfolds with the deliberate pace of a slow-burning fuse, the author crafts a tapestry of lives intertwined by fate and circumstance. The prose, both lyrical and precise, invites readers to linger over each sentence, savoring the nuances of character and setting. Themes of loss, redemption, and the inexorable passage of time permeate the work, offering a meditation on the human condition that is as profound as it is poignant.",
+  "The author's exploration of identity and belonging is both timely and timeless. Through a series of interconnected stories, the narrative delves into the complexities of cultural assimilation and the subtle fractures that occur when personal history collides with societal expectations. The writing is at once sharp and empathetic, capturing the dissonance between internal desires and external realities. This is a work that challenges the reader to reconsider preconceived notions and to engage with the text on a deeply personal level."
+]
 
 books.each do |book|
   Review.create!(
-      content: Faker::GreekPhilosophers.quote,
+      content: quotes.sample,
       rating: rand(1.0..5.0).round(1),
       emotion: emotions.sample,
-      favorite_characters: characters.sample,
       user: users.sample,
       book: book
     )
 end
 
+puts "Reviews created. Now creating bookclubs..."
+
+users.each do |user|
+  book = Book.all.sample
+  Bookclub.create!(
+    name: "#{user.username}'s Book Club",
+    user: user,
+    book: book
+  )
+end
+
+puts "Bookclubs created!"
 puts "Everything is created!"
