@@ -5,7 +5,7 @@
       <!-- Search form - 90% -->
       <div class="flex-grow-1">
         <%= form_with url: books_path, method: :get, local: true, class: "d-flex align-items-center bg-white rounded-pill px-3 shadow-sm py-1" do |f| %>
-        <i class="fas fa-search me-2" style="font-size: 14px; color: #751F1F; "></i>
+          <i class="fas fa-search me-2" style="font-size: 14px; color: #751F1F; "></i>
           <%= f.text_field :query, placeholder: "Find your book here...", class: "form-control border-0 bg-white rounded-pill ", style: "font-size: 14px; color: #751F1F;", autofocus: false %>
         <% end %>
       </div>
@@ -17,20 +17,6 @@
       </div>
     </div>
   </div>
-  <!-- Notre recommandation du jour
-  <div class="row justify-content-center mb-5">
-    <div class="carousel-inner">
-      <% @book.each_with_index do |book, idx| %>
-        <div class="carousel-item d-flex flex-column align-items-center">
-          <img src="<%= book.cover_url %>" class="shadow rounded mb-2" alt="<%= book.title %>" style="width: 130px; height: 180px; object-fit: cover; ">
-          <div class="mt-2 text-center">
-            <h2 class="playfair-display" style="color:#751F1F; font-size: 16px;"><%= book.title %></h2>
-            <div class="text-muted" style="font-size: 14px;;"><%= book.author %></div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>-->
   <!-- TEST -->
   <div id="carouselExampleDark" class="carousel slide mb-4" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -94,7 +80,7 @@
         <% @last.each do |book| %>
           <div class="col-auto gap: 2px;">
             <%= link_to book_path(book), class: "text-decoration-none" do %>
-              <img src="<%= book.cover_url %>" style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; " alt="<%= book.title %>">
+              <%= cl_image_tag book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
               <h6 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
                 <%= truncate(book.title, length: 22) %>
               </h6>

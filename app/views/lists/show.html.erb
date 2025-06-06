@@ -1,18 +1,13 @@
 <div class="container">
   <h1 class="mb-4" style="color: #000; font-weight: bold;"><%= @list.name %> book</h1>
-
-<%= link_to "Add a book", new_list_bookmark_path(@list), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;", data: { bs_toggle: "modal", bs_target: "#new_book_modal" } %>
-
+  <%= link_to "Add a book", new_list_bookmark_path(@list), class: "btn btn-outline-dark rounded-pill px-4", style: "color: #751F1F; border-color: #751F1F;", data: { bs_toggle: "modal", bs_target: "#new_book_modal" } %>
   <div class="row g-3">
     <% @list.bookmarks.each do |bookmark| %>
       <% book = bookmark.book %>
       <div class="col-auto">
         <%= link_to book_path(book), class: "text-decoration-none" do %>
           <div class="d-flex flex-column align-items-center p-3 rounded">
-            <img src="<%= book.cover_url %>"
-                 style="width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem;"
-                 alt="<%= book.title %>"
-                 class="rounded">
+            <%= cl_image_tag book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
             <h5 style="font-size: 14px; margin-bottom: 4px; color: #751F1F;" class="fw-medium playfair-display text-center">
               <%= book.title %>
             </h5>
@@ -25,5 +20,4 @@
     <% end %>
   </div>
 </div>
-
 <%= render "bookmarks/modal", list: @list, bookmark: Bookmark.new %>
