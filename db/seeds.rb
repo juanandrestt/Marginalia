@@ -23,18 +23,16 @@ subjects = ["fiction", "poetry", "manga"]
 
 subjects.each do |subject|
   url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=30"
-  p url
   begin
     serialized = URI.open(url).read
     data = JSON.parse(serialized)
-    p data
 
     data["docs"].each do |doc|
-     p title = doc["title"]
-     p author = doc["author_name"]&.first || "Unknown Author"
-     p publishing_year = doc["first_publish_year"]
-     p open_library_id = doc["key"]&.split("/")&.last
-     p subjects = doc["subject"]&.join(", ") || ""
+     title = doc["title"]
+     author = doc["author_name"]&.first || "Unknown Author"
+     publishing_year = doc["first_publish_year"]
+     open_library_id = doc["key"]&.split("/")&.last
+     subjects = doc["subject"]&.join(", ") || ""
 
      p work_url = "https://openlibrary.org/works/#{open_library_id}.json"
       begin
