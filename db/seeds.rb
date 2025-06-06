@@ -19,66 +19,45 @@ User.destroy_all
 
 puts "Creating books..."
 
-subjects = ["fiction", "poetry", "manga"]
+query = "fiction" # you can change this to "poetry", "manga", etc.
+url = "https://www.googleapis.com/books/v1/volumes?q=#{URI.encode_www_form_component(query)}&maxResults=40"
 
-subjects.each do |subject|
-  url = "https://openlibrary.org/search.json?q=subject:#{subject}+AND+first_publish_year:[2020+TO+*]+AND+(publisher:Knopf+OR+publisher:Viz+Media+OR+publisher:Penguin+Random+House)&limit=30"
-  begin
-    serialized = URI.open(url).read
-    data = JSON.parse(serialized)
+begin
+  serialized = URI.open(url).read
+  data = JSON.parse(serialized)
 
-    data["docs"].each do |doc|
-     title = doc["title"]
-     author = doc["author_name"]&.first || "Unknown Author"
-     publishing_year = doc["first_publish_year"]
-     open_library_id = doc["key"]&.split("/")&.last
-     subjects = doc["subject"]&.join(", ") || ""
+  data["items"].each_with_index do |item, index|
+    volume = item["volumeInfo"]
+    title = volume["title"]
+    author = volume["authors"]&.first || "Unknown Author"
+    publishing_year = volume["publishedDate"]&.slice(0, 4)
+    description = volume["description"] || "No description available"
+    cover_url = volume.dig("imageLinks", "thumbnail")&.gsub("http:", "https:")
 
-     p work_url = "https://openlibrary.org/works/#{open_library_id}.json"
-      begin
-        full_data = JSON.parse(URI.open(work_url).read)
-        desc = full_data["description"]
-        description = desc.is_a?(Hash) ? desc["value"] : desc
-      rescue
-        description = nil
-      end
+    next unless cover_url
 
-      cover_id = doc["cover_i"]
-      cover_url = cover_id ? "https://covers.openlibrary.org/b/id/#{cover_id}-L.jpg" : nil
+    book = Book.new(
+      title: title,
+      author: author,
+      publishing_year: publishing_year,
+      open_library_id: item["id"], # You can store Google ID here if you want
+      description: description,
+      cover_url: cover_url,
+      subjects: query, # not precise from Google, just tag with query
+      characters: nil
+    )
 
-      # Ensure cover_url is not nil before proceeding
-      next unless cover_url
+    book.cover.attach(
+      io: URI.open(cover_url),
+      filename: "cover_#{title.parameterize}.jpg",
+      content_type: "image/jpeg"
+    ) if cover_url
 
-      characters = nil # not available here
-      counter = 1
-      book = Book.new(
-        title: title,
-        author: author,
-        publishing_year: publishing_year,
-        open_library_id: open_library_id,
-        description: description,
-        cover_url: cover_url,
-        subjects: subjects,
-        characters: characters
-      )
-
-      # Ensure cover_url is valid before attaching
-      if book.cover_url
-        book.cover.attach(
-          io: URI.open(book.cover_url),
-          filename: "cover_#{book.title}",
-          content_type: "image/jpg"
-        )
-      end
-
-      book.save! if book.cover.attached?
-      counter += 1
-      p "Book #{counter} created"
-    end
-  rescue => e
-    puts "An error occurred: #{e.message}"
-    next
+    book.save! if book.cover.attached?
+    puts "Book #{index + 1}: #{title} created"
   end
+rescue => e
+  puts "Failed to fetch from Google Books API: #{e.message}"
 end
 
 puts "Books created. Now creating users..."
@@ -126,10 +105,11 @@ end
 
 puts "Lists created. Now creating bookmarks..."
 
-Bookmark.create!(
+bookmark = Bookmark.new(
   list: List.all.sample,
   book: Book.all.sample
 )
+bookmark.save if bookmark.valid?
 
 
 puts "Bookmarks created. Now creating reviews..."
