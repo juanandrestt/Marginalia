@@ -13,7 +13,7 @@
       <% current_user.lists.each do |list| %>
         <%= link_to list_path(list), class: "text-decoration-none" do %>
           <div class="col-16 d-flex mb-3 align-items-center">
-          <%= cl_image_tag list.book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
+          <%= cl_image_tag list.book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: list.book.title if list.book.cover.attached? %>
               <h5 style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium playfair-display">
                 <%= list.name %>
               </h5>

@@ -3,7 +3,7 @@
 <div class="container d-flex gap-2 ">
   <!-- Image du livre associé -->
   <div class="text-center" style="margin-top: -60px;">
-    <%= cl_image_tag @bookclub.book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if @bookclub.book.cover.attached? %>
+    <%= cl_image_tag @bookclub.book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: @bookclub.book.title if @bookclub.book.cover.attached? %>
   </div>
 
   <!-- Détails du Bookclub -->
