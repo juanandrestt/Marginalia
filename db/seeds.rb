@@ -71,7 +71,7 @@ subjects.each do |subject|
         )
       end
 
-      book.save!
+      book.save! if book.cover.attached?
     end
   rescue => e
     puts "An error occurred: #{e.message}"

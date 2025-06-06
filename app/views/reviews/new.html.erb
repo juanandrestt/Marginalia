@@ -21,7 +21,7 @@
 </div>
 
 
-<div class="container p-4 rounded" style="margin-bottom: 104px;">
+<div class="container p-4 rounded" style="margin-bottom: 104px;" data-controller="review-form">
   <%= form_with model: [@book, @review], local: true do |form| %>
     <!-- Rating -->
     <div class="mb-5">
@@ -33,12 +33,12 @@
           <% (1..5).each do |n| %>
             <i class="fa-star far cursor-pointer"
              id="star-<%= n %>"
-
-             onclick="selectStar(<%= n %>)"
+             data-action="click->review-form#selectStar"
+             data-value="<%= n %>"
              style="cursor: pointer; color: #751F1F"></i>
           <% end %>
         </div>
-        <%= form.hidden_field :rating, id: "rating-input" %>
+        <%= form.hidden_field :rating, id: "rating-input", data: { review_form_target: "ratingInput" } %>
       </div>
     </div>
     <!-- Emotion -->
@@ -50,7 +50,10 @@
         <% ["😀 Happy", "😢 Sad", "😡 Angry"].each do |emotion| %>
           <div class="col-4">
             <button type="button" class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center"
-                onclick="selectEmotion('<%= emotion %>')" id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
+                data-action="click->review-form#selectEmotion"
+                data-emotion="<%= emotion %>"
+                data-id="<%= emotion.downcase.split(' ').first %>"
+                id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
               <span class="fs-4 mb-1"><%= emotion.split(' ').first %></span>
               <span class="small"><%= emotion.split(' ').last %></span>
             </button>
@@ -61,14 +64,17 @@
         <% ["🧠 Thinking", "🤯 Impress", "🥹 Emotional"].each do |emotion| %>
           <div class="col-4">
             <button type="button" class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center"
-                onclick="selectEmotion('<%= emotion %>')" id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
+                data-action="click->review-form#selectEmotion"
+                data-emotion="<%= emotion %>"
+                data-id="<%= emotion.downcase.split(' ').first %>"
+                id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
               <span class="fs-4"><%= emotion.split(' ').first %></span>
               <span class="small"><%= emotion.split(' ').last %></span>
             </button>
           </div>
         <% end %>
       </div>
-      <%= form.hidden_field :emotion, id: "emotion-input" %>
+      <%= form.hidden_field :emotion, id: "emotion-input", data: { review_form_target: "emotionInput" } %>
     </div>
     <!-- Review Content -->
     <div class="mb-5">
@@ -83,16 +89,19 @@
         <h5>Your favorite characters</h5>
       <% end %>
       <div class="d-flex flex-wrap gap-2">
-        <% ["Juan Pélardon","Anthony d’Auvergne", "Samuel Parmagiano", "Juan Pélardon"].each do |char| %>
+        <% ["Juan Pélardon","Anthony d'Auvergne", "Samuel Parmagiano", "Juan Pélardon"].each do |char| %>
           <button type="button" class="btn bg-white p-3 opacity-80 shadow-sm rounded-4"
-                  onclick="selectCharacter('<%= char %>')" id="char-btn-<%= char.parameterize %>">
+                  data-action="click->review-form#selectCharacter"
+                  data-character="<%= char %>"
+                  data-id="<%= char.parameterize %>"
+                  id="char-btn-<%= char.parameterize %>">
             <%= char %>
           </button>
         <% end %>
       </div>
-      <%= form.hidden_field :favorite_characters, id: "character-input" %>
+      <%= form.hidden_field :favorite_characters, id: "character-input", data: { review_form_target: "characterInput" } %>
     </div>
-  </div>
+  </disv>
   <!-- Submit -->
   <div class="tab-bar col justify-content-around align-items-center bg-white p-3 shadow-sm position-fixed w-100 start-50 translate-middle-x" style="bottom: 0px; height: 104px; z-index: 999; crae-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);">
     <%= form.submit class: "btn rounded-4 py-2 w-100 mb-2", style: "color: #fff; background-color: #751F1F" do %>
@@ -102,36 +111,3 @@
   <p class="text-center mb-4" style="font-size: 14px;">You can modify your review later</p>
 </div>
 </div>
-<!-- JS interactions -->
-<script>
-  function selectStar(value) {
-    document.getElementById("rating-input").value = value;
-    for (let i = 1; i <= 5; i++) {
-      const star = document.getElementById(`star-${i}`);
-      star.classList.remove("fas");
-      star.classList.add("far");
-    }
-    for (let i = 1; i <= value; i++) {
-      const star = document.getElementById(`star-${i}`);
-      star.classList.remove("far");
-      star.classList.add("fas");
-    }
-  }
-
-  function selectEmotion(emotion) {
-    document.getElementById("emotion-input").value = emotion;
-  ["😀 Happy", "😢 Sad", "😡 Angry", "🧠 Thinking", "🤯 Impress", "🥹 Emotional"].forEach(e => {
-    const id = `emotion-btn-${e.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
-    document.getElementById(id).classList.remove("active");
-  });
-    document.getElementById(`emotion-btn-${emotion.toLowerCase()}`).classList.add("active");
-  }
-
-  function selectCharacter(name) {
-    document.getElementById("character-input").value = name;
-    ["juan-pelardon", "anthony-d-auvergne", "samuel-parmagiano"].forEach(id => {
-      document.getElementById(`char-btn-${id}`).classList.remove("active");
-    });
-    document.getElementById(`char-btn-${name.toLowerCase().replaceAll(' ', '-').replaceAll(/[’']/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`).classList.add("active");
-  }
-</script>
