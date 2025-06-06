@@ -9,7 +9,7 @@
     <% @bookclubs.each do |bookclub| %>
       <%= link_to book_bookclub_path(bookclub.book, bookclub), class: "text-decoration-none" do %>
         <div class="col-12 d-flex mb-3 align-items-center">
-          <img src="<%= bookclub.book.cover_url %>" style="width: 50px; height: 70px; object-fit: cover; margin-right: 12px;" alt="<%= bookclub.book.title %>" class="rounded">
+        <%= cl_image_tag bookclub.book.cover.key, class: "rounded-3", style="width: 50px; height: 70px; object-fit: cover; margin-right: 12px;", alt: book.title if book.cover.attached? %>
           <div>
             <h5 style="font-size: 12px; margin-bottom: 4px; color: #751F1F;" class="fw-medium text-muted"><%= bookclub.book.title %></h5>
             <p style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium"><%= bookclub.name %></p>

@@ -10,7 +10,8 @@
 <!-- Book -->
 <div class="bg-white p-3 opacity-80 shadow-sm">
   <div class="d-flex container align-items-center">
-    <img src="<%= @book.cover_url %>" alt="<%= @book.title %>" class="img-fluid shadow rounded me-3 ms-1.25" style="max-height: 89px; object-fit: cover;">
+  <%= cl_image_tag book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
+
     <div class="d-flex flex-column justify-content-center h-100">
       <h4 class="fw-bold font-size mb-1" style="color: #751F1F;">
         <%= @book.title %>

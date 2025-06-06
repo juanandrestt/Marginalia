@@ -3,7 +3,7 @@
 <div class="container d-flex gap-2 ">
   <!-- Image du livre associé -->
   <div class="text-center" style="margin-top: -60px;">
-    <img src="<%= @bookclub.book.cover_url %>" style="width: 130px; height: 180px; object-fit: cover; border: 4px solid white;" alt="<%= @bookclub.book.title %>" class="shadow rounded">
+    <%= cl_image_tag @bookclub.book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if @bookclub.book.cover.attached? %>
   </div>
 
   <!-- Détails du Bookclub -->
