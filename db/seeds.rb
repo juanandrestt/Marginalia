@@ -2,31 +2,19 @@ require "json"
 require "open-uri"
 require "faker"
 
-puts "Deleting all messages..."
-Message.destroy_all
-
-puts "Deleting all lists..."
-List.destroy_all
-
-puts "Deleting all chats..."
-Chat.destroy_all
-
-puts "Deleting all books..."
-Book.destroy_all
-
-puts "Deleting all users..."
-User.destroy_all
-
 puts "Creating books..."
 
-query = "fiction" # you can change this to "poetry", "manga", etc.
-url = "https://www.googleapis.com/books/v1/volumes?q=#{URI.encode_www_form_component(query)}&maxResults=40"
+query = "poetry"
+
+url = "https://www.googleapis.com/books/v1/volumes?q=subject:#{query}&maxResults=40"
 
 begin
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
 
   data["items"].each_with_index do |item, index|
+    next if Book.exists?(open_library_id: item[:id])
+
     volume = item["volumeInfo"]
     title = volume["title"]
     author = volume["authors"]&.first || "Unknown Author"
@@ -40,10 +28,10 @@ begin
       title: title,
       author: author,
       publishing_year: publishing_year,
-      open_library_id: item["id"], # You can store Google ID here if you want
+      open_library_id: item["id"],
       description: description,
       cover_url: cover_url,
-      subjects: query, # not precise from Google, just tag with query
+      subjects: query,
       characters: nil
     )
 
@@ -126,8 +114,6 @@ quotes = [
   "No spoilers but I didn't breathe for the last few pages of this book.",
   "Écrit par une IA",
   "Je suis en train de chialer comme une merde j'arrive pas à m'arrêter",
-  "Bravo les lesbiennes",
-  "Ok...",
   "In a narrative that unfolds with the deliberate pace of a slow-burning fuse, the author crafts a tapestry of lives intertwined by fate and circumstance. The prose, both lyrical and precise, invites readers to linger over each sentence, savoring the nuances of character and setting. Themes of loss, redemption, and the inexorable passage of time permeate the work, offering a meditation on the human condition that is as profound as it is poignant.",
   "The author's exploration of identity and belonging is both timely and timeless. Through a series of interconnected stories, the narrative delves into the complexities of cultural assimilation and the subtle fractures that occur when personal history collides with societal expectations. The writing is at once sharp and empathetic, capturing the dissonance between internal desires and external realities. This is a work that challenges the reader to reconsider preconceived notions and to engage with the text on a deeply personal level."
 ]
