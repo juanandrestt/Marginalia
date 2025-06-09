@@ -4,7 +4,7 @@ class PagesController < ApplicationController
     @books = Book.offset(20).limit(6)
     @last = Book.offset(10).limit(6)
   end
-  
+
   def books
     @book = Book.find(params[:id])
   end
