@@ -1,6 +1,7 @@
 require "json"
 require "open-uri"
 require "faker"
+require 'net/http'
 
 puts "Deleting all messages..."
 Message.destroy_all
@@ -19,13 +20,26 @@ User.destroy_all
 
 puts "Creating books..."
 
+
+
+# def fetch_books
+#   api_key = ENV.fetch('GOOGLE_BOOKS_API_KEY')
+#   raise 'Must supply api_key' if api_key.nil?
+
+#   uri = URI("https://www.googleapis.com/books/v1/volumes?q=fiction&maxResults=40&key=#{api_key}")
+#   response = Net::HTTP.get(uri)
+#   json = JSON.parse(response)
+
+#   return json
+# end
+
+
 query = "fiction" # you can change this to "poetry", "manga", etc.
 url = "https://www.googleapis.com/books/v1/volumes?q=#{URI.encode_www_form_component(query)}&maxResults=40"
-
+# p url
 begin
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
-
   data["items"].each_with_index do |item, index|
     volume = item["volumeInfo"]
     title = volume["title"]

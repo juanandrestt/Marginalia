@@ -29,7 +29,9 @@ Rails.application.routes.draw do
     resources :bookmarks, only: [:new, :create, :destroy]
   end
 
-  resources :bookclubs, only: [:index, :show, :edit, :update, :destroy]
+  resources :bookclubs, only: [:index, :show, :edit, :update, :destroy] do
+    resources :bookclub_users, only: [:create]
+  end
 
   resources :likes, only: [:destroy]
   resources :reviews, only: [] do
