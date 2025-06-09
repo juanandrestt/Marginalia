@@ -12,11 +12,11 @@
   <div class="row mx-1">
     <% @books.each do |book| %>
       <%= link_to book_path(book), class: "text-decoration-none" do %>
-        <div class="col-16 d-flex mb-3 align-items-center">
-          <%= cl_image_tag book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
+        <div class="col-16 d-flex  align-items-center">
+          <%= cl_image_tag book.cover.key, class: "rounded-2 me-3", style:" height: 80px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
           <div>
-            <h5 style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium playfair-display"><%= book.title %></h5>
-            <p class="text-muted" style="font-size: 14px; margin-bottom: 0;"><%= book.author %></p>
+            <h4 style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium playfair-display"><%= book.title %></h4>
+            <p class="" style="font-size: 14px; margin-bottom: 0;"><%= book.author %></p>
           </div>
         </div>
       <% end %>

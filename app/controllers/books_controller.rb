@@ -4,6 +4,8 @@ class BooksController < ApplicationController
   def show
     @current_user_review = @book.reviews.where(user: current_user).first
     @reviews = @book.reviews.where.not(user: current_user)
+    
+    session[:last_viewed_book_url] = request.original_url
   end
 
   def new
