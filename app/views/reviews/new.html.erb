@@ -1,8 +1,8 @@
 <!-- Title -->
 <div class="container mt-3">
   <div class="d-flex align-items-center mb-4 position-relative">
-    <%= link_to :back, class: "btn rounded-pill bg-white position-absolute", style: "color: #751F1F; left: 0;" do %>
-      <i class="fa-solid fa-arrow-left"></i>
+    <%= link_to request.referer || root_path, class: "btn rounded-pill bg-white position-absolute", style: "color: #751F1F; left: 0;" do %>
+      <i class="fa-solid fa-xmark"></i>
     <% end %>
     <h3 class="text-center mb-0 w-100" style="color: #0C0C0C;">Create a review</h3>
   </div>
@@ -10,8 +10,7 @@
 <!-- Book -->
 <div class="bg-white p-3 opacity-80 shadow-sm">
   <div class="d-flex container align-items-center">
-  <%= cl_image_tag @book.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: @book.title if @book.cover.attached? %>
-
+    <%= cl_image_tag @book.cover.key, class: "rounded-3 me-3", style:"height: 96px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: @book.title if @book.cover.attached? %>
     <div class="d-flex flex-column justify-content-center h-100">
       <h4 class="fw-bold font-size mb-1" style="color: #751F1F;">
         <%= @book.title %>
@@ -20,8 +19,6 @@
     </div>
   </div>
 </div>
-
-
 <div class="container p-4 rounded" style="margin-bottom: 104px;" data-controller="review-form">
   <%= form_with model: [@book, @review], local: true do |form| %>
     <!-- Rating -->
@@ -35,8 +32,8 @@
             <i class="fa-star far cursor-pointer"
              id="star-<%= n %>"
              data-action="click->review-form#selectStar"
-             data-value="<%= n %>"
-             style="cursor: pointer; color: #751F1F"></i>
+              data-value="<%= n %>"
+              style="cursor: pointer; color: #751F1F"></i>
           <% end %>
         </div>
         <%= form.hidden_field :rating, id: "rating-input", data: { review_form_target: "ratingInput" } %>
@@ -52,9 +49,9 @@
           <div class="col-4">
             <button type="button" class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center"
                 data-action="click->review-form#selectEmotion"
-                data-emotion="<%= emotion %>"
-                data-id="<%= emotion.downcase.split(' ').first %>"
-                id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
+              data-emotion="<%= emotion %>"
+              data-id="<%= emotion.downcase.split(' ').first %>"
+              id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
               <span class="fs-4 mb-1"><%= emotion.split(' ').first %></span>
               <span class="small"><%= emotion.split(' ').last %></span>
             </button>
@@ -66,9 +63,9 @@
           <div class="col-4">
             <button type="button" class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center"
                 data-action="click->review-form#selectEmotion"
-                data-emotion="<%= emotion %>"
-                data-id="<%= emotion.downcase.split(' ').first %>"
-                id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
+              data-emotion="<%= emotion %>"
+              data-id="<%= emotion.downcase.split(' ').first %>"
+              id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
               <span class="fs-4"><%= emotion.split(' ').first %></span>
               <span class="small"><%= emotion.split(' ').last %></span>
             </button>
@@ -93,9 +90,9 @@
         <% ["Juan Pélardon","Anthony d'Auvergne", "Samuel Parmagiano", "Juan Pélardon"].each do |char| %>
           <button type="button" class="btn bg-white p-3 opacity-80 shadow-sm rounded-4"
                   data-action="click->review-form#selectCharacter"
-                  data-character="<%= char %>"
-                  data-id="<%= char.parameterize %>"
-                  id="char-btn-<%= char.parameterize %>">
+            data-character="<%= char %>"
+            data-id="<%= char.parameterize %>"
+            id="char-btn-<%= char.parameterize %>">
             <%= char %>
           </button>
         <% end %>
