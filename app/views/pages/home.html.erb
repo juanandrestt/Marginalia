@@ -22,7 +22,7 @@
     <div class="carousel-inner">
       <% @books.each_slice(3).with_index do |group, index| %>
         <div class="carousel-item <%= 'active' if index == 0 %>">
-          <div class="d-flex justify-content-center position-relative" style="height: 280px; mb-0">
+          <div class="d-flex justify-content-center position-relative" style="height: 260px; mb-0">
             <% group.each_with_index do |book, i| %>
               <% offset = (i - 1) * 60 %>
               <% z = i == 1 ? 3 : 1 %>
@@ -36,7 +36,7 @@
                 object-fit: cover; margin-bottom: 1rem;
                 box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
                 transform: scale(<%= scale %>);
-                left: calc(50% + <%= offset %>px - 65px);
+                left: calc(50% + <%= offset %>px - 85px);
                 z-index: <%= z %>;
               ">
               <% end %>
@@ -55,45 +55,80 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
       </button>
     </div>
-    <!-- TEST -->
-    <div class="mb-4" style="">
-      <div class="d-flex align-items-center gap-4">
-        <h2 class="mb-3 fw-bold" style="color: #751F1F">Recommandations</h2>
-      </div>
-      <div class="hide-scrollbar row flex-nowrap overflow-auto" style="">
-        <% @booksreco.each do |book| %>
-          <div class="col-auto">
-            <%= link_to book_path(book), class: "text-decoration-none" do %>
-              <%= cl_image_tag book.cover.key, class: "rounded-3", style:"height: 160px; aspect-ratio: 2 / 3;
+    <!-- Reco -->
+    <div class="ms-3">
+      <div class=""style="margin-bottom: 48px;">
+        <div class="d-flex align-items-center gap-4">
+          <div class="d-flex align-items-center mb-3 gap-2" >
+            <i class="fa-solid fa-book-open" style="color: #751F1F"></i>
+            <h3 class="mb-1 fw-bold" style="color: #070740">Recommandations</h3>
+          </div>
+        </div>
+        <div class="hide-scrollbar row flex-nowrap overflow-auto" style="">
+          <% @booksreco.each do |book| %>
+            <div class="col-auto">
+              <%= link_to book_path(book), class: "text-decoration-none" do %>
+                <%= cl_image_tag book.cover.key, class: "rounded-3", style:"height: 140px; aspect-ratio: 2 / 3;
                 object-fit: cover; margin-bottom: 1rem;
                 box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
-              <h6 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
-                <%= truncate(book.title, length: 18) %>
-              </h6>
-              <p class="" style="font-size: 12px; margin-bottom: 0;"><%= truncate(book.author, length: 18) %></p>
-            <% end %>
-          </div>
-        <% end %>
+                <h6 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
+                  <%= truncate(book.title, length: 18) %>
+                </h6>
+                <p class="" style="font-size: 12px; margin-bottom: 0;"><%= truncate(book.author, length: 18) %></p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="" style="padding-bottom: 70px">
-      <h2 class="mb-3 fw-bold">Last book</h2>
-      <div class="hide-scrollbar row flex-nowrap overflow-auto" style="">
-        <% @last.each do |book| %>
-          <div class="col-auto">
-            <%= link_to book_path(book), class: "text-decoration-none" do %>
-              <%= cl_image_tag book.cover.key, class: "rounded-3", style:"height: 160px; aspect-ratio: 2 / 3;
+      <!-- TEST -->
+      <div  style="margin-bottom: 48px; ">
+        <div class="d-flex align-items-center mb-3 gap-2" >
+          <i class="fa-solid fa-book-open" style="color: #751F1F"></i>
+          <h3 class="mb-1 fw-bold" style="color: #070740">Some selection</h3>
+        </div>
+        <div class="px-2 hide-scrollbar d-flex row pb-1 flex-nowrap overflow-auto gap-3 mb-3">
+          <div class="bg-white rounded-4 opacity-80 shadow-sm gap-3 px-3 py-2" style="width: 250px;">
+            <h5 class="">Reader favorites</h5>
+            <p class="mb-0">The most read books of 2025</p>
+          </div>
+          <div class="bg-white rounded-4 opacity-80 shadow-sm gap-3 px-3 py-2" style="width: 250px;">
+            <h5 class="">Books of the summer</h5>
+            <p class="mb-0">The most read books of 2025</p>
+          </div>
+        </div>
+        <div class="px-2 hide-scrollbar d-flex row pb-1 flex-nowrap overflow-auto gap-3 mb-3">
+          <div class="bg-white rounded-4 opacity-80 shadow-sm gap-3 px-3 py-2" style="width: 250px;">
+            <h5 class="">Vacation reads</h5>
+            <p class="mb-0">The most read books of 2025</p>
+          </div>
+          <div class="bg-white rounded-4 opacity-80 shadow-sm gap-3 px-3 py-2" style="width: 250px;">
+            <h5 class="">Staff picks</h5>
+            <p class="mb-0">The most read books of 2025</p>
+          </div>
+        </div>
+      </div>
+      <!-- Last -->
+      <div class="" style="padding-bottom: 70px">
+        <div class="d-flex align-items-center mb-3 gap-2" >
+          <i class="fa-solid fa-book-open" style="color: #751F1F"></i>
+          <h3 class="mb-1 fw-bold" style="color: #070740">Last book</h3>
+        </div>
+        <div class="hide-scrollbar row flex-nowrap overflow-auto" style="">
+          <% @last.each do |book| %>
+            <div class="col-auto">
+              <%= link_to book_path(book), class: "text-decoration-none" do %>
+                <%= cl_image_tag book.cover.key, class: "rounded-3", style:"height: 140px; aspect-ratio: 2 / 3;
                 object-fit: cover; margin-bottom: 1rem;
                 box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
-              <h6 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
-                <%= truncate(book.title, length: 18) %>
-              </h6>
-              <p class="" style="font-size: 11px; margin-bottom: 0;"><%= truncate(book.author, length: 18) %></p>
-            <% end %>
-          </div>
-        <% end %>
+                <h6 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
+                  <%= truncate(book.title, length: 18) %>
+                </h6>
+                <p class="" style="font-size: 11px; margin-bottom: 0;"><%= truncate(book.author, length: 18) %></p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-
 </div>
