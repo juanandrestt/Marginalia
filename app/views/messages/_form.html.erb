@@ -1,7 +1,15 @@
 <div class="position-fixed w-100 start-50 translate-middle-x px-3" style="bottom: 0px; z-index: 999; background-color: #FAF5EF; padding: 16px 0;">
+  <!--<div class="mb-2 hidden-scrollbar d-flex align-items-center gap-2 overflow-auto" style="white-space: nowrap;">
+    <% ["Can you suggest me a book to read", "Who are you", ].each do |question| %>
+      <button type="button" class="btn bg-white shadow-sm rounded-4" style="font-size: 16px; color: #070740;"
+            onclick="sendQuickMessage('<%= j question %>')">
+        <%= question %>
+      </button>
+    <% end %>
+  </div>-->
   <%= simple_form_for [chat, message] do |f| %>
     <div class="d-flex align-items-center bg-white shadow-sm px-3 py-2" style="border-radius: 50px; width: 100%; max-width: 720px; border: 1px solid #FFEAD8;">
-      <%= f.text_field :content, placeholder: "Talk with margi", class: "form-control border-0 bg-transparent", style: "font-size: 16px; color: #070740;" %>
+      <%= f.text_field :content, id: "message_content", placeholder: "Talk with margi", class: "form-control border-0 bg-transparent", style: "font-size: 16px; color: #070740;" %>
       <div class="position-relative d-flex justify-content-center align-items-center">
         <%= f.button :submit, '', class: "btn d-flex align-items-center justify-content-center", style: "width: 36px; height: 36px; border-radius: 50%; background-color: #751F1F;" %>
         <i class="fa-solid fa-arrow-up position-absolute text-white"></i>
@@ -9,3 +17,13 @@
     </div>
   <%end%>
 </div>
+
+<%# <script>
+  function sendQuickMessage(text) {
+    const input = document.querySelector('#message_content');
+    const form = input.closest('form');
+    input.value = text;
+    form.submit();
+    input.value = '';
+  }
+</script> %>
