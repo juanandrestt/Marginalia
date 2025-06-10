@@ -1,9 +1,13 @@
 class PagesController < ApplicationController
   def home
+    if user_signed_in?
     @book = Book.limit(1)
     @books = Book.offset(20).limit(6)
     @booksreco = Book.offset(30).limit(6)
     @last = Book.offset(10).limit(6)
+        else
+      redirect_to new_user_session_path
+    end
   end
 
   def books

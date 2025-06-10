@@ -72,9 +72,9 @@
                 object-fit: cover; margin-bottom: 1rem;
                 box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
                 <h6 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
-                  <%= truncate(book.title, length: 18) %>
+                  <%= truncate(book.title, length: 14) %>
                 </h6>
-                <p class="" style="font-size: 12px; margin-bottom: 0;"><%= truncate(book.author, length: 18) %></p>
+                <p class="" style="font-size: 12px; margin-bottom: 0;"><%= truncate(book.author, length: 14) %></p>
               <% end %>
             </div>
           <% end %>
@@ -121,9 +121,9 @@
                 object-fit: cover; margin-bottom: 1rem;
                 box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: book.title if book.cover.attached? %>
                 <h6 style="margin-bottom: 2px; white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis;">
-                  <%= truncate(book.title, length: 18) %>
+                  <%= truncate(book.title, length: 14) %>
                 </h6>
-                <p class="" style="font-size: 11px; margin-bottom: 0;"><%= truncate(book.author, length: 18) %></p>
+                <p class="" style="font-size: 11px; margin-bottom: 0;"><%= truncate(book.author, length: 14) %></p>
               <% end %>
             </div>
           <% end %>
