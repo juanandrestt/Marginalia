@@ -10,7 +10,7 @@
       <%= simple_form_for [@bookclub, BookclubUser.new] do |f| %>
         <div class="modal-body">
           <%= f.association :user,
-              collection: User.all.order(:username),
+              collection: User.where.not(id: @bookclub.members.pluck(:id)).order(:username),
               label_method: :username,
               prompt: "Select a user",
               input_html: { data: { controller: "tom-select" } } %>
