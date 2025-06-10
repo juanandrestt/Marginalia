@@ -4,7 +4,9 @@ require "faker"
 
 puts "Creating books..."
 
-url = "https://www.googleapis.com/books/v1/volumes?q=subject:philosophy&maxResults=40"
+query = ["fiction"]
+
+url = "https://www.googleapis.com/books/v1/volumes?q=subject:#{query}&maxResults=40"
 excluded_patterns = [
   /university\s+press/i,
   /bod\s*[-–—]?\s*books\s+on\s+demand/i
@@ -124,7 +126,7 @@ end
 puts "Reviews created. Now creating bookclubs..."
 
 users.each do |user|
-  next if user.bookclub.present?
+  next if user.bookclubs.present?
   Bookclub.create!(
     name: "#{user.username}'s Book Club",
     user: user,
