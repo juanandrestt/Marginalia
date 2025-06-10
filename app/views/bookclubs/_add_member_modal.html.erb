@@ -1,0 +1,25 @@
+<div class="modal fade" id="new_member_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add a member to <%= @bookclub.name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+
+      <%= simple_form_for [@bookclub, BookclubUser.new] do |f| %>
+        <div class="modal-body">
+          <%= f.association :user,
+              collection: User.where.not(id: @bookclub.members.pluck(:id)).order(:username),
+              label_method: :username,
+              prompt: "Select a user",
+              input_html: { data: { controller: "tom-select" } } %>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Add member", class: "btn", style: "color: #fff; background-color: #751F1F" %>
+          <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Back</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

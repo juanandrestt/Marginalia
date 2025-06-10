@@ -15,7 +15,6 @@ excluded_patterns = [
 begin
   serialized = URI.open(url).read
   data = JSON.parse(serialized)
-
   data["items"].each_with_index do |item, index|
     next if Book.exists?(open_library_id: item[:id])
 

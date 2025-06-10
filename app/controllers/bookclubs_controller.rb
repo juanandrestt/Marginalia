@@ -20,7 +20,9 @@ class BookclubsController < ApplicationController
     @bookclub = Bookclub.new(bookclub_params)
     @bookclub.book = @book
     @bookclub.user = current_user
+
     if @bookclub.save
+      @bookclub.bookclub_users.create(user: current_user)
       redirect_to bookclub_path(@bookclub)
     else
       render :new, status: :unprocessable_entity

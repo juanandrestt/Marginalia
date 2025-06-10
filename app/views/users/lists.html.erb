@@ -1,29 +1,38 @@
 <div class="container mt-3">
-  <div class="d-flex align-items-center mb-4 position-relative">
+  <div class="d-flex align-items-center justify-content-center mb-4 position-relative">
     <%= link_to :back, class: "btn rounded-pill bg-white position-absolute", style: "color: #751F1F; left: 0;" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
     <h3 class="text-center mb-0 w-100" style="color: #0C0C0C;">All your lists</h3>
+    <%= link_to new_list_path, class: "btn rounded-pill", style: "color: #751F1F;" do %>
+      <i class="fa-solid fa-list text-12"></i>
+    <% end %>
   </div>
 </div>
 <div class="container">
-  <h1 class="mb-4">All your lists</h1>
+  <!--<div class="mb-4 text-center">
+    <%= link_to new_list_path, class: "btn px-4 rounded-3", style: "color: #fff; background-color: #751F1F" do %>
+      <h5 style="color: #fff">Create a list</h5>
+    <% end %>
+  </div>-->
   <div class="container">
     <div class="row mx-1">
       <% current_user.lists.each do |list| %>
         <%= link_to list_path(list), class: "text-decoration-none" do %>
           <div class="col-16 d-flex mb-3 align-items-center">
-          <%= cl_image_tag list.books.first.cover.key, class: "rounded-3", style:"width: 130px; height: 180px; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: list.books.first.title if list.books.first.cover.attached? %>
-              <h5 style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium playfair-display">
+            <%= cl_image_tag list.books.first.cover.key, class: "rounded-3 me-3", style:"height: 80px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: list.books.first.title if list.books.first.cover.attached? %>
+            <div>
+              <h5 style="margin-bottom: 4px; color: #751F1F;" class="fw-medium playfair-display">
                 <%= list.name %>
               </h5>
-              <p class="text-muted" style="font-size: 14px; margin-bottom: 0;">
+              <p class="" style="font-size: 14px; margin-bottom: 0;">
                 <%= list.books.count %> books
               </p>
             </div>
           </div>
-        <% end %>
+        </div>
       <% end %>
-    </div>
+    <% end %>
   </div>
+</div>
 </div>
