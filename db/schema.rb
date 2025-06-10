@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_09_123628) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_10_125721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
@@ -101,6 +101,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_09_123628) do
     t.datetime "updated_at", null: false
     t.index ["review_id"], name: "index_comments_on_review_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "discussions", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "bookclub_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bookclub_id"], name: "index_discussions_on_bookclub_id"
+    t.index ["user_id"], name: "index_discussions_on_user_id"
   end
 
   create_table "follows", force: :cascade do |t|
@@ -210,6 +220,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_09_123628) do
   add_foreign_key "chats", "users"
   add_foreign_key "comments", "reviews"
   add_foreign_key "comments", "users"
+  add_foreign_key "discussions", "bookclubs"
+  add_foreign_key "discussions", "users"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "follows", "users", column: "following_id"
   add_foreign_key "likes", "reviews"

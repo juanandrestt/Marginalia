@@ -7,6 +7,10 @@ class BookclubsController < ApplicationController
 
   def show
     @bookclub = Bookclub.find(params[:id])
+    @discussions = @bookclub.discussions.includes(:user)
+    @discussion = Discussion.new
+    
+    session[:last_viewed_bookclub_url] = request.original_url
   end
 
   def new

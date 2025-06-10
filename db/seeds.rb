@@ -127,7 +127,7 @@ puts "Reviews created. Now creating bookclubs..."
 users.each do |user|
   next if user.bookclubs.present?
   Bookclub.create!(
-    name: "#{user.username}'s Book Club",
+    name: "#{user.username}'s Bookclub",
     user: user,
     book: Book.all.sample
   )

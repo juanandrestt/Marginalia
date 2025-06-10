@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   resources :bookclubs, only: [:index, :show, :edit, :update, :destroy] do
     resources :bookclub_users, only: [:create]
+    resources :discussions, only: [:create]
   end
 
   resources :likes, only: [:destroy]
