@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :books, only: [:index, :show, :new, :create] do
     post 'mark_as_read', on: :member
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
-    resources :bookclubs, only: [:new, :create]
+    resources :bookclubs, only: [:new, :create, :edit, :update]
   end
 
   resources :lists, only: [:index, :new, :create, :show, :destroy] do
