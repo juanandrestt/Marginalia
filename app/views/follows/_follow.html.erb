@@ -1,20 +1,20 @@
 <% follow = current_user.follows.find_by(following: user) %>
-<div id="follow-<%= user.id %>-follow">
+<div id="follow-<%= user.id %>-follow" class="d-flex align-items-center" style="margin-top: -15px;">
     <% if follow %>
         <%= button_to follow_path(id: follow.id),
                     method: :delete,
-                    class: "btn rounded-pill py-0 px-2 follow-button",
+                    class: "btn rounded-3 py-0 px-2 follow-button fw-bold",
                     style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
                     form: { data: { turbo: true } } do %>
-            Unfollow
+            - Unfollow
         <% end %>
     <% else %>
         <%= button_to follows_path(following_id: user.id),
                         method: :post,
-                        class: "btn rounded-pill py-0 px-2 follow-button",
+                        class: "btn rounded-3 py-0 px-2 follow-button fw-bold",
                         style: "color: #751F1F; border-color: #751F1F; font-size: 0.75rem;",
                         form: { data: { turbo: true } } do %>
-            Follow
+            + Follow
         <% end %>
     <% end %>
-</div>  
+</div>
