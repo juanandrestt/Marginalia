@@ -9,7 +9,14 @@
 
       <%= simple_form_for [list, bookmark] do |f| %>
         <div class="modal-body">
-          <%= f.association :book, collection: Book.all.order(:title), prompt: "Select a book", input_html: { data: { controller: "tom-select" } } %>
+          <%= f.association :book,
+                            collection: Book.all.order(:title),
+                            prompt: "Select a book",
+                            input_html: {
+                              multiple: true,
+                              data: { controller: "tom-select" },
+                              class: "form-select"
+                            } %>
         </div>
         <div class="modal-footer">
           <%= f.submit "Add book", class: "btn btn-secondary" %>
