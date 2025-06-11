@@ -13,7 +13,11 @@
               collection: User.where.not(id: @bookclub.members.pluck(:id)).order(:username),
               label_method: :username,
               prompt: "Select a user",
-              input_html: { data: { controller: "tom-select" } } %>
+              input_html: {
+                multiple: true,
+                data: { controller: "tom-select" },
+                class: "form-select"
+              } %>
         </div>
         <div class="modal-footer">
           <%= f.submit "Add member", class: "btn", style: "color: #fff; background-color: #751F1F" %>
