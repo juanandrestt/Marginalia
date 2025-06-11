@@ -11,12 +11,12 @@
   <h3 class="text-center mb-4" style="color: #751F1F;"><%= @book.title %></h3>
   <%= form_with model: [@book, @bookclub], local: true do |form| %>
     <div class="mb-3">
-      <%= form.label :name, class: "text-center mb-2 d-block" ,style: "color: #751F1F;" do %>
+      <%= form.label :name, class: "text-center mb-2 d-block", style: "color: #751F1F;" do %>
         <h5>Name of bookclub</h5>
       <% end %>
       <%= form.text_field :name, class: "form-control d-flex align-items-center bg-white rounded-4 opacity-80 px-3 shadow-sm py-3 w-100 border-0" %>
     </div>
-    
+
     <%= form.submit "Créer", class: "btn rounded-4 py-2 w-100 mb-2", style: "color: #fff; background-color: #751F1F" do %>
       <h5>Create</h5>
     <% end %>

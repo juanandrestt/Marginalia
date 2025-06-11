@@ -2,8 +2,12 @@
 {
   "background_color": "white",
   "description": "Une app sociale et esthétique qui permet de consigner ses lectures, poster des reviews, suivre ses stats et découvrir via ses amis.",
-  "display": "fullscreen",
+  "display": "standalone",
   "name": "Marginalia",
+  "short_name": "Marginalia",
+  "theme_color": "#751F1F",
+  "orientation": "portrait",
+  "scope": "/",
   "icons": [
     <% files = Dir.entries(Rails.root.join("app/assets/images/icons/")).select {|f| !File.directory? f} %>
     <% files.each_with_index do |file, index| %>
