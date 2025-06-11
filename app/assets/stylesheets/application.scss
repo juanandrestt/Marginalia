@@ -36,10 +36,16 @@ p {
 }
 
 .hide-scrollbar {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 
   ::-webkit-scrollbar {
-    display: none;  /* Safari and Chrome */
+    display: none; /* Safari and Chrome */
   }
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #751F1F55; /* halo rouge doux */
+  transition: box-shadow 0.2s ease-in-out;
 }
