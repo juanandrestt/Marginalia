@@ -5,136 +5,37 @@
   <div class="text-center" style="margin-top: -40px;">
     <%= cl_image_tag @bookclub.book.cover.key, class: "rounded-3 ", style:"height: 160px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: @bookclub.book.title if @bookclub.book.cover.attached? %>
   </div>
+
   <!-- Détails du Bookclub -->
   <div class="mt-4">
-    <p class="mb-1"><i class="fa-solid fa-circle-check " style="color: #751F1F"></i> Premium</p>
     <h3 class="" style="color: #751F1F;"><%= @bookclub.name %></h3>
     <div class="d-flex align-items-center">
-      <p class="mb-0"><%= @bookclub.members.count %> members</p>
+      <p class="mb-0"><%= @bookclub.members.count %> member(s)</p>
       <%= link_to "#", class: "btn", style: "color: #751F1F;", data: { bs_toggle: "modal", bs_target: "#new_member_modal" } do %>
         <i class="fa-solid fa-user-plus"></i>
       <% end %>
     </div>
-    <!--<div class="d-flex gap-2">
-      <%= link_to "edit", edit_bookclub_path(@bookclub), class: "btn", style: "color: #751F1F;" %>
-    </div>-->
   </div>
 </div>
-<div class="container px-4 mt-4" style="margin-bottom: 96px;">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4>Thread</h4>
-    <i class="fa-solid fa-ellipsis-vertical" style="color: #751F1F;"></i>
+
+<!-- Thread -->
+<div class="container mt-4"style="padding-bottom: 80px;">
+  <div>
+    <%= render @discussions %>
   </div>
-  <div class="mb-3 p-4" style="background-color: rgba(250, 250, 250, 0.9); border-radius: 8px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05)">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3 mb-3">
-        <img src=""
-             alt=""
-             class="rounded-circle"
-             style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
-        <div>
-          <h5 class="mb-0 fw-bold" style="color: #751F1F;">
-            Username
-          </h5>
-          <p class="text-muted mb-0" style="font-size: 12px; font-family: Poppins;">
-            Date
-          </p>
-        </div>
-        <!-- FOLLOW -->
-        <!-- FOLLOW -->
-      </div>
-    </div>
-    <p class="pb-2"" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;">Un livre labyrinthique et total, superbement écrit.</p>
-    <div class="d-flex align-items-center justify-content-between mt-3">
-      <div class="d-flex align-items-center gap-3">
-        <div class="d-flex align-items-center gap-3">
-          <div class="d-flex align-items-center gap-1", style="background-color: transparent;  border: none; text-decoration: none;">
-            <i class="fa-regular fa-heart" style="color: #751F1F;"></i>
-            <p class="mb-0" style="font-family: Poppins;">
-              12</p>
-          </div>
-          <div class="d-flex align-items-center gap-1", style="background-color: transparent;  border: none; text-decoration: none;">
-            <i class="fa-regular fa-comment" style="color: #751F1F;"></i>
-            <p class="mb-0" style="font-family: Poppins;">
-              12</p>
-          </div>
+
+  <!-- Add Comment Form -->
+  <div class="position-fixed w-100 start-50 translate-middle-x px-3" style="bottom: 0px; z-index: 999; background-color: #FAF5EF; padding: 16px 0;">
+    <%= form_with model: [@bookclub, @discussion], local: true, class: "w-100 d-flex justify-content-center" do |f| %>
+      <div class="d-flex align-items-center bg-white shadow-sm px-3 py-2" style="border-radius: 50px; width: 100%; max-width: 720px; border: 1px solid #FFEAD8;">
+        <%= f.text_field :content, placeholder: "Discuss", class: "form-control border-0 bg-transparent", style: "font-size: 16px; color: #070740;" %>
+        <div class="position-relative d-flex align-items-center justify-content-center">
+          <%= f.submit "", class: "btn d-flex align-items-center justify-content-center", style: "width: 36px; height: 36px; border-radius: 50%; background-color: #751F1F;"%>
+          <i class="fa-solid fa-arrow-up position-absolute text-white"></i>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="mb-3 p-4" style="background-color: rgba(250, 250, 250, 0.9); border-radius: 8px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05)">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3 mb-3">
-        <img src=""
-             alt=""
-             class="rounded-circle"
-             style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
-        <div>
-          <h5 class="mb-0 fw-bold" style="color: #751F1F;">
-            Username
-          </h5>
-          <p class="text-muted mb-0" style="font-size: 12px; font-family: Poppins;">
-            Date
-          </p>
-        </div>
-        <!-- FOLLOW -->
-        <!-- FOLLOW -->
-      </div>
-    </div>
-    <p class="pb-2"" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;">Peut-on se libérer de ses origines sans les trahir ? Ce récit subtil et incarné montre qu'on ne se défait jamais tout à fait de ce qui nous a formés, mais qu'on peut apprendre à le regarder autrement. Une réussite.</p>
-    <div class="d-flex align-items-center justify-content-between mt-3">
-      <div class="d-flex align-items-center gap-3">
-        <div class="d-flex align-items-center gap-3">
-          <div class="d-flex align-items-center gap-1", style="background-color: transparent;  border: none; text-decoration: none;">
-            <i class="fa-regular fa-heart" style="color: #751F1F;"></i>
-            <p class="mb-0" style="font-family: Poppins;">
-              12</p>
-          </div>
-          <div class="d-flex align-items-center gap-1", style="background-color: transparent;  border: none; text-decoration: none;">
-            <i class="fa-regular fa-comment" style="color: #751F1F;"></i>
-            <p class="mb-0" style="font-family: Poppins;">
-              12</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="mb-3 p-4" style="background-color: rgba(250, 250, 250, 0.9); border-radius: 8px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05)">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3 mb-3">
-        <img src=""
-             alt=""
-             class="rounded-circle"
-             style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
-        <div>
-          <h5 class="mb-0 fw-bold" style="color: #751F1F;">
-            Username
-          </h5>
-          <p class="text-muted mb-0" style="font-size: 12px; font-family: Poppins;">
-            Date
-          </p>
-        </div>
-        <!-- FOLLOW -->
-        <!-- FOLLOW -->
-      </div>
-    </div>
-    <p class="pb-2"" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;">This also happened when I dyed my hair</p>
-    <div class="d-flex align-items-center justify-content-between mt-3">
-      <div class="d-flex align-items-center gap-3">
-        <div class="d-flex align-items-center gap-3">
-          <div class="d-flex align-items-center gap-1", style="background-color: transparent;  border: none; text-decoration: none;">
-            <i class="fa-regular fa-heart" style="color: #751F1F;"></i>
-            <p class="mb-0" style="font-family: Poppins;">
-              12</p>
-          </div>
-          <div class="d-flex align-items-center gap-1", style="background-color: transparent;  border: none; text-decoration: none;">
-            <i class="fa-regular fa-comment" style="color: #751F1F;"></i>
-            <p class="mb-0" style="font-family: Poppins;">
-              12</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <% end %>
   </div>
 </div>
+
 <%= render "add_member_modal" %>

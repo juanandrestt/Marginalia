@@ -1,0 +1,24 @@
+<div class="container mt-4">
+<!-- Discussion -->
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center mt-3 gap-3 mb-3">
+      <%= link_to user_path(discussion.user), class: "d-flex align-items-center text-decoration-none" do %>
+        <img src="<%= discussion.user.avatar %>"
+          alt="<%= discussion.user.username || discussion.user.email %>"
+          class="rounded-circle"
+          style="width: 40px; height: 40px; object-fit: cover; margin-right: 12px;">
+        <div>
+          <div class="d-flex gap-2 align-items-center">
+            <h5 class="mb-0 fw-bold" style="color: #751F1F;">
+              <%= discussion.user.username || discussion.user.email %>
+            </h5>
+            <p class="text-muted mb-0" style="font-size: 12px; font-family: Poppins;">
+              <%= discussion.created_at.strftime("%d/%m/%Y") %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <p class="pb-2" style="border-bottom: 1px solid #D5D5D5; font-family: Poppins;"><%= discussion.content %></p>
+</div>

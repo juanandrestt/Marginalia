@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_many :followers, through: :reverse_follows, source: :follower
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :discussions, dependent: :destroy
 
   def following?(other_user)
     follows.exists?(following_id: other_user.id)

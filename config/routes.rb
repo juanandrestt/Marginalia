@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :books, only: [:index, :show, :new, :create] do
     post 'mark_as_read', on: :member
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
-    resources :bookclubs, only: [:new, :create]
+    resources :bookclubs, only: [:new, :create, :edit, :update]
   end
 
   resources :lists, only: [:index, :new, :create, :show, :destroy] do
@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   resources :bookclubs, only: [:index, :show, :edit, :update, :destroy] do
     resources :bookclub_users, only: [:create]
+    resources :discussions, only: [:create]
   end
 
   resources :likes, only: [:destroy]
