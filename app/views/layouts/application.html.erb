@@ -16,29 +16,29 @@
     <%= render partial:'shared/ios_pwa_links' %>
     <%= yield :head %>
   </head>
-  <body class="<%= params[:controller] == "books" && "pages" && params[:action] == "show" ? "bg-white" : ""%> ">
-    <div class="tab-bar d-flex bg-white justify-content-between position-fixed w-100 start-50 translate-middle-x px-5" style="bottom: 0px; height: 56px; z-index: 999; box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.05);border-top-left-radius: 20px; border-top-right-radius: 20px;">
-      <!-- Home -->
-      <%= link_to root_path, class: "text-center text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
-        <i class="fa-solid  fa-house" style="font-size: 20px; color: #751F1F"></i>
-      <% end %>
-      <!-- Bookclubs -->
-      <%= link_to bookclubs_user_path(current_user), class: "text-center text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
-        <i class="fa-solid fa-book" style="font-size: 20px; color: #751F1F"></i>
-      <% end %>
-      <!-- Books -->
-      <%= link_to books_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
-        <i class="fa-solid fa-feather" style="font-size: 20px; color: #751F1F"></i>
-      <% end %>
-      <!-- Lists -->
-      <%= link_to lists_user_path(current_user), class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
-        <i class="fa-solid fa-list" style="font-size: 20px; color: #751F1F"></i>
-      <% end %>
-      <!-- Dashboard -->
-      <%= link_to dashboard_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
-        <i class="fas fa-user" style="font-size: 20px; color: #751F1F"></i>
-      <% end %>
-    </div>
+  <body class="<%= params[:controller] == "books" && params[:action] == "show" ? "bg-white" : ""%>  ">
+      <div class="tab-bar d-flex bg-white justify-content-between position-fixed w-100 start-50 translate-middle-x px-5" style="bottom: 0px; height: 56px; z-index: 999; box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.05);border-top-left-radius: 20px; border-top-right-radius: 20px;">
+        <!-- Home -->
+        <%= link_to root_path, class: "text-center text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+          <i class="fa-solid  fa-house" style="font-size: 20px; color: #751F1F"></i>
+        <% end %>
+        <!-- Bookclubs -->
+        <%= link_to bookclubs_user_path(current_user), class: "text-center text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+          <i class="fa-solid fa-book" style="font-size: 20px; color: #751F1F"></i>
+        <% end %>
+        <!-- Books -->
+        <%= link_to books_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+          <i class="fa-solid fa-feather" style="font-size: 20px; color: #751F1F"></i>
+        <% end %>
+        <!-- Lists -->
+        <%= link_to lists_user_path(current_user), class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+          <i class="fa-solid fa-list" style="font-size: 20px; color: #751F1F"></i>
+        <% end %>
+        <!-- Dashboard -->
+        <%= link_to dashboard_path, class: "text-center text-dark text-decoration-none d-flex flex-column align-items-center justify-content-center" do %>
+          <i class="fas fa-user" style="font-size: 20px; color: #751F1F"></i>
+        <% end %>
+      </div>
     <%= yield %>
   </body>
 </html>

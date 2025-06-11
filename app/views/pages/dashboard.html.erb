@@ -75,7 +75,7 @@
               <div class="align-items-center">
               <%= cl_image_tag reading.book.cover.key, class: "rounded-3", style:"height: 180px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: reading.book.title if reading.book.cover.attached? %>
                 <h3 style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium text-truncate" data-bs-toggle="tooltip" title="<%= reading.book.title %>">
-                  <%= truncate(reading.book.title, length: 20) %>
+                  <%= truncate(reading.book.title, length: 17) %>
                 </h3>
               </div>
             <% end %>
@@ -104,7 +104,7 @@
                 <img src="<%= list.books.sample&.cover_url.presence || 'default_cover_url.jpg' %>"
                      style="height: 180px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);"
                      alt="<%= list.name %>"
-                     class="rounded">
+                     class="rounded-3">
                 <h3 style="font-size: 16px; margin-bottom: 4px; color: #751F1F;" class="fw-medium text-truncate" data-bs-toggle="tooltip" title="<%= list.name %>">
                   <%= list.name %>
                 </h3>
