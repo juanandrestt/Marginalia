@@ -16,6 +16,7 @@
     <%= render partial:'shared/ios_pwa_links' %>
     <%= yield :head %>
   </head>
+
   <body class="<%= params[:controller] == "books" && "pages" && params[:action] == "show" ? "bg-white" : ""%> ">
     <% if current_user %>
       <%= render 'shared/tapbar' %>
