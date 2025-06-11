@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: :home
   def home
     @book = Book.limit(1)
     @books = Book.offset(20).limit(6)
