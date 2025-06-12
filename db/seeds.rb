@@ -4,7 +4,7 @@ require "faker"
 
 puts "Creating books..."
 
-query = ["science fiction"]
+query = ["poetry"]
 url = "https://www.googleapis.com/books/v1/volumes?q=subject:#{URI.encode_www_form_component(query.first)}&maxResults=40"
 excluded_patterns = [
   /university\s+press/i,
