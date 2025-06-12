@@ -1,23 +1,41 @@
 <div class="container" >
-  <!-- Barre de recherche -->
-  <div class="px-3 mb-4 mt-4">
-    <div class="d-flex w-100 gap-2">
+  <div class="px-3 mb-4 mt-4" data-controller="search">
+    <div class="d-flex w-100 gap-2 position-relative">
+      
       <!-- Search form - 90% -->
       <div class="flex-grow-1 shadow-sm rounded-pill">
         <%= form_with url: books_path, method: :get, local: true, class: "d-flex align-items-center bg-white rounded-pill px-3 py-1" do |f| %>
-          <i class="fas fa-search me-2" style="font-size: 14px; color: #751F1F; "></i>
-          <%= f.text_field :query, placeholder: "Find your book here...", class: "form-control border-0 bg-white rounded-pill shadow-none", style: "font-size: 14px; color: #751F1F;", autofocus: false  %>
+          <i class="fas fa-search me-2" style="font-size: 14px; color: #751F1F;"></i>
+          <%= f.text_field :query,
+            id: "search-input",
+            placeholder: "Find your book here...",
+            class: "form-control border-0 bg-white rounded-pill shadow-none",
+            style: "font-size: 14px; color: #751F1F;",
+            autofocus: false,
+            data: {
+              search_target: "input",
+              action: "keyup->search#search"
+            } %>
         <% end %>
       </div>
+
       <!-- Icon link - 10% -->
       <div class="d-flex align-items-center justify-content-center" style="width: 42px;">
         <%= link_to quick_chat_path, data: {turbo_method: :post}, class: "text-decoration-none"  do %>
           <i class="fa-solid fa-wand-magic-sparkles" style="font-size: 18px; color: #751F1F;"></i>
         <% end %>
       </div>
+
+      <!-- Suggestions list prenant la largeur du bloc entier -->
+      <ul id="suggestions-list"
+          class="list-group position-absolute w-100 mt-2 rounded-3 shadow-sm"
+          data-search-target="list"
+          style="top: 100%; z-index: 1000; display: none;">
+      </ul>
     </div>
   </div>
 </div>
+
 <!-- TEST -->
 <div style="background-image: url('/assets/vector.png'); background-size: contain; background-repeat: no-repeat; width: 100%; height: 350px; position: absolute; top: 0; left: 0; z-index: -1;"></div>
 <div class="text-center mb-5">

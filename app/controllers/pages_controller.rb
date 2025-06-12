@@ -8,18 +8,6 @@ class PagesController < ApplicationController
     @bookslider = Book.limit(6)
   end
 
-  def books
-    @book = Book.find(params[:id])
-  end
-
-  def index
-    if params[:query].present?
-      @books = Book.where("title ILIKE ? OR author ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
-    else
-      @books = Book.all
-    end
-  end
-
   def dashboard
     if user_signed_in?
       @recent_lists = List.where(user_id: current_user.id).order(created_at: :desc).limit(5)
