@@ -18,7 +18,6 @@ class BooksController < ApplicationController
       sql_subquery = <<~SQL
         books.title @@ :query
         OR books.author @@ :query
-        OR books.description @@ :query
       SQL
       @books = @books.where(sql_subquery, query: params[:query])
     end
