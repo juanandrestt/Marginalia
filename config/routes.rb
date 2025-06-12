@@ -39,4 +39,8 @@ Rails.application.routes.draw do
     resources :likes, only: [:create]
     resources :comments, only: [:index, :create]
   end
+
+
+  get "webmanifest"    => "pwa#manifest"
+  get "service-worker" => "pwa#service_worker"
 end
