@@ -41,15 +41,30 @@ class MessagesController < ApplicationController
   end
 
   def system_prompt
-    "You are an assistant for a social platform dedicated to people passionate about reading.
-    Your task is to recommend the 3 most relevant books based on the request.
-    Always include the title and the exact URL provided for each book.
-    The answer must be in Markdown format, using the provided URLs as links.
-    Use only the provided book list below and do not make up any books or URLs.
-    Here are the nearest catalog books: "
+    <<~PROMPT
+      You are an assistant for a social platform dedicated to people passionate about reading.
+      Your task is to recommend the 3 most relevant books based on the request.
+  
+      Each recommendation must include:
+      - The **book title as a Markdown link** using the provided URL.
+      - A brief description (from the `description` field).
+      
+      Use only the provided book list below.
+      Do **not** make up any books or URLs.
+      Here are the nearest catalog books:
+    PROMPT
   end
+  
 
   def book_prompt(book)
-    "BOOK id: #{book.id}, Title: #{book.title}, Author: #{book.author}, Description: #{book.description}, Subjects: #{book.subjects}, Publishing year: #{book.publishing_year}, URL: #{request.base_url}#{book_path(book)}"
-  end
+    <<~BOOK
+      BOOK id: #{book.id}
+      Title: #{book.title}
+      Author: #{book.author}
+      Description: #{book.description}
+      Subjects: #{book.subjects}
+      Publishing year: #{book.publishing_year}
+      URL: #{request.base_url}#{book_path(book)}
+    BOOK
+  end  
 end
