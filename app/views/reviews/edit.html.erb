@@ -10,8 +10,11 @@
 <!-- Book -->
 <div class="bg-white p-3 opacity-80 shadow-sm">
   <div class="d-flex container align-items-center">
-    <%= cl_image_tag @review.book.cover.key, class: "rounded-3", style="max-height: 89px; object-fit: cover;", alt: @review.book.title if @review.book.cover.attached? %>
-    <div class="d-flex flex-column justify-content-center h-100">
+    <% if @review.book.cover.attached? %>
+      <%= cl_image_tag @review.book.cover.key, class: "rounded-3", style:"height: 96px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: @review.book.title %>
+    <% end %>
+
+    <div class="d-flex flex-column justify-content-center h-100 ms-4">
       <h4 class="fw-bold font-size mb-1" style="color: #751F1F;">
         <%= @review.book.title %>
       </h4>
@@ -20,7 +23,7 @@
   </div>
 </div>
 <!-- Form -->
-<div class="container p-4 rounded" style="margin-bottom: 104px;">
+<div class="container p-4 rounded" style="margin-bottom: 104px;" data-controller="review-form">
   <%= form_for [@review.book, @review] do |f| %>
     <!-- Rating -->
     <div class="mb-5">
@@ -31,14 +34,16 @@
         <div class="d-flex justify-content-center gap-4 fs-4">
           <% (1..5).each do |n| %>
             <i class="fa-star <%= @review.rating.to_i >= n ? 'fas' : 'far' %> cursor-pointer"
-           id="star-<%= n %>"
-           onclick="selectStar(<%= n %>)"
-           style="cursor: pointer; color: #751F1F;"></i>
+               id="star-<%= n %>"
+               data-action="click->review-form#selectStar"
+               data-value="<%= n %>"
+               style="cursor: pointer; color: #751F1F;"></i>
           <% end %>
         </div>
-        <%= f.hidden_field :rating, id: "rating-input", value: @review.rating %>
+        <%= f.hidden_field :rating, id: "rating-input", data: { review_form_target: "ratingInput" }, value: @review.rating %>
       </div>
     </div>
+
     <!-- Emotion -->
     <div class="mb-5">
       <%= f.label :emotion, class: "text-center mb-3 d-block", style: "color: #751F1F;" do %>
@@ -46,12 +51,14 @@
       <% end %>
       <div class="row g-2 mb-2">
         <% ["😀 Happy", "😢 Sad", "😡 Angry"].each do |emotion| %>
+          <% emotion_id = emotion.downcase.split(' ').first %>
           <div class="col-4">
-            <button
-          type="button"
-          class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center <%= 'active' if @review.emotion == emotion %>"
-          onclick="selectEmotion('<%= emotion %>')"
-          id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
+            <button type="button"
+              class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center <%= 'active' if @review.emotion == emotion %>"
+              data-action="click->review-form#selectEmotion"
+              data-emotion="<%= emotion %>"
+              data-id="<%= emotion_id %>"
+              id="emotion-btn-<%= emotion_id %>">
               <span class="fs-4 mb-1"><%= emotion.split(' ').first %></span>
               <span class="small"><%= emotion.split(' ').last %></span>
             </button>
@@ -60,20 +67,23 @@
       </div>
       <div class="row g-2">
         <% ["🧠 Thinking", "🤯 Impress", "🥹 Emotional"].each do |emotion| %>
+          <% emotion_id = emotion.downcase.split(' ').first %>
           <div class="col-4">
-            <button
-          type="button"
-          class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center <%= 'active' if @review.emotion == emotion %>"
-          onclick="selectEmotion('<%= emotion %>')"
-          id="emotion-btn-<%= emotion.downcase.split(' ').first %>">
+            <button type="button"
+              class="btn bg-white opacity-80 shadow-sm p-2 w-100 rounded-4 d-flex flex-column align-items-center <%= 'active' if @review.emotion == emotion %>"
+              data-action="click->review-form#selectEmotion"
+              data-emotion="<%= emotion %>"
+              data-id="<%= emotion_id %>"
+              id="emotion-btn-<%= emotion_id %>">
               <span class="fs-4"><%= emotion.split(' ').first %></span>
               <span class="small"><%= emotion.split(' ').last %></span>
             </button>
           </div>
         <% end %>
       </div>
-      <%= f.hidden_field :emotion, id: "emotion-input", value: @review.emotion %>
+      <%= f.hidden_field :emotion, id: "emotion-input", data: { review_form_target: "emotionInput" }, value: @review.emotion %>
     </div>
+
     <!-- Content -->
     <div class="mb-5">
       <%= f.label :content, class: "text-center mb-2 d-block", style: "color: #751F1F;" do %>
@@ -81,24 +91,29 @@
       <% end %>
       <%= f.text_area :content, rows: 5, class: "form-control d-flex align-items-center bg-white rounded-4 opacity-80 px-3 shadow-sm py-3 w-100 border-0", placeholder: "Share your thoughts..." %>
     </div>
+
     <!-- Favorite Characters -->
     <div class="mb-5">
       <%= f.label :favorite_characters, class: "text-center mb-3 d-block", style: "color: #751F1F;" do %>
         <h5>Your favorite characters</h5>
       <% end %>
       <div class="d-flex flex-wrap gap-2">
-        <% ["Juan Pélardon", "Anthony d’Auvergne", "Samuel Parmagiano", "Juan Pélardon"].each do |char| %>
+        <% ["Juan Pélardon", "Anthony d’Auvergne", "Samuel Parmagiano"].each do |char| %>
+          <% char_id = char.parameterize %>
           <button
-        type="button"
-        class="btn bg-white p-3 opacity-80 shadow-sm rounded-4 <%= 'active' if @review.favorite_characters == char %>"
-        onclick="selectCharacter('<%= char %>')"
-        id="char-btn-<%= char.parameterize %>">
+            type="button"
+            class="btn bg-white p-3 opacity-80 shadow-sm rounded-4 <%= 'active' if @review.favorite_characters == char %>"
+            data-action="click->review-form#selectCharacter"
+            data-character="<%= char %>"
+            data-id="<%= char_id %>"
+            id="char-btn-<%= char_id %>">
             <%= char %>
           </button>
         <% end %>
       </div>
-      <%= f.hidden_field :favorite_characters, id: "character-input", value: @review.favorite_characters %>
+      <%= f.hidden_field :favorite_characters, id: "character-input", data: { review_form_target: "characterInput" }, value: @review.favorite_characters %>
     </div>
+
     <!-- Submit -->
     <div class="tab-bar col justify-content-around align-items-center bg-white p-3 shadow-sm position-fixed w-100 start-50 translate-middle-x" style="bottom: 0px; height: 104px; z-index: 999;">
       <%= f.submit "Update review", class: "btn rounded-4 py-2 w-100 mb-2", style: "color: #fff; background-color: #751F1F" %>
@@ -106,50 +121,3 @@
   <% end %>
   <p class="text-center mb-4" style="font-size: 14px;">You can modify your review later</p>
 </div>
-<script>
-  function selectStar(value) {
-    document.getElementById("rating-input").value = value;
-    for (let i = 1; i <= 5; i++) {
-      const star = document.getElementById(`star-${i}`);
-      star.classList.remove("fas");
-      star.classList.add("far");
-    }
-    for (let i = 1; i <= value; i++) {
-      const star = document.getElementById(`star-${i}`);
-      star.classList.remove("far");
-      star.classList.add("fas");
-    }
-  }
-    function selectCharacter(name) {
-    document.getElementById("character-input").value = name;
-
-    const characterIds = ["juan-pelardon", "anthony-d-auvergne", "samuel-parmagiano"];
-
-    characterIds.forEach(id => {
-      const el = document.getElementById(`char-btn-${id}`);
-      if (el) el.classList.remove("active");
-    });
-
-    const btnId = `char-btn-${name.toLowerCase().replaceAll(' ', '-').replaceAll(/[’']/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
-    const selectedBtn = document.getElementById(btnId);
-    if (selectedBtn) selectedBtn.classList.add("active");
-  }
-    function selectEmotion(emotion) {
-    document.getElementById("emotion-input").value = emotion;
-
-    const emotions = [
-      "😀 Happy", "😢 Sad", "😡 Angry",
-      "🧠 Thinking", "🤯 Impress", "🥹 Emotional"
-    ];
-
-    emotions.forEach(e => {
-      const id = `emotion-btn-${e.toLowerCase().split(' ')[0]}`;
-      const btn = document.getElementById(id);
-      if (btn) btn.classList.remove("active");
-    });
-
-    const selectedId = `emotion-btn-${emotion.toLowerCase().split(' ')[0]}`;
-    const selectedBtn = document.getElementById(selectedId);
-    if (selectedBtn) selectedBtn.classList.add("active");
-  }
-</script>

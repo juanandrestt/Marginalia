@@ -10,7 +10,10 @@
 <!-- Book -->
 <div class="bg-white p-3 opacity-80 shadow-sm">
   <div class="d-flex container align-items-center">
-    <%= cl_image_tag @book.cover.key, class: "rounded-3 me-3", style:"height: 96px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: @book.title if @book.cover.attached? %>
+    <% if @review.book.cover.attached? %>
+      <%= cl_image_tag @review.book.cover.key, class: "rounded-3", style:"height: 96px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: @review.book.title %>
+    <% end %>
+
     <div class="d-flex flex-column justify-content-center h-100">
       <h4 class="fw-bold font-size mb-1" style="color: #751F1F;">
         <%= @book.title %>
@@ -87,7 +90,7 @@
         <h5>Your favorite characters</h5>
       <% end %>
       <div class="d-flex flex-wrap gap-2">
-        <% ["Juan Pélardon","Anthony d'Auvergne", "Samuel Parmagiano", "Juan Pélardon"].each do |char| %>
+        <% ["Juan Pélardon","Anthony d'Auvergne", "Samuel Parmagiano"].each do |char| %>
           <button type="button" class="btn bg-white p-3 opacity-80 shadow-sm rounded-4"
                   data-action="click->review-form#selectCharacter"
             data-character="<%= char %>"
