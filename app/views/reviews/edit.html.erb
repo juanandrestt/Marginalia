@@ -10,7 +10,7 @@
 <!-- Book -->
 <div class="bg-white p-3 opacity-80 shadow-sm">
   <div class="d-flex container align-items-center">
-    <% if @book.cover.attached? %>
+    <% if @review.book.cover.attached? %>
       <%= cl_image_tag @review.book.cover.key, class: "rounded-3", style:"height: 96px; aspect-ratio: 2 / 3; object-fit: cover; margin-bottom: 1rem; box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);", alt: @review.book.title %>
     <% end %>
 
