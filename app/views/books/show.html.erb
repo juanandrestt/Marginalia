@@ -1,4 +1,7 @@
 <!-- Title -->
+<% content_for :meta_title, @book.title %>
+<% content_for :meta_description, truncate(@book.description, length: 160) %>
+<% content_for :meta_image, url_for(@book.cover) if @book.cover.attached? %>
 <div class="container d-flex justify-content-between align-items-center mt-3">
   <div class="d-flex">
     <div class="d-flex align-items-center">
